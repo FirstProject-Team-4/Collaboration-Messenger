@@ -1,9 +1,10 @@
-import 'Login.css'
+import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAppContext } from '../../context/appContext';
-// import { useAppContext } from '../../Context/AppContext'
-// import { loginUser } from '../../Service/auth-service'
+import { loginUser } from '../../service/auth';
+import { User } from '../../context/appContext';
+
 
  const Login = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ import { useAppContext } from '../../context/appContext';
   const login = async (): Promise<void> => {
     try {
       const response = await loginUser(form.email, form.password)
-      setContext({ user: response.user, userData: null })// userData is a null?
+      setContext({ user: response.user as User | any , userData: null })
       navigate('/about')
     } catch (error: Error | any) {
       setError(true)

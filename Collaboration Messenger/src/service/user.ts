@@ -1,5 +1,5 @@
 import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database'
-import { db } from '../config/config-firebase';
+import { db } from '../config/config-firebase'
 
 export const getUserByUsername = async (username: string) => {
   return await get(ref(db, `users/${username}`))

@@ -1,16 +1,15 @@
-import './Register-view.css';
 import {  useState } from 'react';
 import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, registerUser } from '../../Service/user/auth';
-import { createUserHandle } from '../../Service/user-service';
+import { loginUser, registerUser } from '../../service/auth';
+import { createUserUsername } from '../../service/user';
 import { CheckRegister } from '../../validations/register';
 /**
  * Renders the RegisterView component.
  * 
  * @returns The JSX element representing the RegisterView component.
  */
-export default function RegisterView() {
+export default function Register() {
 
   const nav = useNavigate();
 
@@ -43,7 +42,7 @@ export default function RegisterView() {
 
     try {
       const response = await registerUser(form.email, form.password);
-      createUserHandle(form.username, response.user.uid, form.email);
+      createUserUsername(form.username, response.user.uid, form.email);
       loginUser(form.email, form.password);
       nav('/');
     } catch (error: any) {
