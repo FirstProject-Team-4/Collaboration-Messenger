@@ -37,7 +37,7 @@ console.log(React);
           {/* <Header /> */}
           <div className="main-content">
             <Routes>
-           
+            <Route path="/" element={<About />} />
               <Route path="/about" element={<About />} />
               <Route path="/chat/:id" element />
               <Route path="/allUsers" element />
