@@ -1,6 +1,6 @@
+import './Header.css';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 import { logoutUser } from "../service/auth";
 import Button from "./Button";
@@ -23,11 +23,13 @@ export const Header = () => {
 
     return (
         user &&
-        <div>
-            <NavLink to="/privateChats"> Private </NavLink> 
-            <NavLink to="/groupChats" > Group </NavLink>
-            <NavLink to="/calendar" > Calendar </NavLink>
-            <Button onClick={logout}>Logout </Button>
+             <>
+        <div className="header-view">
+            <NavLink to="/privateChats" className={'header-nav'}> Private </NavLink>
+            <NavLink to="/groupChats" className={'header-nav'} > Group </NavLink>
+            <NavLink to="/calendar" className={'header-nav'} > Calendar </NavLink>
         </div>
+            <Button id='logout' onClick={logout} >Logout </Button>
+            </>
     );
 }

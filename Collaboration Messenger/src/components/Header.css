@@ -1,0 +1,20 @@
+.header-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    position: relative;
+    left: 20px;
+    gap: 10px;
+    border: 1px solid #d16464;
+    height: 500px;
+}
+
+#logout {
+    display: flex;
+    justify-content: right;
+    height: 50px;
+    position: relative;
+    left: 1320px;
+    bottom: 90px;
+ 
+}

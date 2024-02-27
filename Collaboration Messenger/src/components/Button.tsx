@@ -7,6 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
   color?: string;
   id?: string;
+  className?: string;
 }
 
 /**
@@ -20,11 +21,11 @@ interface ButtonProps {
  * @param {string} [props.id=""] - The id of the button.
  * @returns {JSX.Element} The rendered Button component.
  */
-const Button: React.FC<ButtonProps> = ({ children = null, onClick = () => { }, color = "", id = '' }) => {
+const Button: React.FC<ButtonProps> = ({ children = null, onClick = () => { }, color = "", id = '' , className=''}) => {
 
   return (
     <>
-      <button id={id} style={color ? { border: `2px solid ${color}` } : undefined} onClick={onClick}>{children}</button>
+      <button id={id} className={className} style={color ? { border: `2px solid ${color}` } : undefined} onClick={onClick}>{children}</button>
     </>
   );
 }
