@@ -14,10 +14,6 @@ export const Header = () => {
     const navigate = useNavigate();
     const { user, setContext } = useAppContext();
     // const location = useLocation();
-
-    /**
-     * Logs out the user, clears the user context, and navigates to the about page.
-     */
     const logout = async () => {
         await logoutUser();
         setContext({ user: null, userData: null });
@@ -26,13 +22,12 @@ export const Header = () => {
 
 
     return (
+        user &&
         <div>
-            <NavLink to="/about"> About </NavLink> 
-            <NavLink to="/chat" > Chat </NavLink>
-            <NavLink to="/profile" > Profile </NavLink>
-            <NavLink to="/login" > Login </NavLink>
-            <NavLink to="/register" > Register </NavLink>
-            {user && <Button onClick={logout}>Logout </Button>}
+            <NavLink to="/privateChats"> Private </NavLink> 
+            <NavLink to="/groupChats" > Group </NavLink>
+            <NavLink to="/calendar" > Calendar </NavLink>
+            <Button onClick={logout}>Logout </Button>
         </div>
-    )
+    );
 }

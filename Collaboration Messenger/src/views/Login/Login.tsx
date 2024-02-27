@@ -20,7 +20,7 @@ import { User } from '../../context/appContext';
     try {
       const response = await loginUser(form.email, form.password)
       setContext({ user: response.user as User | any , userData: null })
-      navigate('/about')
+      navigate('/home')
     } catch (error: Error | any) {
       setError(true)
     }

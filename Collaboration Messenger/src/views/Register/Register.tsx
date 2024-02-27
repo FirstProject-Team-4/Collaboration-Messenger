@@ -46,7 +46,7 @@ export default function Register() {
       const response = await registerUser(form.email, form.password);
       createUserUsername(form.username, response.user.uid, form.email);
       loginUser(form.email, form.password);
-      nav('/');
+      nav('/home');
     } catch (error: any) {
       console.log(error);
       setError({ username: 'valid', password: 'valid', email: 'Email is already in use' });

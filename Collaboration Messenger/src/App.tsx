@@ -15,7 +15,7 @@ import Home from './views/Home/Home';
 function App() {
   const [context, setContext] = useState({
     user: null as any,
-    userData:  null as any,
+    userData: null as any,
   })
   const [user] = useAuthState(auth);
 
@@ -34,14 +34,14 @@ function App() {
   }, [user, context.user]);
   return (
     <>
-<BrowserRouter>
+      <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
           <Header />
           <div className="main-content">
             <Routes>
-            <Route path="/" element={<About />} />
+              <Route path="/" element={<About />} />
               <Route path="/about" element={<About />} />
-              <Route path="/home" element={<Home/>} />
+              <Route path="/home" element={<Home />} />
               <Route path="/chat/:id" element />
               <Route path="/allUsers" element />
               <Route path="/login" element={<Login />} />
@@ -53,7 +53,7 @@ function App() {
         </AppContext.Provider>
       </BrowserRouter>
     </>
-  
+
   )
 }
 
