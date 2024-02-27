@@ -8,6 +8,8 @@ import About from './views/About/About';
 import { getUserData } from './service/user';
 import { AppContext } from './context/appContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Header } from './components/Header';
+
 
 function App() {
 console.log(React);
@@ -34,7 +36,7 @@ console.log(React);
     <>
 <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
-          {/* <Header /> */}
+          <Header />
           <div className="main-content">
             <Routes>
             <Route path="/" element={<About />} />
