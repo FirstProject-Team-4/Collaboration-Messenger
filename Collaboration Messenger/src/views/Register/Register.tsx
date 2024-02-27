@@ -34,6 +34,7 @@ export default function Register() {
    */
   const submit = async (): Promise<void> => {
     const {username,email,password}=await CheckRegister(form.username, form.email, form.password);
+    console.log(username,email,password);
    
     if (username !== 'valid' || email !== 'valid' || password !== 'valid') {
       setError({ username: username, email: email, password: password });
@@ -41,11 +42,13 @@ export default function Register() {
     }
 
     try {
+      console.log(form)
       const response = await registerUser(form.email, form.password);
       createUserUsername(form.username, response.user.uid, form.email);
       loginUser(form.email, form.password);
       nav('/');
     } catch (error: any) {
+      console.log(error);
       setError({ username: 'valid', password: 'valid', email: 'Email is already in use' });
       return;
     }
@@ -56,7 +59,7 @@ export default function Register() {
    * @returns The color as a string ('green', 'red', or 'black').
    */
 const errorColor = (property:string): string => {
-    if (error[property as keyof typeof error] !=='valid') {
+    if (error[property as keyof typeof error] ==='valid') {
         return 'green';
     }
     if (error[property as keyof typeof error] !== '') {
