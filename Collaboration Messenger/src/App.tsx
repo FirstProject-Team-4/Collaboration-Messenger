@@ -1,16 +1,16 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { auth } from './config/config-firebase';
-import React,{ useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import About from './views/About/About';
 import { getUserData } from './service/user';
 import { AppContext } from './context/appContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Home from './views/Home/Home';
 
 function App() {
-console.log(React);
   const [context, setContext] = useState({
     user: null as any,
     userData:  null as any,
@@ -39,6 +39,7 @@ console.log(React);
             <Routes>
             <Route path="/" element={<About />} />
               <Route path="/about" element={<About />} />
+              <Route path="/home" element={<Home/>} />
               <Route path="/chat/:id" element />
               <Route path="/allUsers" element />
               <Route path="/login" element={<Login />} />
