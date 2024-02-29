@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.column-inf {
+    position: relative;
+    right: 280px;
+    height: 80%;
+    padding-left: 100px;
+    padding-right: 100px;
+    border: 1px solid #fddddd;
+}
+.btn-friends{
+    position: relative;
+    bottom: 20px;
+    right: 230px;
+    top: 30px;
+    padding: 10px;
+    height: 10%;
+    border: 1px solid #fddddd;
+
+}
+.column-chat {
+    height: 88%;
+    position: relative;
+    top: 80px;
+    right: 270px;
+    padding-left: 450px;
+    padding-right: 450px;
+    border: 1px solid #fddddd;
+}
+
+.search-users {
+    padding: 0;
+    height: 10%;
+    position: relative;
+    bottom: 20px;
+    left: 430px;
+}

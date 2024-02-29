@@ -3,10 +3,11 @@
     flex-direction: column;
     justify-content: left;
     position: relative;
-    left: 20px;
+    left: -12px;
     gap: 10px;
-    border: 1px solid #d16464;
-    height: 500px;
+    border: 1px solid #fddddd;
+    height: 620px;
+    padding: 20px;
 }
 
 #logout {
@@ -14,7 +15,6 @@
     justify-content: right;
     height: 50px;
     position: relative;
-    left: 1320px;
-    bottom: 90px;
- 
+    left: 1300px;
+    top: 10px;
 }
