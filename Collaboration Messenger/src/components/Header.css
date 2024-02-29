@@ -6,6 +6,7 @@
     left: -12px;
     gap: 10px;
     border: 1px solid #fddddd;
+    top:50px;
     height: 620px;
     padding: 20px;
 }
@@ -15,6 +16,6 @@
     justify-content: right;
     height: 50px;
     position: relative;
-    left: 1300px;
-    top: 10px;
+    left: 85%;
+   
 }

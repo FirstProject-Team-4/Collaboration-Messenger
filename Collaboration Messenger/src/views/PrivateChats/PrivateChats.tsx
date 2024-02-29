@@ -8,6 +8,7 @@ import UserSearch from '../../components/Search/UserSearch';
 
 
 const PrivateChats = () => {
+    
     return (
         <>
             <div className='search-users'>
@@ -17,9 +18,9 @@ const PrivateChats = () => {
             <div className="information">
                 <Information />
             </div>
-            <div className="chat">
+            
                 <Chat />
-            </div>
+            
         </>
     );
 }

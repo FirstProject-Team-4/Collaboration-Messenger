@@ -62,7 +62,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
                 </div>
                 <div className="messages-container">
                     <Messages messages={messageList} />
-                    <div ref={(el) => { el?.scrollIntoView({ behavior: 'smooth' }); }} />
+                    {/* <div ref={(el) => { el?.scrollIntoView({ behavior: 'smooth' }); }} /> */}
                 </div>
                 <input
                     type="text"

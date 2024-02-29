@@ -1,0 +1,5 @@
+.information{
+    display: fixed;
+    position: relative;
+    z-index: 1;
+}

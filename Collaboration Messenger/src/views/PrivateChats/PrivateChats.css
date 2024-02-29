@@ -6,10 +6,10 @@
 
 .column-inf {
     position: relative;
-    right: 280px;
-    height: 80%;
-    padding-left: 100px;
-    padding-right: 100px;
+    right:0px;
+    left:-360px;
+    height: 100%;
+
     border: 1px solid #fddddd;
 }
 .btn-friends{
@@ -23,16 +23,17 @@
 
 }
 .column-chat {
-    height: 88%;
+    height: 87%;
     position: relative;
+    width: 700px;
     top: 80px;
     right: 270px;
-    padding-left: 450px;
-    padding-right: 450px;
-    border: 1px solid #fddddd;
+    
+    border: 1px solid #e61a1a;
 }
 
 .search-users {
+    position: relative;
     padding: 0;
     height: 10%;
     position: relative;

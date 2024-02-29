@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 500px;
+    height: 100%;
     width: 150px;
     border:2px solid #d16464;
-    left:-70px;
+    left:-105px;
 justify-content: left;
 }
 .groups-form h6{

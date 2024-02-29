@@ -6,6 +6,7 @@ import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
 import { get, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
+import './UserSearch.css';
 
 
 const UserSearch = () => {
@@ -48,8 +49,11 @@ const UserSearch = () => {
         } else {
             console.log('chat does not exist');
             update(ref(db, `/chats/${chatId}`), {user1:{username:user.username, uid:user.uid}, user2:{username:userData.username, uid:userData.uid} });
+  
             
         }
+        setSearch('');
+        setUsers([]);
 
     }
 
