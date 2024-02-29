@@ -1,17 +1,21 @@
-/* #root {
-  max-width: 1280px;
+/* size */
+#root {
+  width: 1580px;
+  height: 670px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-} */
+  overflow: auto;
+  /* Add this if you want to enable scrolling when the content overflows the fixed size */
+}
 
 
 #root {
-display: flex;
-flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.main-content{
+.main-content {
   display: flex;
   position: relative;
 }
