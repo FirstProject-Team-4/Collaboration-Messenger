@@ -11,11 +11,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Header } from './components/Header';
 import Home from './views/Home/Home';
 import Group from './views/Group/Group';
+import PrivateChats from './views/PrivateChats/PrivateChats';
+import Friends from './views/Chat/Friends';
+
 
 function App() {
   const [context, setContext] = useState({
-    user: null as any,
-    userData: null as any,
+    user: {} as any,
+    userData: {} as any,
   })
   const [user] = useAuthState(auth);
 
@@ -45,6 +48,9 @@ function App() {
               <Route path="/group/:id" element={<Group/>} />
               <Route path="/group" element={<Group/>} />
               <Route path="/chat/:id" element />
+              <Route path="/friends" element={<Friends />} />
+              <Route path="/privateChats" element={<PrivateChats />} />
+              <Route path="/privateChats/:id" element={<PrivateChats />} />
               <Route path="/allUsers" element />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
