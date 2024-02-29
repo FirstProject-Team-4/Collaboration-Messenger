@@ -9,9 +9,11 @@
 #root {
 display: flex;
 flex-direction: row;
+justify-content: left;
 }
 
 .main-content{
   display: flex;
+  flex-direction: row;
   position: relative;
 }

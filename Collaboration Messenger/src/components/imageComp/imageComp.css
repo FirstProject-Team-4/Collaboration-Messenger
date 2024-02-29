@@ -1,0 +1,23 @@
+.letter {
+
+    font-style: normal;
+    font-size: 20px;
+    border-radius: 20%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: solid 2px #000000;
+  
+    background-color: aliceblue;
+    color: black;
+}
+
+.img {
+    width: 30px;
+    margin-left: 3px;
+    height: 30px;
+    border-radius: 20%;
+
+    
+   
+    
+}

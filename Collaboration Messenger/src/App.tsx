@@ -9,8 +9,8 @@ import { getUserData } from './service/user';
 import { AppContext } from './context/appContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Header } from './components/Header';
-
 import Home from './views/Home/Home';
+import Group from './views/Group/Group';
 
 function App() {
   const [context, setContext] = useState({
@@ -42,6 +42,8 @@ function App() {
               <Route path="/" element={<About />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/group/:id" element={<Group/>} />
+              <Route path="/group" element={<Group/>} />
               <Route path="/chat/:id" element />
               <Route path="/allUsers" element />
               <Route path="/login" element={<Login />} />

@@ -13,6 +13,7 @@ export type User = {
     activity:string;
     notifications:{},
     createdOn: Date;
+    groups: string[];
   
   }
   

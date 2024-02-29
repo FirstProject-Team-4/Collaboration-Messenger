@@ -1,0 +1,19 @@
+.joined-groups{
+    display:flex;
+    position: relative;
+    top:0px;
+    flex-direction:row;
+    justify-content:left;
+    align-items:center;
+    margin-top: 0px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+.joined-groups h4{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 2px;
+}
