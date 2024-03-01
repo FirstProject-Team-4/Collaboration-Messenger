@@ -10,10 +10,90 @@
     border-bottom: 1px solid #e0e0e0;
 
 }
+.group-invites{
+    display:flex;
+    position: relative;
+    top:0px;
+    flex-direction:row;
+    justify-content:left;
+    align-items:center;
+    margin-top: 0px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+.group-invites h4{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 2px;
+}
+.group-invites button{
+    display: flex;
+    position: relative;
+    background-color: #131111;
+    left: 30px;
+    margin-right: 4px;
+    color: white;
+    font-size: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+ 
+    cursor: pointer;
+}
+
 .joined-groups h4{
     font-size: 15px;
     font-weight: 600;
     margin: 0px;
     padding: 0px;
     margin-left: 2px;
+}
+.invite-members-form{
+    display:flex;
+    width: 500px;
+    height: 500px;
+    background-color: black;
+    border: 1px solid #e0e0e0;
+
+    flex-direction:column;
+   
+    align-items:center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.invite-members-header{
+    display:flex;
+    position: relative;
+    width: 100%;
+    top:0px;
+    gap: 32%;
+    background-color: #090909;
+    border-bottom:1px solid #e0e0e0;
+   
+    flex-direction:row;
+    
+    
+    
+}
+.invite-members-header button{
+    background-color: #131111;
+    color: white;
+  
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.invite-memebers-close-btn{
+    position: fixed;
+
+    top: 545px;
+    align-self:center;
+    
+    background-color: #131111;
+    color: white;
+    font-size: 20px;
+    
+    cursor: pointer;
 }

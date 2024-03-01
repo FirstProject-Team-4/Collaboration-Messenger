@@ -5,13 +5,15 @@ import CreateGroup from './CreateGroup';
 import { NavLink, useParams } from 'react-router-dom';
 import { getGroupsByUser } from '../../service/group';
 import JoinedGroups, { Group } from '../../components/group-components/JoinedGroup';
-import { onValue, ref } from 'firebase/database';
+import { onChildAdded, onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
+import GroupInvites from '../../components/group-components/GroupInvites';
 export default function Group() {
     const { userData } = useAppContext();
     const { id } = useParams();
     const [groups, setGroups] = useState<Group[] | any>([]);
+    const [groupInvitation, setGroupInvitation] = useState<string[] | any>([]);
 
     const [currentId, setCurrentId] = useState<String | undefined>('');
 
@@ -20,14 +22,29 @@ export default function Group() {
             onValue(ref(db, `users/${userData.username}/groups`), (snapshot) => {
                 getGroupsByUser(userData.username).then(setGroups);
             });
+            onChildRemoved(ref(db, `users/${userData.username}/groupInvitation`), (snapshot) => {
+                if (snapshot.exists()) {
+                    setGroupInvitation(Object.keys(snapshot.val()));
+                }
+            });
+            onValue(ref(db, `users/${userData.username}/groupInvitation`), (snapshot) => {
+                if (snapshot.exists()) {
+                    setGroupInvitation(Object.keys(snapshot.val()));
+                }
+            });
 
         }
         setCurrentId(id)
     }, [id, userData]);
-
+    console.log(groupInvitation)
+console.log('fak')
     return (
         <>
             <div className="groups-form">
+                {groupInvitation &&
+                groupInvitation.map((group: any, index: any) => {
+                    return <GroupInvites groupId={group} key={index} />
+                })}
                 <h6>Groups</h6>
                 {groups.map((group: any, index: any) => {
                     return <JoinedGroups singleGroup={group} key={index} />
@@ -39,7 +56,7 @@ export default function Group() {
             </div>
             {id === 'createGroup' && <CreateGroup />}
             {id === 'join' && <div>Join</div>}
-            {id !== 'createGroup' && id !== 'join' && id !== undefined && <SingleGroup/>}
+            {id !== 'createGroup' && id !== 'join' && id !== undefined && <SingleGroup />}
         </>
     )
 }

@@ -6,9 +6,14 @@ export const createGroup=(currentGroup:{title:string,description:string,type:str
     const newGroupId=  push(ref(db, `groups/`), currentGroup);
     update(ref(db, `users/${currentGroup.owner}/groups/${newGroupId.key}`), {title:currentGroup.title, image:currentGroup.image});
 }
-export const getGroupByID=(id:string)=>{
-    const snapshot= ref(db, `groups/${id}`);
-    return snapshot;
+export const getGroupByID=async(id:string)=>{
+    const snapshot=await get(ref(db, `groups/${id}`));
+    const current= Object.keys(snapshot.val())
+        return{
+            id:id,
+            ...snapshot.val()
+        }
+   
 }
 export const getGroupsByUser= async(username:string)=>{
     const snapshot= await get(ref(db, `users/${username}/groups`));
@@ -42,4 +47,13 @@ return Object.keys(publicGroupsQuery.val()).map((key)=>{
     }
 });
 
+}
+export const inviteToGroup= async(groupId:string,username:string)=>{
+    
+    const snapshot=await get(ref(db, `users/${username}/groups/${groupId}`));
+    const snapshot2=await get(ref(db, `users/${username}/groupInvitation/${groupId}`));
+    if(snapshot.exists() || snapshot2.exists()){
+        return;
+    }
+    update(ref(db, `users/${username}/groupInvitation/`), {[groupId]:true});
 }
