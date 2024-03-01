@@ -18,7 +18,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
     const [currentMessage, setCurrentMessage] = useState(''); 
     const [messageList, setMessageList] = useState<any[]>([]); 
     const [friend, setFriend] = useState<any>({}); 
-
+    console.log('Chat');
     useEffect(() => {
         const messageRef = ref(db, `/chats/${id}/messages`);
         const unsubscribe = onValue(messageRef, (snapshot) => {
@@ -28,6 +28,8 @@ const Chat: React.FC<ChatProps> = ({}) => {
                     ...snapshot.val()[key]
                 }));
                 setMessageList(messages);
+            }else{
+                setMessageList([]);// if there are no messages
             }
         });
 
@@ -53,6 +55,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
         }
         setCurrentMessage('');
     };
+    console.log('Chat');
 
     return (
         id && (
@@ -78,7 +81,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
                 />
                 <Button onClick={sendCurrentMessage}>Send message</Button>
             </div>
-        ) || <div>Choose a chat</div>
+        ) 
     );
 };
 export default Chat;

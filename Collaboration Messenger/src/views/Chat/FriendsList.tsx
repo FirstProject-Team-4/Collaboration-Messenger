@@ -8,6 +8,7 @@ export default function FriendsList({ friends }: { friends: any }) {
     const [friendList, setFriendList] = useState<any>([]);
     const { userData } = useAppContext();
     // const navigate = useNavigate();
+    console.log('FriendsList');
 
     useEffect(() => {
         if (friends) {
@@ -20,6 +21,7 @@ export default function FriendsList({ friends }: { friends: any }) {
     //     navigate(`/chat/${commbineId()}`);
     // };
    
+    console.log('FriendsList');
 
     return (
         <>

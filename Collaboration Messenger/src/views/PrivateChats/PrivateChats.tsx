@@ -1,21 +1,28 @@
 import './PrivateChats.css';
 import Chat from "../../components/Chat";
 import Information from "../Information/Information";
-import { NavLink } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import UserSearch from '../../components/Search/UserSearch';
+import { useEffect } from 'react';
 
 
 
 
 const PrivateChats = () => {
+    const {id} = useParams<{id: string}>();
+    console.log('PrivateChats');
     
+    useEffect(() => {
+    }, [id])
+    console.log('PrivateChats');
+
     return (
         <>
             <div className='search-users'>
-                <NavLink to='/friends' className='btn-friends'>Friends</NavLink>
+             
                 <UserSearch />
             </div>
-            <div className="information">
+            <div className="inf">
                 <Information />
             </div>
             

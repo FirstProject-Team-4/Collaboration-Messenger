@@ -13,8 +13,9 @@ const UserSearch = () => {
     const { userData } = useAppContext();
     const [users, setUsers] = useState([] as any);
     const [search, setSearch] = useState('');
-    const navigate = useNavigate(); // Get the navigate function
-
+    const navigate = useNavigate(); 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+console.log('UserSearch');
     useEffect(() => {
         if (search !== '') {
             searchUser();
@@ -56,24 +57,32 @@ const UserSearch = () => {
         setUsers([]);
 
     }
-
+    console.log('UserSearch');
     return (
         <div>
-            <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => handleSearch(e.target.value)} />
-            <Button onClick={searchUser} id='btn-search'>Search</Button>
-            <div className="inf">
-                {users.map((user: any) => {
-                    return (
-                        <div className="border-users" key={user.uid}>
-                            <div className="information">
-                                <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                <Button onClick={() => handleChat(user)}>Chat</Button>
-                            </div>
+            <Button onClick={() => setIsModalOpen(true)} id='btn-search'>Open Search</Button>
+
+            {isModalOpen && (
+                <div className="modal-backdrop">
+                    <div className="modal">
+                        <button onClick={() => {console.log('Close button clicked'); setIsModalOpen(false);}}>Close</button>
+                        <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => handleSearch(e.target.value)} />
+                        <Button onClick={searchUser}>Search</Button>
+                        <div className="inf">
+                            {users.map((user: any) => {
+                                return (
+                                    <div className="border-users" key={user.uid}>
+                                        <div className="information">
+                                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
+                                            <Button onClick={() => handleChat(user)}>Chat</Button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
-                    );
-                })}
-            </div>
-        </div>
-    )
+                        </div>
+                </div>
+            )}
+        </div>)
 }
 export default UserSearch;
