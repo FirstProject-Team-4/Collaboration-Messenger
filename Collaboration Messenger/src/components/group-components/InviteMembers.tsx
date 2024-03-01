@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
-import InviteSearch from './InviteSearch';
+import InviteSearch from '../Search/InviteSearch';
 
 export const InviteMembers = () => {
     const [openFriend, setOpenFriend] = useState(true);
