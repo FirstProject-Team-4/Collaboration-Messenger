@@ -19,6 +19,7 @@ interface FriendsRequestProps {
 
 export default function FriendsRequest({ username, friendUser }: FriendsRequestProps) {
     const [requests, setRequests] = useState<Request[]>([]);
+console.log('FriendsRequest');
 
     useEffect(() => {
         friendRequests(username).then(setRequests);
@@ -35,6 +36,7 @@ export default function FriendsRequest({ username, friendUser }: FriendsRequestP
         // Remove this request from state
         setRequests(requests.filter(request => request.id !== requestId));
     };
+console.log('FriendsRequest');
 
     return (
         <div>

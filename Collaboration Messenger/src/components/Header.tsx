@@ -28,6 +28,7 @@ export const Header = () => {
         <div className="header-view">
             <NavLink to="/privateChats" className={'header-nav'}> Private </NavLink>
             <NavLink to="/group" className={'header-nav'} >Groups</NavLink>
+            <NavLink to='/friends' className={'header-nav'}>Friends</NavLink>
             <NavLink to="/calendar" className={'header-nav'} > Calendar </NavLink>
         </div>
             <Button id='logout' onClick={logout} >Logout </Button>

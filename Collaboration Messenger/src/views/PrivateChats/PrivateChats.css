@@ -6,8 +6,7 @@
 
 .column-inf {
     position: relative;
-    right:0px;
-    left:-360px;
+    right:230px;
     height: 100%;
 
     border: 1px solid #fddddd;
@@ -25,10 +24,9 @@
 .column-chat {
     height: 87%;
     position: relative;
-    width: 700px;
+    width: 900px;
     top: 80px;
-    right: 270px;
-    
+    right: 180px;
     border: 1px solid #e61a1a;
 }
 

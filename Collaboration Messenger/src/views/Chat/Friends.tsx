@@ -8,6 +8,7 @@ import FriendsList from "./FriendsList";
 export default function Friends() {
     const { userData } = useAppContext();
     const [requests, setRequests] = useState<any>({});
+console.log('Friends');
 
     useEffect(() => {
         if (userData?.friendsRequest) {
@@ -25,6 +26,7 @@ export default function Friends() {
             unsubscribe();
         };
     }, [userData]);
+    console.log('Friends');
 
     return (
         <>
