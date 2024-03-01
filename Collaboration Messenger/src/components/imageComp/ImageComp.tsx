@@ -12,7 +12,12 @@ export default function ImageComp({unique,type}:{unique:string,type:string}) {
              const response=await get(ref(db, `groups/${unique}`))
                 setData(response.val());
             break;
+            case'user':
+                const response2=await get(ref(db, `users/${unique}`))
+                setData(response2.val());
+                break;
            }
+
         })()
     }, [])
 
