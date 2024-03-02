@@ -5,6 +5,8 @@ import { useAppContext } from "../context/appContext";
 import { logoutUser } from "../service/auth";
 import Button from "./Button";
 import Group from '../views/Group/Group';
+import { ref, update } from 'firebase/database';
+import { db } from '../config/config-firebase';
 
 /**
  * Renders the header component.
@@ -13,10 +15,15 @@ import Group from '../views/Group/Group';
  */
 export const Header = () => {
     const navigate = useNavigate();
-    const { user, setContext } = useAppContext();
+    const { user,userData, setContext } = useAppContext();
     // const location = useLocation();
     const logout = async () => {
         await logoutUser();
+        update(ref(db, `users/${userData.username}/status`), { status:'offline'});
+        const groups=userData.groups?Object.keys(userData.groups):[]
+        groups.forEach(id=>{
+            update(ref(db, `groups/${id}/members/${userData.username}/status`), { status:'offline'});
+        })
         setContext({ user: null, userData: null });
         navigate('/about');
     }

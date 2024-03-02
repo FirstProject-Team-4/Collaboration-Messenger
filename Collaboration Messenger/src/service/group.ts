@@ -1,5 +1,6 @@
 import { push, ref, update, orderByChild, equalTo, query,get } from "firebase/database"
 import { db } from "../config/config-firebase"
+import { MembersProps } from "../components/group-components/GroupMembers";
 
 
 export const createGroup=(currentGroup:{title:string,description:string,type:string,image:string,members:never[],createdOn:number,owner:string|undefined})=>{
@@ -56,4 +57,17 @@ export const inviteToGroup= async(groupId:string,username:string)=>{
         return;
     }
     update(ref(db, `users/${username}/groupInvitation/`), {[groupId]:true});
+}
+export const getGroupMembers=async(groupId:string):Promise<MembersProps[]>=>{
+    const snapshot=await get(ref(db, `groups/${groupId}/members`));
+    if(!snapshot.exists()){
+        return [];
+    }
+    return Object.keys(snapshot.val()).map((key)=>{
+        return{
+            username:key,
+            ...snapshot.val()[key]
+        }
+    })
+    
 }

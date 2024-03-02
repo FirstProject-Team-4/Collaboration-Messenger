@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { auth } from './config/config-firebase';
+import { auth, db } from './config/config-firebase';
 import { useState, useEffect } from 'react';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
@@ -13,6 +13,8 @@ import Home from './views/Home/Home';
 import Group from './views/Group/Group';
 import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Chat/Friends';
+import { onValue, ref, update } from 'firebase/database';
+import { toggleStatus } from './service/status';
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       getUserData(user.uid)
         .then(snapshot => {
           if (snapshot.exists()) {
@@ -31,10 +34,16 @@ function App() {
           }
         })
     }
+  }, [user]);
 
+  useEffect(() => {
+    if (context.userData) {
+      toggleStatus(context.userData)
+  
+    }
+  }, [context.userData]);
 
-
-  }, [user, context.user]);
+ 
   return (
     <>
       <BrowserRouter>

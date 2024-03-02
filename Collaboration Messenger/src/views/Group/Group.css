@@ -56,27 +56,43 @@ height: 100%;
     border: 1px solid #d16464;
     border-radius: 20px;
 }
-.single-group-container{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    left:-70px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    height: 500px;
-    width: 500px;
-    border:2px solid #d16464;
-}
-.members-container{
+.chat-container{
     display: flex;
     flex-direction: row;
     position: relative;
-    left:-70px;
+    left:-105px;
     justify-content: center;
     justify-items: center;
     align-items: center;
-    height: 500px;
+    height: 100%;
+    width: 770px;
+    border:2px solid #d16464;
+}
+.single-group-container{
+    display: flex;
+    flex-direction: row;
+
+
+}
+.members-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+   left: -105px;
+
+    height: 100%;
     width: 250px;
     border:2px solid #d16464;
+}
+.members-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    gap:20px;
+    left: 35px;
+    
+    
+    
 }

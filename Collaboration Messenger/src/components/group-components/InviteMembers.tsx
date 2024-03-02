@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import InviteSearch from '../Search/InviteSearch';
 
-export const InviteMembers = () => {
+export const InviteMembers = ({closeFn}:any) => {
     const [openFriend, setOpenFriend] = useState(true);
     console.log('invitememebers')
     return (
-        <Popup
-            trigger={<button>Invite Members</button>}
-            modal
-            overlayStyle={{ background: 'rgba(0,0,0,0.6)' }} // Add a shadow to the rest of the page
-            contentStyle={{ width: '300px', borderRadius: '20px', padding: '20px' }} // Style the modal
-        >
-            {(close) => (
+        <div className='invite-members-container'>
                 <div className='invite-members-form'>
                     <div className='invite-members-header'>
                         <button onClick={() => setOpenFriend(true)}>Invite Friends</button>
@@ -21,13 +15,13 @@ export const InviteMembers = () => {
                  {!openFriend&&< InviteSearch type={'invite'}/>}
                     <button className='invite-memebers-close-btn' onClick={
                         () => {
-                            close();
+                            closeFn(false);
                             setOpenFriend(true);
                         }
                     }>Close</button>
                 </div>
-            )}
-        </Popup>
+            
+        </div>
     );
 };
 

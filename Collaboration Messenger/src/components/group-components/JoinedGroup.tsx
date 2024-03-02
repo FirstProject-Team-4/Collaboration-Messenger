@@ -5,7 +5,9 @@ import './group-components.css'
 export interface Group {
     id:string,
     title:string,
-    image:string
+    image:string,
+    members:{},
+    owner:string
 }
 
 export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {
