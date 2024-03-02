@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-// import { chatId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-// import { commbineId } from "../../service/friends";
 
 export default function FriendsList({ friends }: { friends: any }) {
     const [friendList, setFriendList] = useState<any>([]);
     const { userData } = useAppContext();
-    // const navigate = useNavigate();
+  
     console.log('FriendsList');
 
     useEffect(() => {
@@ -17,9 +15,6 @@ export default function FriendsList({ friends }: { friends: any }) {
         }
     }, [userData]);
 
-    // const navigateToChat = () => {
-    //     navigate(`/chat/${commbineId()}`);
-    // };
    
     console.log('FriendsList');
 

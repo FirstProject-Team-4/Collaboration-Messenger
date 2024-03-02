@@ -4,7 +4,7 @@ import Button from "../Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, getDatabase, push, ref, set, update } from "firebase/database";
+import { get, getDatabase, push, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 

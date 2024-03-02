@@ -32,7 +32,7 @@ console.log('Friends');
         <>
             {Object.keys(requests).length > 0 ? (
                 <div className='friend-request-id'>
-                    <FriendsRequest username={userData?.username} requests={requests} />
+                    <FriendsRequest  />
                 </div>
             ) : (
                 <div className="no-friend">No requests</div>

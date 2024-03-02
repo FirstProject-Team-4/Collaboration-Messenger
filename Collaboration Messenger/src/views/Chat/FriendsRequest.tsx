@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 import { friendRequests, acceptFriendRequest, rejectFriendRequest } from '../../service/friends';
+import { useAppContext } from '../../context/appContext';
+import { onValue, ref } from 'firebase/database';
+import { db } from '../../config/config-firebase';
+import { NavLink } from 'react-router-dom';
+import ImageComp from '../../components/imageComp/ImageComp';
 
 interface Request {
     id: string;
-    fromUser: string;
+   uid: string;
+   username: string;
 }
 
 interface User {
@@ -13,28 +19,35 @@ interface User {
 
 interface FriendsRequestProps {
     username: string | any;
-    requests: any;
     friendUser: User | any;
+
 }
 
-export default function FriendsRequest({ username, friendUser }: FriendsRequestProps) {
+export default function FriendsRequest() {
     const [requests, setRequests] = useState<Request[]>([]);
-console.log('FriendsRequest');
+const {userData} = useAppContext();
+
 
     useEffect(() => {
-        friendRequests(username).then(setRequests);
-    }, [username]);
+       onValue(ref(db, `users/${userData?.username}/friendsRequest`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const requests = Object.keys(data).map((key) => ({
+                    id: key,
+                   uid: data[key].uid,
+                   username: data[key].username
+                }));
+                setRequests(requests);
+            }
+        });
+    }, [userData]);
 
-    const handleAccept = (requestId: any) => {
-        acceptFriendRequest(requestId, friendUser);
-        // Remove this request from state
-        setRequests(requests.filter(request => request.id !== requestId));
+    const handleAccept = (friendUser:any) => {
+        acceptFriendRequest(userData, friendUser);
     };
 
-    const handleReject = (requestId: any) => {
-        rejectFriendRequest(requestId, friendUser);
-        // Remove this request from state
-        setRequests(requests.filter(request => request.id !== requestId));
+    const handleReject = (friendUser: any) => {
+        rejectFriendRequest(userData, friendUser);
     };
 console.log('FriendsRequest');
 
@@ -42,9 +55,10 @@ console.log('FriendsRequest');
         <div>
             {requests.map(request => (
                 <div key={request.id}>
-                    <p>{request.fromUser}</p>
-                    <button onClick={() => handleAccept(request.id)}>Accept</button>
-                    <button onClick={() => handleReject(request.id)}>Reject</button>
+                    <ImageComp unique={request.username} type={'user'} />
+                    <NavLink to={`/profile/${request.username}`} >{request.username}</NavLink>
+                    <button onClick={() => handleAccept(request)}>Accept</button>
+                    <button onClick={() => handleReject(request)}>Reject</button>
                 </div>
             ))}
         </div>

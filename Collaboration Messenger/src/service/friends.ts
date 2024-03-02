@@ -1,8 +1,6 @@
-import { get, getDatabase, push, ref, remove, update } from "firebase/database"
+import { get, push, ref, remove, update } from "firebase/database"
 import { db } from "../config/config-firebase"
 
-
-//тук се правят заявките за приятелство и се добавят в базата данни
 
 export const commbineId = (currentUser: string, user2: string) => {
     const chatId=[currentUser, user2].sort().join('');
@@ -25,7 +23,6 @@ export const acceptFriendRequest = async (currentUser: { username: string, uid: 
 export const rejectFriendRequest = async (currentUser: { username: string, uid: string }, friendUser: { username: string, uid: string }) => {
     remove(ref(db, `/users/${currentUser.username}/friendRequests/${friendUser.username}`));
 }
-
 
 export const getMessages = async (chatID: string) => {
     const snapshot = await get(ref(db, `chat/${chatID}/messages`));
