@@ -4,7 +4,7 @@ import Button from "../Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, ref, update } from "firebase/database";
+import { get, getDatabase, push, ref, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 
@@ -16,6 +16,7 @@ const UserSearch = () => {
     const navigate = useNavigate(); 
     const [isModalOpen, setIsModalOpen] = useState(false);
 console.log('UserSearch');
+
     useEffect(() => {
         if (search !== '') {
             searchUser();
@@ -34,7 +35,7 @@ console.log('UserSearch');
     const searchUser = async () => {
         const snapshot = await getAllUsers();
         const filtered = snapshot.filter((user: any) => {
-            return (user.username.includes(search))
+            return user.username && user.username.includes(search);
         })
         setUsers(filtered);
     }
@@ -58,6 +59,16 @@ console.log('UserSearch');
 
     }
     console.log('UserSearch');
+  
+   const handleAddFriend = async (user: { username: string, uid: string }) => {
+       const db= getDatabase();
+       const friendRequestRef=ref(db, `/users/${user.username}/friendsRequest/`);
+       const newRequest = {
+        username: userData.username,
+        uid: userData.uid,
+      };
+      await push(friendRequestRef, newRequest);
+}
     return (
         <div>
             <Button onClick={() => setIsModalOpen(true)} id='btn-search'>Open Search</Button>
@@ -75,6 +86,7 @@ console.log('UserSearch');
                                         <div className="information">
                                             <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
                                             <Button onClick={() => handleChat(user)}>Chat</Button>
+                                          <Button onClick={() => handleAddFriend(user)}>Add Friend</Button>
                                         </div>
                                     </div>
                                 );
