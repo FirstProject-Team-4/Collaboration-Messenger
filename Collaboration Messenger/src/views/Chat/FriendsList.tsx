@@ -1,30 +1,57 @@
+import { onChildRemoved, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { db } from "../../config/config-firebase";
 import { useAppContext } from "../../context/appContext";
+import ImageComp from "../../components/imageComp/ImageComp";
 
-export default function FriendsList({ friends }: { friends: any }) {
+
+export default function FriendsList() {
     const [friendList, setFriendList] = useState<any>([]);
     const { userData } = useAppContext();
   
     console.log('FriendsList');
 
     useEffect(() => {
-        if (friends) {
-            const currentFriendList = Object.keys(friends).map((key) => friends[key]);
-            setFriendList(currentFriendList);
-        }
+        onValue(ref(db, `users/${userData?.username}/friends`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const friends = Object.keys(data).map((key) => ({
+                    id: key,
+                    uid: data[key].uid,
+                    username: data[key].username
+                }));
+                setFriendList(friends);
+            } else {
+                setFriendList([]);
+            }
+        });
+        onChildRemoved(ref(db, `users/${userData?.username}/friends`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const friends = Object.keys(data).map((key) => ({
+                    id: key,
+                    uid: data[key].uid,
+                    username: data[key].username
+                }
+                ));
+                setFriendList(friends);
+            } else {
+                setFriendList([]);
+            }
+        });
     }, [userData]);
 
-   
-    console.log('FriendsList');
 
     return (
         <>
             <h4>Friends</h4>
-            {friendList && friendList.map((friend: any, index: number) => (
+            { friendList.map((friend: any, index: number) => (
                 <div key={index} className="friend-info">
+                    <ImageComp unique={friend.username} type={'user'} />
                     <NavLink to={`/profile/${friend.username}`}>{friend.username}</NavLink>
-                    {/* <button className='btn' onClick={navigateToChat}>Chat</button> */}
+                    <button className='btn' onClick={() => {}}>Chat</button>
+                  
                 </div>
             ))}
         </>

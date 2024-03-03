@@ -15,13 +15,14 @@ export const friendRequests = async (username: string | undefined) => {
     return [];
 }
 
-export const acceptFriendRequest = async (currentUser: { username: string, uid: string, }, friendUser: { username: string, uid: string }) => {
-    update(ref(db, `/users/${currentUser.username}/friends/${friendUser.username}`), friendUser);
-    remove(ref(db, `/users/${currentUser.username}/friendRequests/${friendUser.username}`));
+export const acceptFriendRequest = async (currentUser: { username: string, uid: string, }, friendUser: { username: string, id:string, uid: string }) => {
+    update(ref(db, `/users/${currentUser.username}/friends/${friendUser.username}`),{uid: friendUser.uid, username: friendUser.username});
+    // update(ref(db, `/users/${currentUser.username}/friendsRequest`), {[friendUser.id]: null});
+    remove(ref(db,`users/${currentUser.username}/friendsRequest/${friendUser.id}`));
 }
 
-export const rejectFriendRequest = async (currentUser: { username: string, uid: string }, friendUser: { username: string, uid: string }) => {
-    remove(ref(db, `/users/${currentUser.username}/friendRequests/${friendUser.username}`));
+export const rejectFriendRequest = async (currentUser: { username: string, uid: string }, friendUser: { username: string, id:string, uid: string }) => {
+    remove(ref(db, `/users/${currentUser.username}/friendsRequest/${friendUser.id}`));
 }
 
 export const getMessages = async (chatID: string) => {
@@ -47,4 +48,5 @@ export const chatOwners = async (chatID: string) => {
 export const sendMessage = (chatID: string, message: { author: string, createdOn: number, content: string }) => {
     push(ref(db, `/chats/${chatID}/messages`), message);
 }
+
 
