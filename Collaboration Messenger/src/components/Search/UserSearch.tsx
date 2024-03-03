@@ -9,9 +9,9 @@ import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 
 interface UserSearchProps {
-    type: string;
+    type?: string;
   }
-const UserSearch = ({ type }: UserSearchProps) => {
+const UserSearch = ({ type ='Open Search'}: UserSearchProps) => {
     const { userData } = useAppContext();
     const [users, setUsers] = useState([] as any);
     const [search, setSearch] = useState('');
@@ -77,7 +77,7 @@ const UserSearch = ({ type }: UserSearchProps) => {
     return (
 
         <div>
-         { type === "addFriend" && <Button onClick={() => setIsModalOpen(true)} id='btn-search' >Open Search</Button>}
+         { <Button onClick={() => setIsModalOpen(true)} id='btn-search' >{type}</Button> }
 
             {isModalOpen && (
                 <div className="modal-backdrop">
@@ -87,7 +87,6 @@ const UserSearch = ({ type }: UserSearchProps) => {
                         <Button onClick={searchUser}>Search</Button>
                         <div className="inf">
                             {users.map((user: any) => {
-console.log(user);
 
                                 const isAlreadyFriend =userData?.friends ? Object.keys(userData?.friends)?.includes(user.username):false;
                                 const isAlreadyRequested =user?.friendsRequest ? Object.keys(user.friendsRequest)?.includes(userData?.username):false;
