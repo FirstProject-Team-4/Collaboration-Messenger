@@ -13,7 +13,6 @@ import Home from './views/Home/Home';
 import Group from './views/Group/Group';
 import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Chat/Friends';
-import { onValue, ref, update } from 'firebase/database';
 import { toggleStatus } from './service/status';
 
 

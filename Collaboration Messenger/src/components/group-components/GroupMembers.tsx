@@ -22,16 +22,16 @@ console.log(offlineMembers);
     return (
         <div>
             <h5>{`Online:${onlineMembers.length}`}</h5>
-            {onlineMembers.map((member) => {
-                    return <div className="group-members">
+            {onlineMembers.map((member,index) => {
+                    return <div key={index} className="group-members">
                     <ImageComp unique={member.username} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>
                     </div>
             })}
             <h5>{`Offline:${offlineMembers.length}`}</h5>
-            {offlineMembers.map((member) => {
-                    return <div className="group-members">
+            {offlineMembers.map((member,index) => {
+                    return <div key={index} className="group-members">
                     <ImageComp unique={member.username} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>

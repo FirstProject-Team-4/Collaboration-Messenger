@@ -10,7 +10,7 @@ export const CheckRegister = async(username:string ,email: string, password: str
         const checkUser = await getUserByUsername(username)
         
         if (username.length < 3 || username.length > 16) {
-            error.username = 'Username must be between 4 and 32 symbols.';
+            error.username = 'Username must be between 4 and 16 symbols.';
         }
        else if (checkUser.exists()) {
           error.username = 'Username is already taken'

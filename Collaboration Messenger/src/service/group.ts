@@ -1,4 +1,4 @@
-import { push, ref, update, orderByChild, equalTo, query,get } from "firebase/database"
+import { push, ref, update, orderByChild, equalTo, query,get, remove } from "firebase/database"
 import { db } from "../config/config-firebase"
 import { MembersProps } from "../components/group-components/GroupMembers";
 
@@ -9,6 +9,9 @@ export const createGroup=(currentGroup:{title:string,description:string,type:str
 }
 export const getGroupByID=async(id:string)=>{
     const snapshot=await get(ref(db, `groups/${id}`));
+    if(!snapshot.exists()){
+        return;
+    }
     const current= Object.keys(snapshot.val())
         return{
             id:id,
@@ -38,6 +41,7 @@ return privateGroupsQuery;
 export const getPublicGroups=async()=>{
     const groupsRef = ref(db, 'groups/');
 const publicGroupsQuery = await get(query(groupsRef, orderByChild('type'), equalTo('public')));
+console.log(1);
 if(!publicGroupsQuery.exists()){
     return [];
 }
@@ -70,4 +74,8 @@ export const getGroupMembers=async(groupId:string):Promise<MembersProps[]>=>{
         }
     })
     
+}
+export const removeGroupMember=async(groupId:string,username:string)=>{
+    remove(ref(db, `groups/${groupId}/members/${username}`));
+    remove(ref(db, `users/${username}/groups/${groupId}`));
 }

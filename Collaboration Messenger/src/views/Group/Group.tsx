@@ -9,6 +9,7 @@ import { onChildAdded, onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
 import GroupInvites from '../../components/group-components/GroupInvites';
+import PublicGroups from './PublicGroups';
 export default function Group() {
     const { userData } = useAppContext();
     const { id } = useParams();
@@ -55,7 +56,7 @@ console.log('fak')
                 </div>
             </div>
             {id === 'createGroup' && <CreateGroup />}
-            {id === 'join' && <div>Join</div>}
+            {id === 'join' && <PublicGroups/>}
             {id !== 'createGroup' && id !== 'join' && id !== undefined && <SingleGroup />}
         </>
     )
