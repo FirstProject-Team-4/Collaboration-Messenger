@@ -6,7 +6,7 @@
 
 .column-inf {
     position: relative;
-    right:230px;
+    right:100px;
     height: 100%;
 
     border: 1px solid #fddddd;
@@ -26,7 +26,7 @@
     position: relative;
     width: 900px;
     top: 80px;
-    right: 180px;
+    right: 90px;
     border: 1px solid #e61a1a;
 }
 
