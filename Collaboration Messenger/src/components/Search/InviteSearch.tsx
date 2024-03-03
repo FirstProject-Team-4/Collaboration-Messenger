@@ -4,7 +4,7 @@ import Button from "../Button";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, ref, update } from "firebase/database";
+import { get, ref, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 import { inviteToGroup } from "../../service/group";
@@ -24,12 +24,18 @@ console.log('UserSearch')
         if (search === '') {
             return;
         }
-        const snapshot = await getAllUsers();
-        const filtered = snapshot.filter((user: any) => {
-            return (user.username.includes(search))
-        })
+        const allUsers = await getAllUsers();
+        const filtered=allUsers.filter((user: any) => {
+            console.log(user);
+            return user.username.toLowerCase().includes(search.toLowerCase());
+        });
         setUsers(filtered);
-    }
+           
+        }
+       
+       
+        
+    
 
     const handleChat = async (user: { uid: string, username: string }) => {
         const chatId = commbineId(userData.uid, user.uid);
