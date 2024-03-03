@@ -18,12 +18,12 @@ export const Header = () => {
     const { user,userData, setContext } = useAppContext();
     // const location = useLocation();
     const logout = async () => {
-        await logoutUser();
         update(ref(db, `users/${userData.username}/status`), { status:'offline'});
         const groups=userData.groups?Object.keys(userData.groups):[]
         groups.forEach(id=>{
             update(ref(db, `groups/${id}/members/${userData.username}`), { status:'offline'});
         })
+        await logoutUser();
         setContext({ user: null, userData: null });
         navigate('/about');
     }
