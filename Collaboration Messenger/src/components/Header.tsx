@@ -30,7 +30,7 @@ export const Header = () => {
 
 
     return (
-        user &&
+        userData &&
              <>
         <div className="header-view">
             <NavLink to="/privateChats" className={'header-nav'}> Private </NavLink>
