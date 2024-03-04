@@ -19,5 +19,6 @@ justify-content: left;
   display: flex;
   flex-direction: row;
   position: relative;
+  width: 100%;
   /* top: 50px; */
 }

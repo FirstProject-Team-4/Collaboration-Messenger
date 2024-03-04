@@ -48,6 +48,7 @@ if(!publicGroupsQuery.exists()){
 return Object.keys(publicGroupsQuery.val()).map((key)=>{
     return{
         id:key,
+        
         ...publicGroupsQuery.val()[key]
     }
 });
@@ -78,4 +79,9 @@ export const getGroupMembers=async(groupId:string):Promise<MembersProps[]>=>{
 export const removeGroupMember=async(groupId:string,username:string)=>{
     remove(ref(db, `groups/${groupId}/members/${username}`));
     remove(ref(db, `users/${username}/groups/${groupId}`));
+}
+export const joinGroup=async(group:{id:string,image:string,title:string},username:string)=>{
+    update(ref(db, `groups/${group.id}/members/${username}`), {status:'online'});
+    update(ref(db, `users/${username}/groups/${group.id}`), {title:group.title, image:group.image?group.image:''});
+    remove(ref(db, `users/${username}/groupInvitation/${group.id}`));
 }

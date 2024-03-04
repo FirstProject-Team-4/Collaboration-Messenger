@@ -112,7 +112,7 @@
     flex-direction: flex-start;
     position: relative;
     left: -105px;
-    width: 700px;
+    width: 100%;
     height: 662px;
     gap: 27.5px;
     border: 1px solid #d16464;
@@ -135,7 +135,7 @@
 }
 
 .public-single-group-container p {
-    max-width: 300px;
+    flex-wrap: wrap;
     word-wrap: break-word; 
 
 }
@@ -146,4 +146,16 @@
     padding: 20px;
     width: 30px;
     border: 1px solid #d16464;
+}
+.public-groups-view{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.public-groups-view input{
+    width: 50%;
+    align-self: center;
+    height: 30px;
+    border: 1px solid #d16464;
+    margin: 10px;
 }
