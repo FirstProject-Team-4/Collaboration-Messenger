@@ -1,0 +1,16 @@
+.header-frineds {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.view-frineds {
+    width: 1000px;
+    border: solid 1px #e61a1a;
+
+}
+
+.view {
+    border: solid 1px #1ae6e6;
+}

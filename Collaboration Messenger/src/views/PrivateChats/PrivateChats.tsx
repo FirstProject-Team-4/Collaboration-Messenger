@@ -20,7 +20,7 @@ const PrivateChats = () => {
         <>
             <div className='search-users'>
              
-                <UserSearch />
+                <UserSearch  />
             </div>
             <div className="inf">
                 <Information />
