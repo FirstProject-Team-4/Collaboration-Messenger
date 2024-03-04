@@ -8,9 +8,13 @@
 .view-frineds {
     width: 1000px;
     border: solid 1px #e61a1a;
+ 
 
 }
 
 .view {
     border: solid 1px #1ae6e6;
-}
+    width: 100%;
+    height: 80%;
+} 
+

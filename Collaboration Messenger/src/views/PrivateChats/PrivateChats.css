@@ -6,16 +6,16 @@
 
 .column-inf {
     position: relative;
-    right:100px;
+    right:230px;
+    top: 10px;
     height: 100%;
-
     border: 1px solid #fddddd;
 }
 .btn-friends{
     position: relative;
     bottom: 20px;
     right: 230px;
-    top: 30px;
+    top: 10px;
     padding: 10px;
     height: 10%;
     border: 1px solid #fddddd;
@@ -24,9 +24,10 @@
 .column-chat {
     height: 87%;
     position: relative;
+    right: 200px;
+    top: 30px;
     width: 900px;
-    top: 80px;
-    right: 90px;
+    height: 610px;
     border: 1px solid #e61a1a;
 }
 
@@ -36,5 +37,5 @@
     height: 10%;
     position: relative;
     bottom: 20px;
-    left: 430px;
+    left: 1050px;
 }
