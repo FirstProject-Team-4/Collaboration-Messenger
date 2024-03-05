@@ -11,23 +11,33 @@ import { inviteToGroup } from "../../service/group";
 import ImageComp from "../imageComp/ImageComp";
 
 
-const InviteSearch = ({ type = 'add' }: { type: string }) => {
+const InviteSearch = () => {
     const { id } = useParams();
     const { userData } = useAppContext();
     const [users, setUsers] = useState([] as any);
     const [search, setSearch] = useState('');
     const navigate = useNavigate(); // Get the navigate function
+    const [invited, setInvited] = useState<{[key:string]:boolean}>({});
+    const [groupMembers, setGroupMembers] = useState<any>([]);
+    useEffect(() => {
+        if (id) {
+            get(ref(db, `groups/${id}/members`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setGroupMembers(Object.keys(snapshot.val()));
+                }
+            });
+        }
+    }, [id])
 
 
-console.log('UserSearch')
+console.log(groupMembers);
     const searchUser = async () => {
         if (search === '') {
             return;
         }
         const allUsers = await getAllUsers();
         const filtered=allUsers.filter((user: any) => {
-            console.log(user);
-            return user.username.toLowerCase().includes(search.toLowerCase());
+            return user.username.toLowerCase().includes(search.toLowerCase())&&user.username!==userData.username&&!groupMembers.includes(user.username);
         });
         setUsers(filtered);
            
@@ -37,27 +47,10 @@ console.log('UserSearch')
         
     
 
-    const handleChat = async (user: { uid: string, username: string }) => {
-        const chatId = commbineId(userData.uid, user.uid);
-        console.log(chatId);
-        console.log(user, userData)
-        const snapshot = await get(ref(db, `/chats/${chatId}`));
-        if ((snapshot).exists()) {
-            navigate(`/privateChats/${chatId}`);
-            console.log('chat exists')
-        } else {
-            console.log('chat does not exist');
-            update(ref(db, `/chats/${chatId}`), { user1: { username: user.username, uid: user.uid }, user2: { username: userData.username, uid: userData.uid } });
-        }
-        setSearch('');
-        setUsers([]);
-    }
     const handleInvite = async (user: { uid: string, username: string }) => {
-        
-        console.log(id);
-        console.log(user);
         if (id) {
             inviteToGroup(id, user.username);
+            setInvited({...invited,[user.username]:true});
         }
     }
     return (
@@ -71,8 +64,7 @@ console.log('UserSearch')
                             <div className="information">
                                 <ImageComp unique={user.username} type='user' />
                                 <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                {type === 'add' && <Button onClick={() => handleChat(user)}>Chat</Button>}
-                                {type === 'invite' && <Button onClick={() => handleInvite(user)}>Invite</Button>}
+                                {invited[user.username]?'Invited': <Button onClick={() => handleInvite(user)}>Invite</Button>}
                             </div>
                         </div>
                     );

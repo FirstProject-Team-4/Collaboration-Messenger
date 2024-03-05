@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
-import Chat from '../../components/Chat';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import './Group.css';
 
@@ -11,6 +10,7 @@ import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
 import { useAppContext } from '../../context/appContext';
+import Chat from '../../components/chat/Chat';
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
@@ -21,6 +21,7 @@ export default function SingleGroup() {
     useEffect(() => {
         if (id) {
             getGroupByID(id).then((group) => {
+                console.log(group);
                 if (group){
                 setCurrentGroup(group);
                 }
@@ -44,13 +45,13 @@ export default function SingleGroup() {
         <>
             <div className="single-group-container">
                 <div className="chat-container">
-                    make a chat component
+                    <Chat type={'group'} />
                 </div>
                 <div className="members-container">
                     <div className="members-buttons">
                         <h4>{`members ${groupMembers.length}`}</h4>
-                        {currentGroup.owner===userData.username&&<Button onClick={() => setOpen(true)}>Invite </Button>}
-                        {currentGroup.owner!==userData.username&&<Button onClick={leaveGroup}>Leave </Button>}
+                        {currentGroup.owner===userData?.username&&<Button onClick={() => setOpen(true)}>Invite </Button>}
+                        {currentGroup.owner!==userData?.username&&<Button onClick={leaveGroup}>Leave </Button>}
                         {open && <InviteMembers closeFn={setOpen} />}
                     </div>
                     <GroupMembers members={groupMembers} owner={currentGroup.owner} />

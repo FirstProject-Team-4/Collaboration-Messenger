@@ -5,29 +5,41 @@ import { useAppContext } from "../../context/appContext";
 import ImageComp from "../../components/imageComp/ImageComp";
 import './Group.css';
 import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../config/config-firebase";
 
 export default function PublicGroups() {
     const [groups, setGroups] = useState<any>([]);
-    const { userData,setContext } = useAppContext();
+    const { userData } = useAppContext();
     const [search, setSearch] = useState('');
+    const nav=useNavigate();
     useEffect(() => {
+        if (!userData) return;
+        onValue(ref(db, `users/${userData.username}/groups`), () => {
         getPublicGroups().then((groups) => {
             groups = groups.filter((group: any) => group.owner !== userData.username);
             setGroups(groups);
         })
+        });
     }, [userData])
 
     const leavePublicGroup = (groupId: string) => {
         if (window.confirm('Are you sure you want to leave this group?')) {
             removeGroupMember(groupId, userData.username)
-            setGroups(groups.filter((group: any) => group.id !== groupId));
+        //    const filteredGroups = groups.filter((g: any) => g.id !== groupId);
+        //    filteredGroups.push({...groups, members:{[userData.username]:null}});
+        //       setGroups(filteredGroups);    
 
         }
         console.log('leave');
     }
     const joinPublicGroup = (group: { id: string, image: string, title: string }) => {
         joinGroup(group, userData.username);
-        setContext({ ...userData, groups: { ...userData.groups, [group.id]: { title: group.title, image: group.image } } })
+        // const filteredGroups = groups.filter((g: any) => g.id !== group.id);
+        // filteredGroups.push({...group,members:{[userData.username]:userData.username}});
+        // setGroups(filteredGroups);
+        // // nav(`/group/${group.id}`)
 
         
     }
@@ -41,7 +53,7 @@ export default function PublicGroups() {
     return (
         <div className="public-groups-view">
         <input type="text" placeholder="Search" onChange={(e) => handleSearch(e.target.value)} />
-       { groups.length !== 0 ?
+       { groups.length!== 0 &&userData ?
             <div className="public-groups-container">
                 {groups.map((group: any, index: any) => {
                     console.log(group.id);
@@ -50,8 +62,7 @@ export default function PublicGroups() {
                         <h3>{group.title}</h3>
                         <p>{group.description}</p>
                         <p>{group.members?Object.keys(group.members).length:0} members</p>
-                        {group.members?Object.keys(group.members).includes(userData.username) && <button onClick={() => leavePublicGroup(group.id)}>Leave </button>:''}
-                        {group.members? !Object.keys(group.members).includes(userData.username) && <button onClick={() => { joinPublicGroup(group) }}>Join </button>:''}
+                        {group.members && Object.keys(group.members).includes(userData.username) ? <button onClick={() => leavePublicGroup(group.id)}>Leave </button> : <button onClick={() => { joinPublicGroup(group) }}>Join </button>}
                     </div>
                 })}
             </div>

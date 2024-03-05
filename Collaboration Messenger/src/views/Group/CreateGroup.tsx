@@ -39,7 +39,7 @@ export default function CreateGroup() {
             image: currentImageUrl,
             members: [],
             createdOn: Number(new Date()),
-            owner: userData?.username
+            owner: userData.username
         }
 
         createGroup(group);

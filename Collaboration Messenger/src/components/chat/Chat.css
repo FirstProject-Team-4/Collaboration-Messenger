@@ -1,0 +1,94 @@
+/* Chat container */
+.chat-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    height: 100%;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background-color: rgba(211, 14, 241, 0.598);
+
+    box-sizing: border-box;
+  
+  }
+  .column-chat {
+    width: 70%;
+    height: 100%;
+  }
+  
+ 
+  
+ 
+  
+  /* User Image */
+  .chat-container .letter {
+    width: 40px;
+    height: 50px;
+    font-family: "Gloria Hallelujah", cursive;
+    font-style: normal;
+    margin-top: 5px;
+    font-size: 30px;
+    border-radius: 50%;
+    border: solid 2px #000000;
+    padding: 17px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: aliceblue;
+    color: black;
+  }
+  
+
+  
+  /* User handle */
+  .chat-container h1 {
+    /* align-self: center; */
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Messages container */
+  .messages-container {
+    width: 400px;
+    height: 400px;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    margin-bottom: 10px;
+    border-top: 1px solid #e01212;
+  background-color: aqua;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  
+  }
+  
+  /* Input field */
+  .chat-container input {
+    width: 80%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #0a0a0a;
+    background-color: #9ecdf800;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* Send button */
+  .chat-container button {
+    background-color: #5da8ed;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .chat-container button:hover {
+    background-color: #005999;
+  }
