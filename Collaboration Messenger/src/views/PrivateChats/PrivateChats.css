@@ -4,12 +4,21 @@
 
 }
 
+
 .column-inf {
     position: relative;
-    right:230px;
+    right:160px;
     top: 10px;
-    height: 100%;
-    border: 1px solid #fddddd;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    top: 10px;
+    height: 600px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
+    border-radius: 10px;
+    transition: all 0.5s ease;
 }
 .btn-friends{
     position: relative;
@@ -24,11 +33,18 @@
 .column-chat {
     height: 87%;
     position: relative;
-    right: 200px;
-    top: 30px;
+    right: 155px;
     width: 900px;
-    height: 610px;
-    border: 1px solid #e61a1a;
+    gap: 10px;
+    border: 1px solid rgba(247, 247, 247, 0.585);
+    top: 50px;
+    height: 560px;
+    padding: 20px;
+    /* backdrop-filter: blur(30px); */
+    box-shadow: 0 8px 32px 0 rgba(38, 46, 146, 0.37),
+        0 30px 60px rgba(184, 175, 188, 0.434);
+    border-radius: 10px;
+    transition: all 0.5s ease;
 }
 
 .search-users {

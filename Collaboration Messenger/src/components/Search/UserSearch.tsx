@@ -6,12 +6,15 @@ import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
 import { get, getDatabase, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import './UserSearch.css';
+
 
 interface UserSearchProps {
     type?: string;
-  }
-const UserSearch = ({ type ='Open Search'}: UserSearchProps) => {
+}
+const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     const { userData } = useAppContext();
     const [users, setUsers] = useState([] as any);
     const [search, setSearch] = useState('');
@@ -54,8 +57,6 @@ const UserSearch = ({ type ='Open Search'}: UserSearchProps) => {
         } else {
             console.log('chat does not exist');
             update(ref(db, `/chats/${chatId}`), { user1: { username: user.username, uid: user.uid }, user2: { username: userData.username, uid: userData.uid } });
-
-
         }
         setSearch('');
         setUsers([]);
@@ -77,26 +78,27 @@ const UserSearch = ({ type ='Open Search'}: UserSearchProps) => {
     return (
 
         <div>
-         { <Button onClick={() => setIsModalOpen(true)} id='btn-search' >{type}</Button> }
+            {<Button onClick={() => setIsModalOpen(true)} id='btn-search' ><PersonSearchIcon fontSize="small" />  {type}</Button>}
 
             {isModalOpen && (
                 <div className="modal-backdrop">
                     <div className="modal">
-                        <button onClick={() => { console.log('Close button clicked'); setIsModalOpen(false); }}>Close</button>
+
+                        <button onClick={() => setIsModalOpen(false)}>  <HighlightOffIcon /> </button>
                         <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => handleSearch(e.target.value)} />
                         <Button onClick={searchUser}>Search</Button>
                         <div className="inf">
                             {users.map((user: any) => {
 
-                                const isAlreadyFriend =userData?.friends ? Object.keys(userData?.friends)?.includes(user.username):false;
-                                const isAlreadyRequested =user?.friendsRequest ? Object.keys(user.friendsRequest)?.includes(userData?.username):false;
+                                const isAlreadyFriend = userData?.friends ? Object.keys(userData?.friends)?.includes(user.username) : false;
+                                const isAlreadyRequested = user?.friendsRequest ? Object.keys(user.friendsRequest)?.includes(userData?.username) : false;
 
-                                 return (
+                                return (
                                     <div className="border-users" key={user.uid}>
                                         <div className="information">
                                             <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
                                             <Button onClick={() => handleChat(user)}>Chat</Button>
-                                            {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested &&<Button onClick={() => handleAddFriend(user)}>Add Friend</Button>}
+                                            {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested && <Button onClick={() => handleAddFriend(user)}>Add Friend</Button>}
                                         </div>
                                     </div>
                                 );

@@ -14,31 +14,50 @@
 
 #logout {
     display: flex;
-   
+
     height: 45px;
     position: relative;
     bottom: 20px;
     left: 1300px;
-   
+
 }
+.logo img{
+    position: relative;
+    left: 10px;
+    top: 20px;
+    height: 100px; /* Adjust as needed */
+    width: 100px; /* Adjust as needed */
+  }
+.logout-menu{
+    position: relative;
+   
+    height: 450px;
+    width: 100px;
+    background-color: aliceblue;
 
-
-  /* Add additional styles for other elements inside the header as needed */
-  .header-view {
+}
+.logout-button{
+    background-color: aqua;
+}
+.header-view {
     display: flex;
     flex-direction: column;
     justify-content: left;
     position: relative;
     left: -12px;
-    gap: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18); /* Light border */
+    gap: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     top: 10px;
     height: 600px;
     padding: 20px;
-   
-    backdrop-filter: blur(10px); /* Blur the background elements */
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), /* Add some shadow for depth */
-                0 30px 60px rgba(97, 218, 251, 0.3); /* Add some blue light */
-    border-radius: 10px; /* Rounded corners */
-    transition: all 0.5s ease; /* Add transition */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+
+.header-nav {
+    font-family: "Gloria Hallelujah", cursive;
+  font-style: normal;
 }
