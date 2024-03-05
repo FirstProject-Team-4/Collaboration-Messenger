@@ -3,8 +3,9 @@ import { db } from "../config/config-firebase"
 import { MembersProps } from "../components/group-components/GroupMembers";
 
 
-export const createGroup=(currentGroup:{title:string,description:string,type:string,image:string,members:never[],createdOn:number,owner:string|undefined})=>{
+export const createGroup=(currentGroup:{title:string,description:string,type:string,image:string,members:never[],createdOn:number,owner:string})=>{
     const newGroupId=  push(ref(db, `groups/`), currentGroup);
+    update(ref(db,`groups/${newGroupId.key}/members`), {[currentGroup?.owner]:{status:'online'}});
     update(ref(db, `users/${currentGroup.owner}/groups/${newGroupId.key}`), {title:currentGroup.title, image:currentGroup.image});
 }
 export const getGroupByID=async(id:string)=>{
@@ -12,7 +13,7 @@ export const getGroupByID=async(id:string)=>{
     if(!snapshot.exists()){
         return;
     }
-    const current= Object.keys(snapshot.val())
+    
         return{
             id:id,
             ...snapshot.val()
@@ -84,4 +85,7 @@ export const joinGroup=async(group:{id:string,image:string,title:string},usernam
     update(ref(db, `groups/${group.id}/members/${username}`), {status:'online'});
     update(ref(db, `users/${username}/groups/${group.id}`), {title:group.title, image:group.image?group.image:''});
     remove(ref(db, `users/${username}/groupInvitation/${group.id}`));
+}
+export const sendGroupMessage=(groupId:string,message:{})=>{
+    push(ref(db, `groups/${groupId}/messages`), message);
 }

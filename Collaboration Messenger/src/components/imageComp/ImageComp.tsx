@@ -19,8 +19,7 @@ export default function ImageComp({unique,type}:{unique:string,type:string}) {
            }
 
         })()
-    }, [])
-
+    }, [unique])
     return (
        data&& <>
             {data?.image ? <img className="img" src={data?.image} alt="user" /> : <span className="letter">{data.username?data.username[0]:data.title[0]}</span>}
