@@ -116,6 +116,7 @@ const Chat = ({ type }: { type: string }) => {
                 {type === 'private' ? <h1>Private Chat</h1> : <h1>Group Chat</h1>}
                 <div className="messages-container">
                     <Messages messages={messageList} />
+                    <div ref={(el) => { el?.scrollIntoView({ behavior:'instant' }); }} />
                 </div>
                 <div className={'send-file-list'}>
                     {file.map((f, index) => {
