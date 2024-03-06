@@ -2,20 +2,22 @@ import { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { NavLink } from "react-router-dom";
 import ImageComp from "../../components/imageComp/ImageComp";
+import { useAppContext } from "../../context/appContext";
 
 interface Chat {
+  uid: string;
   id: string;
-  user1: {
-    username: string;
-  };
+  username: string;
+
+
 }
 
 const Information: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
-
+  const { userData } = useAppContext();
   useEffect(() => {
     const db = getDatabase();
-    const chatsRef = ref(db, 'chats');
+    const chatsRef = ref(db, `users/${userData?.username}/privateChats`);
 
     const unsubscribe = onValue(chatsRef, (snapshot) => {
       const data = snapshot.val();
@@ -24,19 +26,25 @@ const Information: React.FC = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [userData]);
+
+
+
+
+
 
   return (
     <div className="column-inf">
       <h3>Messages information </h3>
       <p>Choose with who to chat</p>
-      {chats.map((chat, index) => (
-        <div key={index}>
+
+      {chats.map((chat) => (
+        <div key={chat.id}>
 
           <NavLink to={`/privateChats/${chat.id}`}>
             <div className="chat-user">
-              <ImageComp unique={chat.user1.username} type={'user'} />
-              <p>{chat.user1.username}</p>
+              <ImageComp unique={chat.username} type={'user'} />
+              <p>{chat.username}</p>
             </div>
           </NavLink>
         </div>

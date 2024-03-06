@@ -43,7 +43,10 @@ export const Header = () => {
         setContext({ user: null, userData: null });
         navigate('/about');
     }
-
+ 
+const profile = () => {
+    navigate(`/profile/${userData?.username}`);
+}
 
     return (
         userData &&
@@ -57,9 +60,7 @@ export const Header = () => {
             <NavLink to='/friends' className={'header-nav'}><Diversity2Icon/>Friends</NavLink>
             <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon/>Calendar </NavLink>
             
-        </div>
-            {/* <Button id='logout' onClick={logout} >Logout </Button> */}
-          
+        </div>          
             <IconButton
   id="logout"
   aria-controls="logout-menu"
@@ -78,7 +79,7 @@ export const Header = () => {
   onClose={handleClose}
 //   className="logout-menu"
 >
-  <MenuItem className="logout-menu-item" onClick={handleClose}>Profile</MenuItem>
+  <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
   <MenuItem className="logout-menu-item" onClick={handleClose}>My account</MenuItem>
   <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
 </Menu>

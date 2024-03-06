@@ -14,6 +14,7 @@ import Group from './views/Group/Group';
 import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
+import Profile from './views/Profile/Profile';
 
 
 function App() {
@@ -51,6 +52,8 @@ function App() {
           <div className="main-content">
             <Routes>
               <Route path="/" element={<About />} />
+              
+              <Route path='/profile/:id' element={<Profile />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
               <Route path="/group/:id" element={<Group/>} />

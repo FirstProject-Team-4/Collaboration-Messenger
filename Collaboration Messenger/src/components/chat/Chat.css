@@ -6,12 +6,11 @@
     align-items: center;
     width: 600px;
     height: 100%;
-    border: 1px solid #000000;
+    border: 1px solid #fffafa;
     border-radius: 10px;
-    background-color: rgba(211, 14, 241, 0.598);
+    background-color: rgba(211, 14, 241, 0.085);
 
     box-sizing: border-box;
-  
   }
   .column-chat {
     width: 70%;
@@ -20,7 +19,11 @@
   
  
   
- 
+ .chat-container h1{
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
   
   /* User Image */
   .chat-container .letter {
@@ -57,8 +60,8 @@
     overflow-y: auto;
 
     margin-bottom: 10px;
-    border-top: 1px solid #e01212;
-  background-color: aqua;
+    border-top: 1px solid #e2e2e2;
+  background-color: rgba(0, 255, 255, 0.303);
     padding: 10px;
     border-radius: 5px;
     overflow-wrap: break-word;

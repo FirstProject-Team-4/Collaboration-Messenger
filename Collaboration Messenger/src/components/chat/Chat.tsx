@@ -3,7 +3,7 @@ import { useAppContext } from "../../context/appContext";
 import { useEffect, useRef, useState } from "react";
 import { onValue, ref, set } from "firebase/database";
 import { db } from "../../config/config-firebase";
-import { chatOwners, sendMessage } from "../../service/friends";
+import { sendMessage } from "../../service/friends";
 import Button from "../Button";
 import Messages from "./Messages";
 import './Chat.css';

@@ -55,8 +55,9 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
             navigate(`/privateChats/${chatId}`);
             console.log('chat exists')
         } else {
-            console.log('chat does not exist');
             update(ref(db, `/chats/${chatId}`), { user1: { username: user.username, uid: user.uid }, user2: { username: userData.username, uid: userData.uid } });
+            update(ref(db, `/users/${userData.username}/privateChats/${chatId}`), { username: user.username, uid: user.uid });
+           update(ref(db, `/users/${user.username}/privateChats/${chatId}`), { username: userData.username, uid: userData.uid });
         }
         setSearch('');
         setUsers([]);
