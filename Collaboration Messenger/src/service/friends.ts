@@ -45,7 +45,7 @@ export const chatOwners = async (chatID: string) => {
     return snapshot.val();
 }
 
-export const sendMessage = (chatID: string, message: { author: string, createdOn: number, content: string }) => {
+export const sendMessage = (chatID: string, message: { author: string|any, createdOn: number, content: string,files:[]|any,type:string }) => {
     push(ref(db, `/chats/${chatID}/messages`), message);
 }
 
