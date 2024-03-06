@@ -24,6 +24,6 @@ justify-content: left;
 }
 
 body{
-  background-image: url('C:\Users\ZBook\Desktop\Collaboration-Messenger\Collaboration Messenger\image\background.jpg');
+  background-image: url('/image/background.jpg');
   background-size: cover; 
 }

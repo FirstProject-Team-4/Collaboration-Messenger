@@ -16,3 +16,11 @@ export const saveImage = async (file: File) => {
     await uploadBytes(storageRef, file);
     return getDownloadURL(storageRef);
 }
+export const saveFile = async (file: File,id:string) => {
+    if (!file) {
+        return;
+    }
+    const storageRef = ref(storage, `files/${id}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+}
