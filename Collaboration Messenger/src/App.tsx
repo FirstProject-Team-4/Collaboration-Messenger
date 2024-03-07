@@ -59,6 +59,7 @@ function App() {
               <Route path="/group/:id" element={<Group/>} />
               <Route path="/group" element={<Group/>} />
               <Route path="/chat/:id" element />
+              <Route path="/profile/:id" element />
               <Route path="/friends" element={<Friends />} />
               <Route path="/privateChats" element={<PrivateChats />} />
               <Route path="/privateChats/:id" element={<PrivateChats />} />
