@@ -65,7 +65,7 @@ const Chat = ({ type }: { type: string }) => {
     }, [id, userData]);
 
 
-    console.log(file)
+
 
     const sendCurrentMessage = async () => {
         if (!currentMessage && !file.length) {

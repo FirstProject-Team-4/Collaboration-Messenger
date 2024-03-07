@@ -9,13 +9,13 @@ import './Profile.css';
 
 const Profile = () => {
     const { id } = useParams<{ id: string }>();
-    const {user, userData, setContext } = useAppContext(); // Assuming 'users' is an array of user objects
+    const { user, userData, setContext } = useAppContext(); // Assuming 'users' is an array of user objects
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [showEdit, setShowEdit] = useState(false);
     const [errorMessage] = useState('');
 
-  
+
 
 
     //for the image
@@ -27,7 +27,7 @@ const Profile = () => {
             setContext({ ...userData, image: imgUrl });
         }
     };
-//for the first and last name (edit)
+    //for the first and last name (edit)
     const handleSubmit = () => {
         update(ref(db, `users/${userData.username}`), { firstName, lastName });
         setContext({ ...userData, firstName, lastName });
@@ -38,11 +38,11 @@ const Profile = () => {
 
         setShowEdit(!showEdit);
     }
-console.log(user);
-console.log(userData.username);
+    console.log(user);
+    console.log(userData.username);
 
 
-    
+
     return (
         <div>
             <h1>Profile</h1>
@@ -54,26 +54,27 @@ console.log(userData.username);
                 {userData?.handle === id && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
             </div>
             {showEdit ? (
-                    <form onSubmit={handleSubmit}>
-                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                        <label>
-                            First Name:
-                            <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                        </label><br></br>
-                        <label>
-                            Last Name:
-                            <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
-                        </label><br></br><br></br>
-                        <input type="submit" value="Submit" />
-                    </form>
-                ) : null}
+                <form onSubmit={handleSubmit}>
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    <label>
+                        First Name:
+                        <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                    </label><br></br>
+                    <label>
+                        Last Name:
+                        <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
+                    </label><br></br><br></br>
+                    <input type="submit" value="Submit" />
+                </form>
+            ) : null}
 
-                <div>
-                    <p>First Name: {userData?.firstName}</p>
-                    <p>Last Name: {userData?.lastName}</p>
-                    <p>Username: {userData?.username}</p>
-                    <p>Email: {userData?.email}</p>
-                    <p>Joined on: {new Date(userData?.createdOn).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>                    </div>
+            <div>
+                <p>First Name: {userData?.firstName}</p>
+                <p>Last Name: {userData?.lastName}</p>
+                <p>Username: {userData?.username}</p>
+                <p>Email: {userData?.email}</p>
+                <p>Joined on: {new Date(userData?.createdOn).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+            </div>
         </div>
     );
 }

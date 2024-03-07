@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import UserSearch from '../../components/Search/UserSearch';
 import { useEffect } from 'react';
 // import Profile from '../Profile/Profile';
-import UserProfile from '../Profile/UserProfile';
+import UserProfile from '../UserProfile/UserProfile';
 
 
 
@@ -31,8 +31,7 @@ const PrivateChats = () => {
             <div className="chat-container">
                 <Chat type={'private'} />
             </div>
-
-            <div className="profile">
+            <div className="user-profile">
                 <UserProfile />
                 {/* <Profile /> */}
             </div>

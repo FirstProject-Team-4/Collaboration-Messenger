@@ -8,6 +8,7 @@ import { get, getDatabase, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import './UserSearch.css';
 
 
@@ -16,7 +17,7 @@ interface UserSearchProps {
 }
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     const { userData } = useAppContext();
-    const [users, setUsers] = useState([] as any);
+    const [users, setUsers] = useState<any>([]);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
@@ -63,7 +64,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         setUsers([]);
 
     }
-    console.log('UserSearch');
+  
 
     const handleAddFriend = async (user: { username: string, uid: string }) => {
         const db = getDatabase();
@@ -98,7 +99,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
                                     <div className="border-users" key={user.uid}>
                                         <div className="information">
                                             <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                            <Button onClick={() => handleChat(user)}>Chat</Button>
+                                            <Button onClick={() => handleChat(user)}><QuestionAnswerIcon/></Button>
                                             {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested && <Button onClick={() => handleAddFriend(user)}>Add Friend</Button>}
                                         </div>
                                     </div>
