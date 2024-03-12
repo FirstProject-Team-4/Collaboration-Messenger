@@ -5,7 +5,7 @@
 }
 
 
-.column-inf, .profile {
+.column-inf, .user-profile {
     position: relative;
     right:160px;
     top: 10px;
@@ -37,5 +37,12 @@
     position: relative;
     bottom: 20px;
     left: 1050px;
+}
+
+.user-profile{
+    position: relative;
+    left: 60px;
+    top: 50px;
+    height: 87%;
 }
 

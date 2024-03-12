@@ -17,8 +17,8 @@ export const friendRequests = async (username: string | undefined) => {
 
 export const acceptFriendRequest = async (currentUser: { username: string, uid: string, }, friendUser: { username: string, id:string, uid: string }) => {
     update(ref(db, `/users/${currentUser.username}/friends/${friendUser.username}`),{uid: friendUser.uid, username: friendUser.username});
-    // update(ref(db, `/users/${currentUser.username}/friendsRequest`), {[friendUser.id]: null});
     remove(ref(db,`users/${currentUser.username}/friendsRequest/${friendUser.id}`));
+    update(ref(db, `/users/${friendUser.username}/friends/${currentUser.username}`),{uid: currentUser.uid, username: currentUser.username});
 }
 
 export const rejectFriendRequest = async (currentUser: { username: string, uid: string }, friendUser: { username: string, id:string, uid: string }) => {
