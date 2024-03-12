@@ -41,15 +41,22 @@ const UserProfile = () => {
             onValue(q, (snapshot) => {
                 if (snapshot.exists()) {
                     setUserProfileData(Object.keys(snapshot.val()).map((key) => snapshot.val()[key])[0]);
-                    setMyBlockList(userData.blockedUsers ? Object.keys(userData.blockedUsers) : []);
                 } else {
                     console.log("No data available");
                 }
             });
+            
+            onValue(ref(db,`users/${userData.username}/blockedUsers`),(snapshot)=>{
+                if(snapshot.exists()){
+                    setMyBlockList(Object.keys(snapshot.val()));
+                }else{
+                    setMyBlockList([]);
+                }
+            })
         } else {
             setUserProfileData(null);
         }
-    }, [currentId]);
+    }, [currentId]); 
 
     const handleBlockUser = () => {
         if (userProfileData) {
@@ -57,22 +64,20 @@ const UserProfile = () => {
             const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${userProfileData.username}`);
             if (myBlockList.includes(userProfileData.username)) {
                 //  unblock the user
-                set(blockUserRef, null).then(() => {
-                    setMyBlockList(myBlockList.filter(user => user !== userProfileData.username));
-                });
+                set(blockUserRef, null)
             } else {
-                set(blockUserRef, true).then(() => {
-                    setMyBlockList([...myBlockList, userProfileData.username]);
-                });
+                set(blockUserRef, true)
             }
         }
     }
     const toggleBlock = () => {
-        if (myBlockList.includes(userProfileData?.username || '')) {
+        if (userProfileData?.username && myBlockList.includes(userProfileData?.username )) {
             return 'Unblock';
         }
         return 'Block';
     }
+    console.log(myBlockList);
+    
 
     const handleAddFriend = async (user: UserProfileData) => {
         const db = getDatabase();
