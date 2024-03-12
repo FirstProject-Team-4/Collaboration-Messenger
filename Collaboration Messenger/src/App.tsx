@@ -17,6 +17,8 @@ import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
 // import { ToastContainer } from 'react-toastify';
 
+
+
 function App() {
   const [context, setContext] = useState({
     user: {} as any,
@@ -38,9 +40,10 @@ function App() {
 
   useEffect(() => {
     if (context.userData) {
-      toggleStatus(context.userData)
-  
+     
+      toggleStatus(context.userData);
     }
+    
   }, [context.userData]);
 
  

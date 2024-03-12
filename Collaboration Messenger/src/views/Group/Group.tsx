@@ -37,8 +37,7 @@ export default function Group() {
         }
         setCurrentId(id)
     }, [id, userData]);
-    console.log(groupInvitation)
-console.log('fak')
+
     return (
         <>
             <div className="groups-form">
