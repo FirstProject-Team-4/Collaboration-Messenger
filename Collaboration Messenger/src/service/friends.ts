@@ -25,6 +25,11 @@ export const rejectFriendRequest = async (currentUser: { username: string, uid: 
     remove(ref(db, `/users/${currentUser.username}/friendsRequest/${friendUser.id}`));
 }
 
+// export const removeFriend = async (currentUser: { username: string, uid: string }, friendUser: { username: string, id:string, uid: string }) => {
+//     remove(ref(db, `/users/${currentUser.username}/friends/${friendUser.username}`));
+//     remove(ref(db, `/users/${friendUser.username}/friends/${currentUser.username}`));
+// }
+
 export const getMessages = async (chatID: string) => {
     const snapshot = await get(ref(db, `chat/${chatID}/messages`));
     if (!snapshot.exists()) {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../../service/user";
+import { getAllUsers, getUserData } from "../../service/user";
 import Button from "../Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, getDatabase, ref, update } from "firebase/database";
+import { get, getDatabase, ref, remove, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -16,10 +16,13 @@ interface UserSearchProps {
     type?: string;
 }
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
-    const { userData } = useAppContext();
+    const { userData, setContext } = useAppContext();
     const [users, setUsers] = useState<any>([]);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  
     const navigate = useNavigate();
 
     console.log('UserSearch');
@@ -32,6 +35,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
 
     const handleSearch = (value: string) => {
         setSearch(value);
+      
         if (value !== '') {
             searchUser();
         } else {
@@ -74,8 +78,8 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
             uid: userData.uid,
         };
         await update(friendRequestRef, newRequest);
-
     }
+
 
     return (
 
@@ -100,6 +104,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
                                         <div className="information">
                                             <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
                                             <Button onClick={() => handleChat(user)}><QuestionAnswerIcon/></Button>
+
                                             {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested && <Button onClick={() => handleAddFriend(user)}>Add Friend</Button>}
                                         </div>
                                     </div>

@@ -10,6 +10,8 @@ export type UserData = {
   email: string;
   uid: string,
   phoneNumber: number,
+  image: string,
+  isBlock: boolean,
   activity: string;
   notifications: {} |null,
   createdOn: Date;

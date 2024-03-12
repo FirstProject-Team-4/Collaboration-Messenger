@@ -1,17 +1,17 @@
-import { get, onChildRemoved, onValue, ref, update } from "firebase/database";
+import { get, getDatabase, onChildRemoved, onValue, ref, remove, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { db } from "../../config/config-firebase";
 import { useAppContext } from "../../context/appContext";
 import ImageComp from "../../components/imageComp/ImageComp";
-import { commbineId } from "../../service/friends";
+import { commbineId} from "../../service/friends";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 
 export default function FriendsList() {
     const [friendList, setFriendList] = useState<any>([]);
     const { userData } = useAppContext();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     console.log('FriendsList');
 
     useEffect(() => {
@@ -57,14 +57,23 @@ export default function FriendsList() {
         }
     }
 
+    const handleRemoveFriend = async (user: { username: string, uid: string }) => {
+        const db = getDatabase();
+        const friendRef = ref(db, `/users/${userData.username}/friends/${user.username}`);
+        await remove(friendRef);
+        const friendRef2 = ref(db, `/users/${user.username}/friends/${userData.username}`);
+        await remove(friendRef2);
+    }
+   
     return (
         <>
             <h4>Friends</h4>
-            { friendList.map((friend: any, index: number) => (
+            {friendList && friendList.map((friend: any, index: number) => (
                 <div key={index} className="friend-info">
                     <ImageComp unique={friend.username} type={'user'} />
                     <NavLink to={`/profile/${friend.username}`}>{friend.username}</NavLink>
-                    <button onClick={() => handleChat(friend)}><QuestionAnswerIcon/></button>
+                    <button onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
+                    <button onClick={() => handleRemoveFriend(friend)}>Remove </button>
                 </div>
             ))}
         </>

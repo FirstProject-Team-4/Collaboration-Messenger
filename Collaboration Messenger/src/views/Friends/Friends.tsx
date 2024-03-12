@@ -4,6 +4,7 @@ import FriendsList from "../Chat/FriendsList";
 import UserSearch from "../../components/Search/UserSearch";
 import Button from "../../components/Button";
 import './Friends.css';
+import BlockList from "../../components/BlockList/BlockList";
 
 export default function Friends() {
     const [view, setView] = useState('friendsList');//status->default
@@ -14,10 +15,9 @@ export default function Friends() {
                 return <FriendsList />;
             case 'friendsRequest':
                 return <FriendsRequest />;
-
-            //добави после
-            // case 'Block':
-            //     return < />;//block
+            case 'block':
+                return <BlockList />;
+                //add ---> only status
             // case 'status':
             //     return < />;//status
             default:
@@ -26,16 +26,16 @@ export default function Friends() {
     }
     return (
         <div className="view-frineds">
-        <div className="header-frineds">
-            <Button onClick={() => setView('friendsList')}>Friends</Button>
-            <Button onClick={() => setView('status')}>Status</Button>
-            <Button onClick={() => setView('friendsRequest')}>Requests</Button>
-            <Button onClick={() => setView('block')}>Block</Button>
-            <UserSearch type="Add friend" />
+            <div className="header-frineds">
+                <Button onClick={() => setView('friendsList')}>Friends</Button>
+                <Button onClick={() => setView('status')}>Status</Button>
+                <Button onClick={() => setView('friendsRequest')}>Requests</Button>
+                <Button onClick={() => setView('block')}>Block</Button>
+                <UserSearch type="Add friend" />
             </div>
             <div className="view">
                 {handleViewChange(view)}
-        </div>
+            </div>
         </div>
     )
 }

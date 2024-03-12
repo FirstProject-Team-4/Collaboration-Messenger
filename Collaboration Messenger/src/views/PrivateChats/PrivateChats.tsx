@@ -33,7 +33,7 @@ const PrivateChats = () => {
             </div>
             <div className="user-profile">
                 <UserProfile />
-                {/* <Profile /> */}
+                
             </div>
 
             </>

@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { auth, db } from './config/config-firebase';
+import { auth } from './config/config-firebase';
 import { useState, useEffect } from 'react';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
@@ -15,7 +15,7 @@ import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
-
+// import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [context, setContext] = useState({
@@ -46,6 +46,7 @@ function App() {
  
   return (
     <>
+   {/* <ToastContainer /> */}
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
           <Header />
