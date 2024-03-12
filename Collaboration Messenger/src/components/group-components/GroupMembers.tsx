@@ -7,18 +7,17 @@ export interface MembersProps{
 }
 
 export default function GroupMembers({members , owner}: { members: MembersProps[] , owner:string}) {
-    console.log(members);
+
     const [onlineMembers, setOnlineMembers] = useState<MembersProps[]>([]);
     const [offlineMembers, setOfflineMembers] = useState<MembersProps[]>([]);
     useEffect(() => {
-   console.log(members);
+
         const online = members.filter((member) => member.status === 'online');
         const offline = members.filter((member) => member.status === 'offline');
         setOnlineMembers(online);
         setOfflineMembers(offline);
     }, [members]);
-console.log(onlineMembers);
-console.log(offlineMembers);
+
     return (
         <div>
             <h5>{`Online:${onlineMembers.length}`}</h5>

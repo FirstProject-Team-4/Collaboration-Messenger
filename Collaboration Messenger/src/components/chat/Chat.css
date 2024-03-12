@@ -110,4 +110,13 @@
     bottom: 0;
     right: 0;
   }
+  .message-image-file{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+  }
+  .file-display{
+    display: flex;
+    flex-direction: column;
+  }
 

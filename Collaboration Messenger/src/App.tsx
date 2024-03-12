@@ -15,6 +15,8 @@ import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
+import { onDisconnect, ref, update } from 'firebase/database';
+import firebase from 'firebase/compat/app';
 
 
 function App() {
@@ -38,9 +40,12 @@ function App() {
 
   useEffect(() => {
     if (context.userData) {
-      toggleStatus(context.userData)
-  
+      // update(ref(db, `users/${context.userData.username}`), { status:'online'});
+      // const address = ref(db, `users/${context.userData.username}`);
+      // onDisconnect(address).update({status:'offline'});
+      toggleStatus(context.userData);
     }
+    
   }, [context.userData]);
 
  

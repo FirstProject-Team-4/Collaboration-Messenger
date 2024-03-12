@@ -9,12 +9,12 @@ export default function ImageComp({unique,type}:{unique:string,type:string}) {
         (async () => {
            switch(type){
             case'group':
-             const response=await get(ref(db, `groups/${unique}`))
-                setData(response.val());
+             const groupImage=await get(ref(db, `groups/${unique}`))
+                setData(groupImage.val());
             break;
             case'user':
-                const response2=await get(ref(db, `users/${unique}`))
-                setData(response2.val());
+                const userImage=await get(ref(db, `users/${unique}`))
+                setData(userImage.val());
                 break;
            }
 

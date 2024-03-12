@@ -32,7 +32,7 @@ export default function PublicGroups() {
         //       setGroups(filteredGroups);    
 
         }
-        console.log('leave');
+
     }
     const joinPublicGroup = (group: { id: string, image: string, title: string }) => {
         joinGroup(group, userData.username);
