@@ -11,7 +11,8 @@ export type Message = {
     createdOn: number,
     type: string,
     files: File[],
-    id: string
+    id: string,
+    replyMessage?:string
 }
 export type File = {
     url: string,
@@ -81,6 +82,7 @@ console.log(reaction);
             <div onMouseOver={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="message-content">
+                {message.replyMessage&&<h5>{message.replyMessage}</h5>}
                 <p>{message.content}</p>
                 {files.map((f, i) => {
                     return (
