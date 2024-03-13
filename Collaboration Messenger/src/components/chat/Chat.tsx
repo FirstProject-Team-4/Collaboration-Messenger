@@ -110,7 +110,8 @@ const Chat = ({ type }: { type: string }) => {
             content: currentMessage,
             createdOn: Number(new Date()),
             files: filesUrl,
-            type: typeMessage
+            type: typeMessage,
+            replyMessage: replyMessage
 
         }
         if (id) {
@@ -125,6 +126,7 @@ const Chat = ({ type }: { type: string }) => {
         };
         setCurrentMessage('');
         setFile([]);
+        setReplyMessage('');
     }
     const openFileSystem = () => {
         if (fileInputRef.current) {
