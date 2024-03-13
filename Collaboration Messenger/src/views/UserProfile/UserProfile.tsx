@@ -22,13 +22,12 @@ type UserProfileData = {
     friendsRequest?: Record<string, unknown>;
 };
 
-
 const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
     const [myBlockList, setMyBlockList] = useState<string[]>([]);
     const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
-
+    const [friendRequestStatus, setFriendRequestStatus] = useState('none'); // 'none', 'pending', 'accepted'
 
     const currentId = id?.split(userData.uid).join('');
 
@@ -45,18 +44,20 @@ const UserProfile = () => {
                     console.log("No data available");
                 }
             });
-            
-            onValue(ref(db,`users/${userData.username}/blockedUsers`),(snapshot)=>{
-                if(snapshot.exists()){
+
+            onValue(ref(db, `users/${userData.username}/blockedUsers`), (snapshot) => {
+                if (snapshot.exists()) {
                     setMyBlockList(Object.keys(snapshot.val()));
-                }else{
+                } else {
                     setMyBlockList([]);
                 }
             })
         } else {
             setUserProfileData(null);
         }
-    }, [currentId]); 
+    }, [currentId]);
+
+
 
     const handleBlockUser = () => {
         if (userProfileData) {
@@ -71,13 +72,13 @@ const UserProfile = () => {
         }
     }
     const toggleBlock = () => {
-        if (userProfileData?.username && myBlockList.includes(userProfileData?.username )) {
+        if (userProfileData?.username && myBlockList.includes(userProfileData?.username)) {
             return 'Unblock';
         }
         return 'Block';
     }
     console.log(myBlockList);
-    
+
 
     const handleAddFriend = async (user: UserProfileData) => {
         const db = getDatabase();
@@ -88,6 +89,7 @@ const UserProfile = () => {
             uid: userData.uid,
         };
         await set(requestRef, newRequest);
+        setFriendRequestStatus('pending');
 
     }
 
@@ -97,10 +99,9 @@ const UserProfile = () => {
         await set(friendRef, null);
         const friendRef2 = ref(db, `users/${user.username}/friends/${userData.username}`);
         await set(friendRef2, null);
+        setFriendRequestStatus('accepted');
     }
 
-//     const isAlreadyFriend = userData?.friends ? Object.keys(userData?.friends)?.includes(userProfileData?.username) : false;
-// const isAlreadyRequested = userProfileData?.friendsRequest ? Object.keys(userProfileData.friendsRequest)?.includes(userData?.username) : false;
     return (
         <div>
             {userProfileData && (
@@ -109,10 +110,18 @@ const UserProfile = () => {
                     <div>
                         <ImageComp unique={userProfileData?.username} type={'user'} />
                         <Button onClick={() => { handleBlockUser() }}>{toggleBlock()}</Button>
-                        
-                        <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>
-                        <button onClick={() => handleRemoveFriend(userProfileData)}>Remove Friend</button>
 
+                        {/* <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>
+                        <button onClick={() => handleRemoveFriend(userProfileData)}>Remove Friend</button> */}
+                        {friendRequestStatus === 'none' && (
+                            <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>
+                        )}
+                        {friendRequestStatus === 'pending' && (
+                            <button disabled>Waiting for request acceptance</button>
+                        )}
+                        {friendRequestStatus === 'accepted' && (
+                            <button onClick={() => handleRemoveFriend(userProfileData)}>Remove Friend</button>
+                        )}
                         <h2>{userProfileData.username}</h2>
                         <p>{userProfileData?.firstName ? userProfileData.firstName : ''}</p>
                         <p>{userProfileData?.lastName ? userProfileData.lastName : ''}</p>

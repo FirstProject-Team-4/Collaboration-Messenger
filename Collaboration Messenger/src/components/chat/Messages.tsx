@@ -1,10 +1,7 @@
-import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
-import { deleteGroupMessage, deleteMessage } from "../../service/chat";
-import Button from "../Button";
 import MessageContent, { Message } from "./MessageContent";
 import './Messages.css';
-import { useEffect, useRef, useState } from "react";
+
 
 type MessagesProps = {
     messages: Message[],
@@ -16,9 +13,6 @@ const Messages = ({ messages , type,setReplyMessage}: MessagesProps) => {
    const { userData } = useAppContext();
 
 
-  
-   
-    
     return (
         userData && <>
             {messages.map((message,index) => {

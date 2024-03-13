@@ -4,12 +4,13 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    width: 600px;
-    height: 100%;
-    border: 1px solid #fffafa;
+    width: 890px;
+    height: 695px;
+    border: 1px solid #fffafa3d;
+    right: 10%;
+    top: 10px;
     border-radius: 10px;
     background-color: rgba(211, 14, 241, 0.085);
-
     box-sizing: border-box;
   }
   .column-chat {
@@ -42,6 +43,12 @@
     color: black;
   }
   
+  .message-input{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
 
   
   /* User handle */
@@ -54,18 +61,17 @@
   
   /* Messages container */
   .messages-container {
-    width: 400px;
-    height: 400px;
+    width: 700px;
+    height: 500px;
     flex-grow: 1;
     overflow-y: auto;
-
     margin-bottom: 10px;
-    border-top: 1px solid #e2e2e2;
-  background-color: rgba(0, 255, 255, 0.303);
-    padding: 10px;
-    border-radius: 5px;
     overflow-wrap: break-word;
     word-break: break-all;
+  position: relative;
+  right: 15%;
+  /* background-color: #005999ea; */
+  padding: 10px;
   
   }
   
@@ -76,7 +82,7 @@
     box-sizing: border-box;
     border: 1px solid #0a0a0a;
     background-color: #9ecdf800;
-    color: black;
+    color: rgb(255, 254, 254);
     border-radius: 5px;
     margin-bottom: 10px;
   }
@@ -105,14 +111,17 @@
     flex-direction: row;
  
   }
+  /* emodji */
   .emoji-picker{
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: relative;
+    bottom: 10;
+    right: 100px;
+   width: 20%;
+   height: 10%;
   }
   .message-image-file{
     width: 100px;
-    height: 100px;
+    height: 00px;
     background-color: white;
   }
   .file-display{

@@ -11,6 +11,10 @@ import { sendGroupMessage } from "../../service/group";
 import { saveFile } from "../../service/storage";
 import { v4 as uuidv4 } from 'uuid';
 import Picker from 'emoji-picker-react';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import SendIcon from '@mui/icons-material/Send';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+
 // import './emoji-mart/css/emoji-mart.css';
 
 type FileObject = {
@@ -178,7 +182,7 @@ const Chat = ({ type }: { type: string }) => {
                 <h5>{replyMessage}</h5>
                 <span onClick={() => setReplyMessage('')}>X</span>
                 </div>)}
-                <input
+                <input className="message-input"
                     type="text"
                     onKeyDown={(event) => {
                         if (event.key === 'Enter') {
@@ -191,12 +195,12 @@ const Chat = ({ type }: { type: string }) => {
                     onClick={() => setShowEmojiPicker(false)}
                     onChange={(e) => { setCurrentMessage(e.target.value); }}
                 />
-                <Button onClick={openFileSystem}>Add file</Button>
+                <Button onClick={openFileSystem}><NoteAddIcon/></Button>
                 <button onClick={(event) =>{
                     setShowEmojiPicker(!showEmojiPicker)
                     event.stopPropagation();
                 }
-                }>Emoji Picker</button>
+                }><AddReactionIcon/></button>
 
                 {showEmojiPicker && (
                     <div className={'emoji-picker'} ><Picker
@@ -227,7 +231,7 @@ const Chat = ({ type }: { type: string }) => {
 
                 />
                 
-                <Button onClick={sendCurrentMessage}>Send message</Button>
+                <Button onClick={sendCurrentMessage}><SendIcon/></Button>
             </div>
         )
     );

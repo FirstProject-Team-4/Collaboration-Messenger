@@ -1,51 +1,83 @@
-.received-message span {
-    background-color: #42c4f3;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px;
-    margin-top: 0px;
-    max-width: 60%;
-    word-wrap: break-word;
-  }
-  
-  .send-message {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  
-  }
-  
-  .received-message {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  
-  
-  }
-  
-  .send-message span {
-    background-color: #66e4fd;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: medium;
-  
-  
-    word-wrap: break-word;
-  }
-  
-  .message-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 6px;
-    margin-bottom: 0px;
-    color: black;
-  }
-  
-  .message-header p {
-    margin-bottom: 0px;
-    margin-top: 5px;
-  }
-  
-  /* .message-header span:first-child {
-    padding-left: 20px;
-  } */
+
+.send-message {
+  background-color: #dbc6f8;
+  border-radius: 12px;
+  margin: 10px 20px;
+  padding: 12px 20px;
+  position: relative;
+  align-items: flex-start;
+  width: 200px;
+  color: black;
+  word-wrap: break-word;
+  position: relative;
+  left: 57%;
+ 
+}
+/* shape message  */
+.send-message::before {
+  content: '';
+  position: absolute;
+  top: 11;
+  left: 100%;
+  border-style: solid;
+  border-width: 15px;
+  border-color: transparent transparent transparent #dbc6f8;
+}
+.received-message {
+  background-color: #b975b5e0;
+  border-radius: 12px;
+  position: relative;
+  align-self: flex-start;
+  word-wrap: break-word;
+  margin: 10px 20px;
+  padding: 12px 20px;
+  width: 200px;
+
+}
+.received-message::before {
+  content: '';
+  position: absolute;
+  top: 11;
+  right: 100%;
+  border-style: solid;
+  border-width: 15px;
+  border-color: transparent #b975b5e0 transparent transparent;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #000000;
+
+}
+
+.message-header p:first-child {
+  font-weight: bold;
+  color: #333;
+
+}
+
+.message-content {
+  display: flex;
+  text-align: end;
+  text-wrap: wrap;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages-container:hover::-webkit-scrollbar {
+  width: 10px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: rgb(136, 116, 134);
+  border-radius: 70px;
+}
+
