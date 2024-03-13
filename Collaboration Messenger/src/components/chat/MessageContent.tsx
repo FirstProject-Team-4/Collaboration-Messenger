@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Chat.css";
+import './MessageContent.css';
 import { useParams } from "react-router-dom";
 import { AddEmojiToGroupMessage, AddEmojiToMessage, deleteGroupMessage, deleteMessage, editGroupMessage, editMessage } from "../../service/chat";
 import Picker from 'emoji-picker-react';
 import { useAppContext } from "../../context/appContext";
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import ReplyAllIcon from '@mui/icons-material/ReplyAll';
+
 export type Message = {
     author: string,
     content: string,
@@ -99,7 +105,7 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
                 <div className="message-reactions">
                     {reaction.map((r:any, i:number) => {
                         return <> {r.users.length>0&&( <div key={i} className="reaction">
-                            <span onClick={()=>
+                            <span className='emodji-reaction' onClick={()=>
                                 {addCurrentEmojiToMessage(r.emoji,message)
                                     if(r.users.includes(userData.username)){
                                         r.users = r.users.filter((u:string)=>u!==userData.username);
@@ -110,7 +116,7 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
                                 }}>{r.emoji}</span>
                            {r.users.length>1&& <span>{r.users.length}</span>}
                         </div>)}
-                        </>
+                        </> 
                     })}
                 </div>
                 {showEmojiPicker && 
@@ -129,13 +135,13 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
                 }
                 {isHovered && 
                     <div className="message-options">
-                        {userData.username === message.author && <button onClick={() => deleteCurrentMessage(message.id)}>X</button>}
+                        {userData.username === message.author && <button onClick={() => deleteCurrentMessage(message.id)}><DeleteIcon/></button>}
                         {userData.username === message.author && <button onClick={() => {
                             setEdit(true);
                             setEditValue(message.content);
-                        }}>Edit</button>}
-                        <button onClick={() => setShowEmojiPicker(true)}>Emoji</button>
-                        {<button onClick={() => setReplyMessage&&setReplyMessage(message.content)}>Reply</button>}
+                        }}><EditNoteIcon/></button>}
+                        <button onClick={() => setShowEmojiPicker(true)}><AddReactionIcon/></button>
+                        {<button onClick={() => setReplyMessage&&setReplyMessage(message.content)}><ReplyAllIcon/></button>}
                         
                     </div>
                 }

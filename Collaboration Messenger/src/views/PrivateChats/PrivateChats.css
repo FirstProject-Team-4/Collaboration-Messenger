@@ -1,48 +1,103 @@
 .container {
     display: flex;
     flex-direction: row;
-
-}
-
-
-.column-inf, .user-profile {
+  }
+  
+  .column-inf {
     position: relative;
-    right:160px;
-    top: 10px;
+    right: 132px;
+    top: 15px;
     gap: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     top: 10px;
-    height: 600px;
+    height: 650px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
         0 30px 60px rgba(97, 218, 251, 0.3);
     border-radius: 10px;
     transition: all 0.5s ease;
-}
-.btn-friends{
+  }
+  
+  .btn-friends {
     position: relative;
     bottom: 20px;
     right: 230px;
-    top: 10px;
+    top: 15px;
     padding: 10px;
     height: 10%;
     border: 1px solid #fddddd;
-}
-
-.search-users {
+  }
+  
+  .search-users {
     position: relative;
     padding: 0;
     height: 10%;
     position: relative;
     bottom: 20px;
     left: 1050px;
-}
-
-.user-profile{
+  }
+  
+  .user-profile {
     position: relative;
-    left: 60px;
+    right: 25px;
     top: 50px;
-    height: 87%;
-}
-
+    height: 57%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    top: 10px;
+    height: 650px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
+    border-radius: 10px;
+    transition: all 0.5s ease;
+  }
+  
+  /* Styles for screens smaller than 1200px */
+  @media (max-width: 1200px) {
+    .column-inf, .user-profile {
+      right: 120px; 
+      height: 550px; 
+    }
+  
+    .btn-friends {
+      right: 200px; 
+    }
+  
+    .search-users {
+      left: 800px; 
+    }
+  }
+  
+  /* Styles for screens smaller than 800px */
+  @media (max-width: 800px) {
+    .column-inf, .user-profile {
+      right: 80px; 
+      height: 500px; 
+    }
+  
+    .btn-friends {
+      right: 170px; 
+    }
+  
+    .search-users {
+      left: 550px; 
+    }
+  }
+  
+  /* Styles for screens smaller than 600px */
+  @media (max-width: 600px) {
+    .column-inf, .user-profile {
+      right: 40px; 
+      height: 450px; 
+    }
+  
+    .btn-friends {
+      right: 140px; 
+    }
+  
+    .search-users {
+      left: 300px; 
+    }
+  }

@@ -23,7 +23,11 @@ justify-content: left;
   /* top: 50px; */
 }
 
-body{
+/* body{
   background-image: url('/image/background.jpg');
   background-size: cover; 
+} */
+
+body{
+  background-color: rgb(0, 0, 0);
 }

@@ -3,13 +3,13 @@ import { useAppContext } from "../../context/appContext";
 import { saveImage } from "../../service/storage";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom'; 
 import './Profile.css';
 
 
 const Profile = () => {
-    const { id } = useParams<{ id: string }>();
-    const { user, userData, setContext } = useAppContext(); // Assuming 'users' is an array of user objects
+    // const { id } = useParams<{ id: string }>();
+    const {  userData, setContext } = useAppContext();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [showEdit, setShowEdit] = useState(false);
@@ -38,10 +38,6 @@ const Profile = () => {
 
         setShowEdit(!showEdit);
     }
-    console.log(user);
-    console.log(userData.username);
-
-
 
     return (
         <div>
@@ -51,7 +47,7 @@ const Profile = () => {
                     {userData && userData.image && <img src={userData.image} alt="Profile" />}
                 </div>
                 <input type="file" onChange={handleImage} />
-                {userData?.handle === id && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
+                {userData && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
             </div>
             {showEdit ? (
                 <form onSubmit={handleSubmit}>
