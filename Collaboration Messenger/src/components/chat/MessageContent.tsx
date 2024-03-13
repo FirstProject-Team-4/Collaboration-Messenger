@@ -39,7 +39,7 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
 
     }, [message])
 
-console.log(reaction);
+
     const deleteCurrentMessage = (messageId: string) => {
         if (window.confirm('Are you sure you want to delete this message?')
         ) {
