@@ -22,35 +22,7 @@ export const stunConfig = {
 };
 
 
-export const createGroupOffer = async (peerConnection: RTCPeerConnection, callId: string) => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); // Get the media stream
-    stream.getTracks().forEach(track => peerConnection.addTrack(track, stream)); // Add the media stream to the peer connection
 
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer); // Set the offer to the local description
-
-    const offerRef = ref(db, `calls/${callId}/offer`); // Save the offer to Firebase
-    set(offerRef, {
-        type: offer.type,
-        sdp: offer.sdp
-    });
-
-    return offer; // Return the offer
-}
-export const createAnswer = async (peerConnection: RTCPeerConnection, offer: RTCSessionDescriptionInit, callId: string, participantId: string) => {
-    await peerConnection.setRemoteDescription(offer);
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-
-    // Save the answer to Firebase
-    const answerRef = ref(db, `calls/${callId}/participants/${participantId}/answer`);
-    set(answerRef, {
-        type: answer.type,
-        sdp: answer.sdp
-    });
-
-    return answer;
-}
 
 
 

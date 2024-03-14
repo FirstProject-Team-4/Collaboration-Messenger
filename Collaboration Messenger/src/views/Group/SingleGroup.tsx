@@ -11,7 +11,7 @@ import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
 import { useAppContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
-import { createGroupOffer, stunConfig } from '../../service/video-audio-calls';
+import {  stunConfig } from '../../service/video-audio-calls';
 
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
@@ -113,9 +113,9 @@ export default function SingleGroup() {
                 };
                 onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
                     const data = snapshot.val();
-                    console.log(`${data} THIS SHOULD BE ICE CANDIDATE`)
+                    console.log(`${data.candidate} THIS SHOULD BE ICE CANDIDATE`)
                     console.log('Received new ICE candidate');
-                    if (data && data.target === userData?.username) {
+                    if (data && data.target === member.username) {
                         const candidate = new RTCIceCandidate(data.candidate);
                         await peerConnection.addIceCandidate(candidate);
                         console.log('Added ICE candidate to peer connection');
@@ -133,7 +133,7 @@ export default function SingleGroup() {
                        
                     }
                 });
-    
+
                 peerConnection.ontrack = (event) => {
                     setRemoteStream(prevStreams => {
                         console.log(event.streams[0])
@@ -214,7 +214,8 @@ export default function SingleGroup() {
         onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
             const data = snapshot.val();
             console.log('Received new ICE candidate');
-            if (data && data.target === userData?.username) {
+            if (data && data.target === offer.username) {
+                
                 const candidate = new RTCIceCandidate(data.candidate);
                 await peerConnection.addIceCandidate(candidate);
                 console.log('Added ICE candidate to peer connection');
