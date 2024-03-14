@@ -137,19 +137,14 @@ export default function SingleGroup() {
             console.log(e);
         }
     }
+  
+
     const answerCall = async (offer: any) => {
         setIsCallStarted(true);
         console.log(offer);
-        
+    
         const peerConnection = new RTCPeerConnection(stunConfig);
-        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
-            const data = snapshot.val();
-            if (data && data.target === offer.caller) {
-                const candidate = new RTCIceCandidate(data.candidate);
-                await peerConnection.addIceCandidate(candidate);
-            }
-        });
-
+    
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (localVideoRef.current) {
             localVideoRef.current.srcObject = localStream;
@@ -175,6 +170,18 @@ export default function SingleGroup() {
     
         // Now call setRemoteDescription and createAnswer
         await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
+    
+        // Listen for new ICE candidates and add them to the peer connection
+        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
+            const data = snapshot.val();
+            console.log(data);
+            if (data && data.target === offer.caller) {
+                console.log('ice candidate event called');
+                const candidate = new RTCIceCandidate(data.candidate);
+                await peerConnection.addIceCandidate(candidate);
+            }
+        });
+    
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
     
@@ -186,19 +193,12 @@ export default function SingleGroup() {
                 sdp: answer.sdp
             }
         });
+    }
     
-        // Listen for offers after setting up the peer connection
-        onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
-            const data = snapshot.val();
-            if (data) {
-                setOffers(data.offer);
-                setIsCallStarted(true);
-            }
-        });
-        peerConnection.onconnectionstatechange = (event) => {
-            console.log(`Connection state change: ${peerConnection.connectionState}`);
-        };
-    };
+
+    
+    
+      
 
 
     const handleEndCall = () => {
