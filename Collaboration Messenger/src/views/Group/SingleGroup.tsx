@@ -168,77 +168,62 @@ export default function SingleGroup() {
     }
   
  console.log(remoteStream)
-    const answerCall = async (offer: any) => {
-        console.log('answerCall started');
-        setIsCallStarted(true);
-    
-        const peerConnection = new RTCPeerConnection(stunConfig);
-        console.log('Created new RTCPeerConnection');
-    
-        const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        setLocalStream(localStream);
-        console.log('Got local stream');
-        if (localVideoRef.current) {
-            localVideoRef.current.srcObject = localStream;
-            console.log('Set local video ref srcObject');
-        }
-        localStream.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localStream);
-            console.log('Added track to peer connection');
-        });
-    
-        // Set up event handlers before calling setRemoteDescription and createAnswer
-        peerConnection.ontrack = (event) => {
-            console.log('ontrack event fired');
-            setRemoteStream(prevStreams => [...prevStreams, { stream: event.streams[0], username: userData?.username }]);
-            console.log('Updated remoteStream state');
-        };
-        peerConnection.onicecandidate = async (event) => {
-            if (event.candidate) {
-                const candidate = event.candidate.toJSON();
-                const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
-              
-               const obj= {
-                    target: offer.caller,
-                    candidate: candidate,
-                };
-                const newCandidateRef = update(iceCandidateRef,obj);
-            }
-        };
-    
-        // Now call setRemoteDescription and createAnswer
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
-        console.log('Set remote description');
-    
-        // Listen for new ICE candidates and add them to the peer connection
-        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
-            const data = snapshot.val();
-            console.log('Received new ICE candidate');
-            if (data && data.target === offer.username) {
-                
-                const candidate = new RTCIceCandidate(data.candidate);
-                await peerConnection.addIceCandidate(candidate);
-                console.log('Added ICE candidate to peer connection');
-            }
-        });
-    
-        const answer = await peerConnection.createAnswer();
-        console.log('Created answer');
-        await peerConnection.setLocalDescription(answer);
-        peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
-        console.log('Set local description');
-    
-        const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
-        await set(answerRef, {
-            caller: userData?.username,
-            answer: {
-                type: answer.type,
-                sdp: answer.sdp
-            }
-        });
-        console.log('Set answerRef');
+
+ const answerCall = async (offer: any) => {
+    setIsCallStarted(true);
+    console.log(offer);
+
+    const peerConnection = new RTCPeerConnection(stunConfig);
+
+    const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+    if (localVideoRef.current) {
+        localVideoRef.current.srcObject = localStream;
+    }
+    localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+    // Set up event handlers before calling setRemoteDescription and createAnswer
+    peerConnection.ontrack = (event) => {
+        console.log('ontrack event called');
+        console.log(event);
+        setRemoteStream(prevStreams => [...prevStreams, { stream: event.streams[0], username: userData?.username }]);
     };
-    
+    peerConnection.onicecandidate = async (event) => {
+        if (event.candidate) {
+            const candidate = event.candidate.toJSON();
+            const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
+            await update(iceCandidateRef, {
+                target: offer.caller,
+                candidate: candidate,
+            });
+        }
+    };
+
+    // Now call setRemoteDescription and createAnswer
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
+
+    // Listen for new ICE candidates and add them to the peer connection
+    onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
+        const data = snapshot.val();
+        console.log(data);
+        if (data && data.target === offer.caller) {
+            console.log('ice candidate event called');
+            const candidate = new RTCIceCandidate(data.candidate);
+            await peerConnection.addIceCandidate(candidate);
+        }
+    });
+
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+
+    const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
+    await set(answerRef, {
+        caller: userData?.username,
+        answer: {
+            type: answer.type,
+            sdp: answer.sdp
+        }
+    });
+}
 
     
     
