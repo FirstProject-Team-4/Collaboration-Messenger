@@ -148,7 +148,7 @@ export default function SingleGroup() {
     const answerCall = async (offer: any) => {
         console.log(offer);
         const peerConnection = new RTCPeerConnection(stunConfig);
-        const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
     
         // Set up event handlers before calling setRemoteDescription and createAnswer
@@ -233,7 +233,7 @@ export default function SingleGroup() {
                             {isScreenSharing ? 'Stop Sharing Screen' : 'Share Screen'}
                         </button>
                         <button onClick={() => {
-                            if (!offers) {
+                            if (offers.length===0) {
                                 startGroupVideoCall();
                             }
                             else {
