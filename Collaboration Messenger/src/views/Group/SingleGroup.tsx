@@ -98,7 +98,10 @@ export default function SingleGroup() {
                     peerConnection.addTrack(track, localStream);
         
                 });
-    
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+
+                //ICE CANDIDATES 
                 peerConnection.onicecandidate = async (event) => {
                     if (event.candidate) {
                         const candidate = event.candidate.toJSON();
@@ -107,10 +110,11 @@ export default function SingleGroup() {
                             target: member.username,
                             candidate: candidate,
                         };
-                        const newCandidateRef = update(iceCandidateRef,obj);
+                        const newCandidateRef =await update(iceCandidateRef,obj);
                        
                     }
                 };
+                //LISTENING FOR ICE CANDIDATES
                 onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
                     const data = snapshot.val();
                     console.log(`${data.candidate} THIS SHOULD BE ICE CANDIDATE`)
@@ -121,6 +125,8 @@ export default function SingleGroup() {
                         console.log('Added ICE candidate to peer connection');
                     }
                 });
+
+                //LISTENING FOR ANSWERS
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
 
                     const data = snapshot.val();
@@ -133,7 +139,7 @@ export default function SingleGroup() {
                        
                     }
                 });
-
+                //LISTENING FOR TRACKS
                 peerConnection.ontrack = (event) => {
                     setRemoteStream(prevStreams => {
                         console.log(event.streams[0])
@@ -146,9 +152,8 @@ export default function SingleGroup() {
                     });
                 };
     
-                const offer = await peerConnection.createOffer();
-                await peerConnection.setLocalDescription(offer);
-               
+                
+               //SENDING OFFERS
                 const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
                 await update(offerRef, {
                     target: member.username,
