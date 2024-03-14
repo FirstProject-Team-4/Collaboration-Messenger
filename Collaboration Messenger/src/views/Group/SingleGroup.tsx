@@ -103,11 +103,12 @@ export default function SingleGroup() {
                     if (event.candidate) {
                         const candidate = event.candidate.toJSON();
                         const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`);
-                        const newCandidateRef = push(iceCandidateRef);
-                        await set(newCandidateRef, {
+                        const obj={
                             target: member.username,
                             candidate: candidate,
-                        });
+                        };
+                        const newCandidateRef = update(iceCandidateRef,obj);
+                       
                     }
                 };
                 onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
@@ -196,11 +197,12 @@ export default function SingleGroup() {
             if (event.candidate) {
                 const candidate = event.candidate.toJSON();
                 const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
-                const newCandidateRef = push(iceCandidateRef);
-                await set(newCandidateRef, {
+              
+               const obj= {
                     target: offer.caller,
                     candidate: candidate,
-                });
+                };
+                const newCandidateRef = update(iceCandidateRef,obj);
             }
         };
     
