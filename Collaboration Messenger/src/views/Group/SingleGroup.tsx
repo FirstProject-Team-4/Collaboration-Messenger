@@ -79,19 +79,17 @@ export default function SingleGroup() {
     const startGroupVideoCall = async () => {
         try {
             setIsCallStarted(true);
-            const localStream = await navigator.mediaDevices.getUserMedia({ video: true });// access the user media
+            const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
             if (localVideoRef.current) {
                 localVideoRef.current.srcObject = localStream;
-                // setLocalStream(localStream);
-                console.log(localStream);
             }
-
-            groupMembers.forEach(async member => { // loop through the members of the group
-                const peerConnection = new RTCPeerConnection(stunConfig); // create a new peer connection
+    
+            // Use for...of instead of forEach
+            for (const member of groupMembers) {
+                const peerConnection = new RTCPeerConnection(stunConfig);
                 peerConnections.current.push(peerConnection);
-                localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));// add the local stream to the peer connection
-                console.log(localStream.getTracks());
-                // Listen for ICE candidates
+                localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+    
                 peerConnection.onicecandidate = async (event) => {
                     if (event.candidate) {
                         const candidate = event.candidate.toJSON();
@@ -102,32 +100,22 @@ export default function SingleGroup() {
                         });
                     }
                 };
-            
-                // Listen for answers
+    
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
                     const data = snapshot.val();
-                    console.log(data);
                     if (data && data.caller === member.username) {
                         const answer = new RTCSessionDescription(data.answer);
                         await peerConnection.setRemoteDescription(answer);
                     }
                 });
+    
                 peerConnection.ontrack = (event) => {
                     setRemoteStream(prevStreams => [...prevStreams, event.streams[0]]);
                 }
-                // onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
-                //     const data = snapshot.val();
-                //     if (data && data.caller === member.username) {
-                //         const answer = new RTCSessionDescription(data.answer);
-                //         await peerConnection.setRemoteDescription(answer);
-                //     }
-                // });
-
-
-
-                const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
-                const offer = await peerConnection.createOffer()
+    
+                const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);
+                const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
                 await update(offerRef, {
                     target: member.username,
                     caller: userData?.username,
@@ -136,11 +124,8 @@ export default function SingleGroup() {
                         sdp: offer.sdp
                     }
                 });
-
-            });
-
-        }
-        catch (e) {
+            }
+        } catch (e) {
             console.log(e);
         }
     }
