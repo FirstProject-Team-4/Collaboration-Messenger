@@ -52,10 +52,9 @@ export default function SingleGroup() {
         if (userData) {
             onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
                 const data = snapshot.val();
-                const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
+                const offer = Object.values(data).filter((offer: any) => offer.target === userData.username) as { offer: any }[];
 
-                if (offer) {
-                    
+                if (offer.length > 0) {
                     console.log(offer[0].offer);
                     // setJoinGroupCall(true); // Set incomingCall to true when an offer is received
                 }
@@ -153,23 +152,22 @@ export default function SingleGroup() {
         peerConnection.onicecandidate = async (event) => {
             if (event.candidate) {
                 const candidate = event.candidate.toJSON();
-                const iceCandidateRef = ref(db, 'iceCandidates');
+                const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
                 await push(iceCandidateRef, {
-                    target: userData?.username,
+                    target: offer.caller,
                     candidate: candidate,
                 });
             }
         };
-     
+    
         // Now call setRemoteDescription and createAnswer
-        await peerConnection.setRemoteDescription(offer);
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
-    console.log(answer);
-    console.log(offer);
-        const answerRef =  ref(db, `GroupCalls/${id}/answers/${userData?.username}`);;
-        await push(answerRef, {
-            caller: offer.target,
+    
+        const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
+        await set(answerRef, {
+            caller: userData?.username,
             answer: {
                 type: answer.type,
                 sdp: answer.sdp
@@ -177,7 +175,7 @@ export default function SingleGroup() {
         });
     
         // Listen for offers after setting up the peer connection
-        onValue(ref(db, `offers/${userData?.username}`), async snapshot => {
+        onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
             const data = snapshot.val();
             if (data) {
                 setOffer(data.offer);
