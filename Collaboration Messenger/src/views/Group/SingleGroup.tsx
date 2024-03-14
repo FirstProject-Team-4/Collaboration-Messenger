@@ -77,7 +77,7 @@ export default function SingleGroup() {
     const startGroupVideoCall = async () => {
         try {
             setIsCallStarted(true);
-            const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });// access the user media
+            const localStream = await navigator.mediaDevices.getUserMedia({ video: true });// access the user media
             if (localVideoRef.current) {
                 localVideoRef.current.srcObject = localStream;
                 // setLocalStream(localStream);
