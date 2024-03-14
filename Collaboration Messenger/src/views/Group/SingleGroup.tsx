@@ -17,7 +17,7 @@ export default function SingleGroup() {
     const [open, setOpen] = useState(false);
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
-    const [remoteStream, setRemoteStream] = useState<MediaStream[]>([]);
+    const [remoteStream, setRemoteStream] = useState<{ stream: MediaStream, username: string }[]>([]);
     const [offers, setOffers] = useState<any[]>([]);
     const [isCallStarted, setIsCallStarted] = useState(false);
     const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -72,6 +72,7 @@ export default function SingleGroup() {
     const leaveGroup = () => {
         removeGroupMember(currentGroup.id, userData.username);
     }
+   
 
 
 
@@ -102,6 +103,7 @@ export default function SingleGroup() {
                 };
     
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
+                    console.log('answer event called');
                     const data = snapshot.val();
                     if (data && data.caller === member.username) {
                         const answer = new RTCSessionDescription(data.answer);
@@ -110,8 +112,14 @@ export default function SingleGroup() {
                 });
     
                 peerConnection.ontrack = (event) => {
-                    setRemoteStream(prevStreams => [...prevStreams, event.streams[0]]);
-                }
+                    setRemoteStream(prevStreams => {
+                        if (!prevStreams.some(existingStream => existingStream.username === member.username)) {
+                            return [...prevStreams, { stream: event.streams[0], username: member.username }];
+                        } else {
+                            return prevStreams;
+                        }
+                    });
+                };
     
                 const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);
@@ -132,7 +140,16 @@ export default function SingleGroup() {
     const answerCall = async (offer: any) => {
         setIsCallStarted(true);
         console.log(offer);
+        
         const peerConnection = new RTCPeerConnection(stunConfig);
+        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
+            const data = snapshot.val();
+            if (data && data.target === offer.caller) {
+                const candidate = new RTCIceCandidate(data.candidate);
+                await peerConnection.addIceCandidate(candidate);
+            }
+        });
+
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (localVideoRef.current) {
             localVideoRef.current.srcObject = localStream;
@@ -143,7 +160,7 @@ export default function SingleGroup() {
         peerConnection.ontrack = (event) => {
             console.log('ontrack event called');
             console.log(event);
-            setRemoteStream(prevStreams => [...prevStreams, event.streams[0]]);
+            setRemoteStream(prevStreams => [...prevStreams, { stream: event.streams[0], username: userData?.username }]);
         };
         peerConnection.onicecandidate = async (event) => {
             if (event.candidate) {
@@ -178,6 +195,9 @@ export default function SingleGroup() {
                 setIsCallStarted(true);
             }
         });
+        peerConnection.onconnectionstatechange = (event) => {
+            console.log(`Connection state change: ${peerConnection.connectionState}`);
+        };
     };
 
 
@@ -236,8 +256,8 @@ export default function SingleGroup() {
                     </div>
 
                     {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay  playsInline style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} ></video>}
-                    {isCallStarted && remoteStream.map((stream, index) => (
-                        <video key={index} style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => video ? video.srcObject = stream : null}></video>
+                    {isCallStarted && remoteStream.map((element, index) => (
+                        <video key={index} style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => video ? video.srcObject = element.stream : null}></video>
                     ))}
 
                     {!isCallStarted && <Chat type={'group'} />}
