@@ -144,8 +144,12 @@ export default function SingleGroup() {
         const peerConnection = new RTCPeerConnection(stunConfig);
         onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
             const data = snapshot.val();
+            console.log(data.target, offer.caller);
+            
+            
             if (data && data.target === offer.caller) {
                 const candidate = new RTCIceCandidate(data.candidate);
+                console.log(candidate);
                 await peerConnection.addIceCandidate(candidate);
             }
         });
@@ -187,11 +191,19 @@ export default function SingleGroup() {
             }
         });
     
-        // Listen for offers after setting up the peer connection
+         // Listen for offers after setting up the peer connection
+        // onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
+        //     const data = snapshot.val();
+        //     if (data) {
+        //         setOffers(data.offer);
+        //         setIsCallStarted(true);
+        //     }
+        // });
+       
         onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
             const data = snapshot.val();
             if (data) {
-                setOffers(data.offer);
+                setOffers(Array.isArray(data.offer) ? data.offer : [data.offer]);
                 setIsCallStarted(true);
             }
         });
