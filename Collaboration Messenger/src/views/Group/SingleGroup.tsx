@@ -91,7 +91,7 @@ export default function SingleGroup() {
                 if (member.username === userData?.username) {
                     continue;
                 }
-                const peerConnection = new RTCPeerConnection(stunConfig);
+                const peerConnection =  new RTCPeerConnection(stunConfig);
         
                 peerConnections.current.push(peerConnection);
                 localStream.getTracks().forEach(track => {
@@ -121,6 +121,7 @@ export default function SingleGroup() {
                     console.log('Received new ICE candidate');
                     if (data && data.target === member.username) {
                         const candidate = new RTCIceCandidate(data.candidate);
+                        console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
                         await peerConnection.addIceCandidate(candidate);
                         console.log('Added ICE candidate to peer connection');
                     }
@@ -213,6 +214,7 @@ export default function SingleGroup() {
         if (data && data.target === offer.caller) {
             console.log('ice candidate event called');
             const candidate = new RTCIceCandidate(data.candidate);
+            console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
             await peerConnection.addIceCandidate(candidate);
         }
     });
