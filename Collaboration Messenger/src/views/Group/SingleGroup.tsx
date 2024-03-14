@@ -157,13 +157,14 @@ export default function SingleGroup() {
                 });
             }
         };
-    
+     
         // Now call setRemoteDescription and createAnswer
         await peerConnection.setRemoteDescription(offer);
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
-    
-        const answerRef = ref(db, 'answers');
+    console.log(answer);
+    console.log(offer);
+        const answerRef =  ref(db, `GroupCalls/${id}/answers/${userData?.username}`);;
         await push(answerRef, {
             caller: offer.target,
             answer: {
