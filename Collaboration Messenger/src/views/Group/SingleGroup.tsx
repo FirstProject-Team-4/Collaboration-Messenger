@@ -106,6 +106,7 @@ export default function SingleGroup() {
                 // Listen for answers
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
                     const data = snapshot.val();
+                    console.log(data);
                     if (data && data.caller === member.username) {
                         const answer = new RTCSessionDescription(data.answer);
                         await peerConnection.setRemoteDescription(answer);
@@ -144,6 +145,7 @@ export default function SingleGroup() {
         }
     }
     const answerCall = async (offer: any) => {
+        setIsCallStarted(true);
         console.log(offer);
         const peerConnection = new RTCPeerConnection(stunConfig);
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -157,7 +159,7 @@ export default function SingleGroup() {
             if (event.candidate) {
                 const candidate = event.candidate.toJSON();
                 const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
-                await push(iceCandidateRef, {
+                await update(iceCandidateRef, {
                     target: offer.caller,
                     candidate: candidate,
                 });
