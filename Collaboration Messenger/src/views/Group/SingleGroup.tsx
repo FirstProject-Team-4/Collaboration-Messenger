@@ -138,7 +138,7 @@ export default function SingleGroup() {
 
                     }
                 };
-                
+
 
 
                 //LISTENING FOR TRACKS
@@ -146,7 +146,9 @@ export default function SingleGroup() {
                     setRemoteStream(prevStreams => {
                         console.log(event.streams[0])
                         if (!prevStreams.some(existingStream => existingStream.username === member.username)) {
-                            return [...prevStreams, { stream: event.streams[0], username: member.username }];
+                            const newStreams = [...prevStreams, { stream: event.streams[0], username: member.username }];
+                            console.log('remoteStream state after update', newStreams); // Check if the remoteStream state is being updated correctly
+                            return newStreams;
                         } else {
 
                             return prevStreams;
@@ -292,10 +294,14 @@ export default function SingleGroup() {
                     </div>
 
                     {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay playsInline style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} ></video>}
-                    {isCallStarted && remoteStream.length > 0 && remoteStream.map((element, index) => (
-                        <video key={index} style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => video ? video.srcObject = element.stream : null}></video>
+                    {isCallStarted && remoteStream.map((element, index) => (
+                        <video key={index} style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => {
+                            if (video) {
+                                video.srcObject = element.stream;
+                                console.log('video element after setting srcObject', video); // Check if the video element is displaying the stream correctly
+                            }
+                        }}></video>
                     ))}
-
                     {!isCallStarted && <Chat type={'group'} />}
                 </div>
                 <div className="members-container">
