@@ -50,13 +50,15 @@ export default function SingleGroup() {
     }, [id])
     useEffect(() => {
         if (userData) {
-                    onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
+                    onValue(ref(db, `GroupCalls/${id}/offers`), snapshot => {
                         if (!snapshot.exists()) {
                            return;
                         }
                         const data = snapshot.val();
                         console.log(data);
-                        const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
+                        const offer=Object.keys(data).filter(key=>key!==userData.username).map(key=>data[key]);
+                        
+
                          console.log(offer);
                        offer.forEach(async (offer:any)=>{
                         
