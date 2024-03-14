@@ -88,6 +88,7 @@
     flex-direction: row;
     position: relative;
     right: 40px;
+  
     justify-content: center;
     justify-items: center;
     align-items: center;
@@ -138,7 +139,21 @@
     border-radius: 10px;
     transition: all 0.5s ease; /* Add transition */
 }
+.chat-header{
+    display: absolute;
+    flex-direction: row;
+   top: 200px;
+    border: 1px solid #d16464;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 
+                0 30px 60px rgba(97, 218, 251, 0.3); 
+    border-radius: 10px;
+    transition: all 0.5s ease; /* Add transition */
 
+}
 
 
 
