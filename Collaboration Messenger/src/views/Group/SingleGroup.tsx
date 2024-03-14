@@ -18,7 +18,7 @@ export default function SingleGroup() {
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
     const [remoteStream, setRemoteStream] = useState<MediaStream[]>([]);
-    const [offer, setOffer] = useState<any>();
+    const [offer, setOffer] = useState<any>(null);
     const [isCallStarted, setIsCallStarted] = useState(false);
     const localVideoRef = useRef<HTMLVideoElement>(null);
   const peerConnections = useRef<RTCPeerConnection[]>([]);
@@ -52,6 +52,7 @@ export default function SingleGroup() {
         if (userData) {
             onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
                 const data = snapshot.val();
+                console.log(data);
                 const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
 
                 if (data && data.target === userData.username) {
@@ -112,13 +113,13 @@ export default function SingleGroup() {
                 peerConnection.ontrack = (event) => {
                     setRemoteStream(prevStreams => [...prevStreams, event.streams[0]]);
                 }
-                onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
-                    const data = snapshot.val();
-                    if (data && data.caller === member.username) {
-                        const answer = new RTCSessionDescription(data.answer);
-                        await peerConnection.setRemoteDescription(answer);
-                    }
-                });
+                // onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
+                //     const data = snapshot.val();
+                //     if (data && data.caller === member.username) {
+                //         const answer = new RTCSessionDescription(data.answer);
+                //         await peerConnection.setRemoteDescription(answer);
+                //     }
+                // });
 
 
 
@@ -153,23 +154,22 @@ export default function SingleGroup() {
         peerConnection.onicecandidate = async (event) => {
             if (event.candidate) {
                 const candidate = event.candidate.toJSON();
-                const iceCandidateRef = ref(db, 'iceCandidates');
+                const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
                 await push(iceCandidateRef, {
-                    target: userData?.username,
+                    target: offer.caller,
                     candidate: candidate,
                 });
             }
         };
-     
+    
         // Now call setRemoteDescription and createAnswer
-        await peerConnection.setRemoteDescription(offer);
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
-    console.log(answer);
-    console.log(offer);
-        const answerRef =  ref(db, `GroupCalls/${id}/answers/${userData?.username}`);;
-        await push(answerRef, {
-            caller: offer.target,
+    
+        const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
+        await set(answerRef, {
+            caller: userData?.username,
             answer: {
                 type: answer.type,
                 sdp: answer.sdp
@@ -177,7 +177,7 @@ export default function SingleGroup() {
         });
     
         // Listen for offers after setting up the peer connection
-        onValue(ref(db, `offers/${userData?.username}`), async snapshot => {
+        onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
             const data = snapshot.val();
             if (data) {
                 setOffer(data.offer);
@@ -229,7 +229,7 @@ export default function SingleGroup() {
                             {isScreenSharing ? 'Stop Sharing Screen' : 'Share Screen'}
                         </button>
                         <button onClick={() => {
-                            if (!isCallStarted) {
+                            if (!offer) {
                                 startGroupVideoCall();
                             }
                             else {
