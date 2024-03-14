@@ -18,7 +18,7 @@ export default function SingleGroup() {
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
     const [remoteStream, setRemoteStream] = useState<MediaStream[]>([]);
-    const [offer, setOffer] = useState<any>(null);
+    const [offers, setOffers] = useState<any[]>([]);
     const [isCallStarted, setIsCallStarted] = useState(false);
     const localVideoRef = useRef<HTMLVideoElement>(null);
   const peerConnections = useRef<RTCPeerConnection[]>([]);
@@ -50,19 +50,22 @@ export default function SingleGroup() {
     }, [id])
     useEffect(() => {
         if (userData) {
-            onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
-                const data = snapshot.val();
-                console.log(data);
-                const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
-
-                if (data && data.target === userData.username) {
-                    setOffer(data.offer);
-                    console.log(offer);
-                    // setJoinGroupCall(true); // Set incomingCall to true when an offer is received
+                    onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
+                        if (!snapshot.exists()) {
+                           return;
+                        }
+                        const data = snapshot.val();
+                        console.log(data);
+                        const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
+                         console.log(offer);
+                       offer.forEach(async (offer:any)=>{
+                        
+                        setOffers([...offers,offer]);
+                           console.log(offers);
+                        });
+                    });
                 }
-            });
-        }
-    }, [userData, id]);
+            }, [userData, id]);
 
     const leaveGroup = () => {
         removeGroupMember(currentGroup.id, userData.username);
@@ -126,7 +129,7 @@ export default function SingleGroup() {
                 const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
                 const offer = await peerConnection.createOffer()
                 await peerConnection.setLocalDescription(offer);
-                await push(offerRef, {
+                await update(offerRef, {
                     target: member.username,
                     caller: userData?.username,
                     offer: {
@@ -143,6 +146,7 @@ export default function SingleGroup() {
         }
     }
     const answerCall = async (offer: any) => {
+        console.log(offer);
         const peerConnection = new RTCPeerConnection(stunConfig);
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
@@ -180,7 +184,7 @@ export default function SingleGroup() {
         onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
             const data = snapshot.val();
             if (data) {
-                setOffer(data.offer);
+                setOffers(data.offer);
                 setIsCallStarted(true);
             }
         });
@@ -229,11 +233,13 @@ export default function SingleGroup() {
                             {isScreenSharing ? 'Stop Sharing Screen' : 'Share Screen'}
                         </button>
                         <button onClick={() => {
-                            if (!offer) {
+                            if (!offers) {
                                 startGroupVideoCall();
                             }
                             else {
-                                answerCall(offer)
+                                offers.forEach(offer => {
+                                    answerCall(offer);
+                                });
                             }
 
                         }}>VideoCall</button>
