@@ -32,7 +32,7 @@ export default function SingleGroup() {
     useEffect(() => {
         if (id) {
             getGroupByID(id).then((group) => {
-                console.log(group);
+  
                 if (group) {
                     setCurrentGroup(group);
                 }
@@ -55,15 +55,14 @@ export default function SingleGroup() {
                            return;
                         }
                         const data = snapshot.val();
-                        console.log(data);
+
                         const offer=Object.keys(data).filter(key=>key!==userData.username).map(key=>data[key]);
                         
 
-                         console.log(offer);
                        offer.forEach(async (offer:any)=>{
                         
                         setOffers([...offers,offer]);
-                           console.log(offers);
+
                         });
                     });
                 }
@@ -88,12 +87,17 @@ export default function SingleGroup() {
             // Use for...of instead of forEach
             for (const member of groupMembers) {
                 const peerConnection = new RTCPeerConnection(stunConfig);
+                console.log('Created new peer connection for:', member.username);
                 peerConnections.current.push(peerConnection);
-                localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+                localStream.getTracks().forEach(track => {
+                    peerConnection.addTrack(track, localStream);
+                    console.log('Added track to peer connection for:', member.username);
+                });
     
                 peerConnection.onicecandidate = async (event) => {
                     if (event.candidate) {
                         const candidate = event.candidate.toJSON();
+                        console.log('onicecandidate event fired for:', member.username);
                         const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`);
                         await update(iceCandidateRef, {
                             target: member.username,
@@ -103,11 +107,14 @@ export default function SingleGroup() {
                 };
     
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
-                    console.log('answer event called');
+
                     const data = snapshot.val();
                     if (data && data.caller === member.username) {
+                 
                         const answer = new RTCSessionDescription(data.answer);
+
                         await peerConnection.setRemoteDescription(answer);
+                        console.log('Set remote description for:', member.username);
                     }
                 });
     
@@ -123,6 +130,7 @@ export default function SingleGroup() {
     
                 const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);
+                console.log('Created offer for:', member.username);
                 const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
                 await update(offerRef, {
                     target: member.username,
@@ -134,56 +142,67 @@ export default function SingleGroup() {
                 });
             }
         } catch (e) {
-            console.log(e);
+
         }
     }
   
 
     const answerCall = async (offer: any) => {
+        console.log('answerCall started');
         setIsCallStarted(true);
-        console.log(offer);
     
         const peerConnection = new RTCPeerConnection(stunConfig);
+        console.log('Created new RTCPeerConnection');
     
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        console.log('Got local stream');
         if (localVideoRef.current) {
             localVideoRef.current.srcObject = localStream;
+            console.log('Set local video ref srcObject');
         }
-        localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+        localStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localStream);
+            console.log('Added track to peer connection');
+        });
     
         // Set up event handlers before calling setRemoteDescription and createAnswer
         peerConnection.ontrack = (event) => {
-            console.log('ontrack event called');
-            console.log(event);
+            console.log('ontrack event fired');
             setRemoteStream(prevStreams => [...prevStreams, { stream: event.streams[0], username: userData?.username }]);
+            console.log('Updated remoteStream state');
         };
         peerConnection.onicecandidate = async (event) => {
             if (event.candidate) {
+                console.log('onicecandidate event fired');
                 const candidate = event.candidate.toJSON();
                 const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
                 await update(iceCandidateRef, {
                     target: offer.caller,
                     candidate: candidate,
                 });
+                console.log('Updated iceCandidateRef');
             }
         };
     
         // Now call setRemoteDescription and createAnswer
         await peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
+        console.log('Set remote description');
     
         // Listen for new ICE candidates and add them to the peer connection
         onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
             const data = snapshot.val();
-            console.log(data);
+            console.log('Received new ICE candidate');
             if (data && data.target === offer.caller) {
-                console.log('ice candidate event called');
                 const candidate = new RTCIceCandidate(data.candidate);
                 await peerConnection.addIceCandidate(candidate);
+                console.log('Added ICE candidate to peer connection');
             }
         });
     
         const answer = await peerConnection.createAnswer();
+        console.log('Created answer');
         await peerConnection.setLocalDescription(answer);
+        console.log('Set local description');
     
         const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
         await set(answerRef, {
@@ -193,7 +212,8 @@ export default function SingleGroup() {
                 sdp: answer.sdp
             }
         });
-    }
+        console.log('Set answerRef');
+    };
     
 
     
