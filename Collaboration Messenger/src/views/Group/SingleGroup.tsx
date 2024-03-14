@@ -111,8 +111,20 @@ export default function SingleGroup() {
                         const answer = new RTCSessionDescription(data.answer);
 
                         await peerConnection.setRemoteDescription(answer);
-
+                //LISTENING FOR ICE CANDIDATES
+                onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
+                    const data = snapshot.val();
+                    console.log(`${data.candidate} THIS SHOULD BE ICE CANDIDATE`)
+                    console.log('Received new ICE candidate');
+                    if (data && data.target === member.username) {
+                        const candidate = new RTCIceCandidate(data.candidate);
+                        console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
+                        await peerConnection.addIceCandidate(candidate);
+                        console.log('Added ICE candidate to peer connection');
                     }
+                });
+                    }
+
                 });
                 //ICE CANDIDATES 
                 peerConnection.onicecandidate = async (event) => {
