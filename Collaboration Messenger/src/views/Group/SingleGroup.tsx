@@ -52,8 +52,11 @@ export default function SingleGroup() {
         if (userData) {
             onValue(ref(db, `GroupCalls/${id}/offers/${userData.username}`), snapshot => {
                 const data = snapshot.val();
-                if (data && data.target === userData.username) {
-                    setOffer(data.offer);
+                const offer=Object.values(data).filter((offer:any)=>offer.target===userData.username);
+
+                if (offer) {
+                    
+                    console.log(offer[0].offer);
                     // setJoinGroupCall(true); // Set incomingCall to true when an offer is received
                 }
             });
