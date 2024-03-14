@@ -92,23 +92,23 @@ export default function SingleGroup() {
                 localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));// add the local stream to the peer connection
                 console.log(localStream.getTracks());
                 // Listen for ICE candidates
+                peerConnection.onicecandidate = async (event) => {
+                    if (event.candidate) {
+                        const candidate = event.candidate.toJSON();
+                        const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`);
+                        await update(iceCandidateRef, {
+                            target: member.username,
+                            candidate: candidate,
+                        });
+                    }
+                };
+            
+                // Listen for answers
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
                     const data = snapshot.val();
                     if (data && data.caller === member.username) {
                         const answer = new RTCSessionDescription(data.answer);
                         await peerConnection.setRemoteDescription(answer);
-                
-                        // Handle ICE candidate generation
-                        peerConnection.onicecandidate = async (event) => {
-                            if (event.candidate) {
-                                const candidate = event.candidate.toJSON();
-                                const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`);
-                                await update(iceCandidateRef, {
-                                    target: member.username,
-                                    candidate: candidate,
-                                });
-                            }
-                        };
                     }
                 });
                 peerConnection.ontrack = (event) => {
