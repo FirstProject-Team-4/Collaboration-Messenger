@@ -1,0 +1,15 @@
+Create an offer: One peer (the caller) creates an offer using the createOffer method on their RTCPeerConnection object. This generates an SDP (Session Description Protocol) offer, which contains information about any media tracks that the caller wants to send, and any data channels they want to open.
+
+Set the offer as the local description: The caller sets this offer as their local description using the setLocalDescription method. This tells the RTCPeerConnection what media tracks and data channels it should be prepared to send.
+
+Send the offer to the other peer: The caller then sends this offer to the other peer (the callee) using some form of signaling (in your case, it looks like you're using Firebase).
+
+Set the offer as the remote description: The callee receives this offer and sets it as their remote description using the setRemoteDescription method. This tells their RTCPeerConnection what media tracks and data channels it should be prepared to receive.
+
+Create an answer: The callee then creates an answer using the createAnswer method on their RTCPeerConnection. This generates an SDP answer, which contains information about any media tracks that the callee is willing to receive, and any data channels they are willing to open.
+
+Set the answer as the local description: The callee sets this answer as their local description using the setLocalDescription method.
+
+Send the answer to the caller: The callee then sends this answer back to the caller using the same signaling method.
+
+Set the answer as the remote description: The caller receives this answer and sets it as their remote description using the setRemoteDescription method.

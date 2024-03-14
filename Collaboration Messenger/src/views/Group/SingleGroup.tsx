@@ -19,6 +19,7 @@ export default function SingleGroup() {
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
     const [remoteStream, setRemoteStream] = useState<{ stream: MediaStream, username: string }[]>([]);
     const [offers, setOffers] = useState<any[]>([]);
+    const [localStream, setLocalStream] = useState<MediaStream | null>(null);
     const [isCallStarted, setIsCallStarted] = useState(false);
     const localVideoRef = useRef<HTMLVideoElement>(null);
   const peerConnections = useRef<RTCPeerConnection[]>([]);
@@ -80,49 +81,65 @@ export default function SingleGroup() {
         try {
             setIsCallStarted(true);
             const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            setLocalStream(localStream);
             if (localVideoRef.current) {
                 localVideoRef.current.srcObject = localStream;
             }
     
             // Use for...of instead of forEach
             for (const member of groupMembers) {
+                if (member.username === userData?.username) {
+                    continue;
+                }
                 const peerConnection = new RTCPeerConnection(stunConfig);
-                console.log('Created new peer connection for:', member.username);
+        
                 peerConnections.current.push(peerConnection);
                 localStream.getTracks().forEach(track => {
                     peerConnection.addTrack(track, localStream);
-                    console.log('Added track to peer connection for:', member.username);
+        
                 });
     
                 peerConnection.onicecandidate = async (event) => {
                     if (event.candidate) {
                         const candidate = event.candidate.toJSON();
-                        console.log('onicecandidate event fired for:', member.username);
                         const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`);
-                        await update(iceCandidateRef, {
+                        const newCandidateRef = push(iceCandidateRef);
+                        await set(newCandidateRef, {
                             target: member.username,
                             candidate: candidate,
                         });
                     }
                 };
-    
+                onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
+                    const data = snapshot.val();
+                    console.log(`${data} THIS SHOULD BE ICE CANDIDATE`)
+                    console.log('Received new ICE candidate');
+                    if (data && data.target === userData?.username) {
+                        const candidate = new RTCIceCandidate(data.candidate);
+                        await peerConnection.addIceCandidate(candidate);
+                        console.log('Added ICE candidate to peer connection');
+                    }
+                });
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
 
                     const data = snapshot.val();
                     if (data && data.caller === member.username) {
-                 
+                  console.log('Received answer from:', member.username);
+                  console.log(`${data.answer} THIS SHOULD BE SDP AND TYPE`);
                         const answer = new RTCSessionDescription(data.answer);
 
                         await peerConnection.setRemoteDescription(answer);
-                        console.log('Set remote description for:', member.username);
+                       
                     }
                 });
     
                 peerConnection.ontrack = (event) => {
                     setRemoteStream(prevStreams => {
+                        console.log(event.streams[0])
                         if (!prevStreams.some(existingStream => existingStream.username === member.username)) {
                             return [...prevStreams, { stream: event.streams[0], username: member.username }];
                         } else {
+                            
                             return prevStreams;
                         }
                     });
@@ -130,7 +147,7 @@ export default function SingleGroup() {
     
                 const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);
-                console.log('Created offer for:', member.username);
+               
                 const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
                 await update(offerRef, {
                     target: member.username,
@@ -140,13 +157,16 @@ export default function SingleGroup() {
                         sdp: offer.sdp
                     }
                 });
+                peerConnection.onconnectionstatechange = () => {
+                    console.log('FAAAAAAAAAAAAAAAAAAAAAAAAAK  Connection state change for:', member.username, 'New state:', peerConnection.connectionState);
+                };
             }
         } catch (e) {
 
         }
     }
   
-
+ console.log(remoteStream)
     const answerCall = async (offer: any) => {
         console.log('answerCall started');
         setIsCallStarted(true);
@@ -155,6 +175,7 @@ export default function SingleGroup() {
         console.log('Created new RTCPeerConnection');
     
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        setLocalStream(localStream);
         console.log('Got local stream');
         if (localVideoRef.current) {
             localVideoRef.current.srcObject = localStream;
@@ -173,14 +194,13 @@ export default function SingleGroup() {
         };
         peerConnection.onicecandidate = async (event) => {
             if (event.candidate) {
-                console.log('onicecandidate event fired');
                 const candidate = event.candidate.toJSON();
                 const iceCandidateRef = ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`);
-                await update(iceCandidateRef, {
+                const newCandidateRef = push(iceCandidateRef);
+                await set(newCandidateRef, {
                     target: offer.caller,
                     candidate: candidate,
                 });
-                console.log('Updated iceCandidateRef');
             }
         };
     
@@ -192,7 +212,7 @@ export default function SingleGroup() {
         onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
             const data = snapshot.val();
             console.log('Received new ICE candidate');
-            if (data && data.target === offer.caller) {
+            if (data && data.target === userData?.username) {
                 const candidate = new RTCIceCandidate(data.candidate);
                 await peerConnection.addIceCandidate(candidate);
                 console.log('Added ICE candidate to peer connection');
@@ -202,6 +222,7 @@ export default function SingleGroup() {
         const answer = await peerConnection.createAnswer();
         console.log('Created answer');
         await peerConnection.setLocalDescription(answer);
+        peerConnection.setRemoteDescription(new RTCSessionDescription(offer.offer));
         console.log('Set local description');
     
         const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
@@ -225,12 +246,9 @@ export default function SingleGroup() {
         setRemoteStream([]);
         setIsCallStarted(false);
     
-        (localVideoRef.current?.srcObject as MediaStream)?.getTracks().forEach(track => track.stop());
+        localStream?.getTracks().forEach(track => track.stop());
     
-        // Close the peer connections
         peerConnections.current.forEach(connection => connection.close());
-    
-        // Clear the peer connections
         peerConnections.current = [];
     };
     const startScreenSharing = async () => {
@@ -264,6 +282,7 @@ export default function SingleGroup() {
                         </button>
                         <button onClick={() => {
                             if (offers.length===0) {
+                                console.log(remoteStream)
                                 startGroupVideoCall();
                             }
                             else {
@@ -276,7 +295,7 @@ export default function SingleGroup() {
                     </div>
 
                     {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay  playsInline style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} ></video>}
-                    {isCallStarted && remoteStream.map((element, index) => (
+                    {isCallStarted &&remoteStream.length>0&& remoteStream.map((element, index) => (
                         <video key={index} style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => video ? video.srcObject = element.stream : null}></video>
                     ))}
 
