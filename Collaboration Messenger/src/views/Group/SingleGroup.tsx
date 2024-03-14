@@ -134,10 +134,15 @@ export default function SingleGroup() {
         console.log(offer);
         const peerConnection = new RTCPeerConnection(stunConfig);
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (localVideoRef.current) {
+            localVideoRef.current.srcObject = localStream;
+        }
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
     
         // Set up event handlers before calling setRemoteDescription and createAnswer
         peerConnection.ontrack = (event) => {
+            console.log('ontrack event called');
+            console.log(event);
             setRemoteStream(prevStreams => [...prevStreams, event.streams[0]]);
         };
         peerConnection.onicecandidate = async (event) => {
@@ -230,9 +235,9 @@ export default function SingleGroup() {
                         }}>VideoCall</button>
                     </div>
 
-                    {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay  playsInline style={{ height: '300px', width: '300px', zIndex: 0 }} ></video>}
+                    {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay  playsInline style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} ></video>}
                     {isCallStarted && remoteStream.map((stream, index) => (
-                        <video key={index} autoPlay playsInline ref={video => video ? video.srcObject = stream : null}></video>
+                        <video key={index} style={{ height: '300px',border:'2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => video ? video.srcObject = stream : null}></video>
                     ))}
 
                     {!isCallStarted && <Chat type={'group'} />}
