@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import './imageComp.css'
-import { get, ref, set } from "firebase/database";
+import { get, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 
-export default function ImageComp({unique,type}:{unique:string,type:string}) {
+export default function ImageComp({unique,type}:{unique:string,type:string, className:string}) {
     const [data, setData] = useState<any>(null)
     useEffect(() => {
         (async () => {

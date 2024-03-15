@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getGroupByID } from "../../service/group"
 import { Group } from "./JoinedGroup";
 import ImageComp from "../imageComp/ImageComp";
-import Button from "../Button";
+import Button from "../button/Button";
 import { ref, update } from "firebase/database";
 import { useAppContext } from "../../context/appContext";
 import { db } from "../../config/config-firebase";

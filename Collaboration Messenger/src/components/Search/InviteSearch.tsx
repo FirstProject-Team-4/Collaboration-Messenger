@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../service/user";
-import Button from "../Button";
+import Button from "../button/Button";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";

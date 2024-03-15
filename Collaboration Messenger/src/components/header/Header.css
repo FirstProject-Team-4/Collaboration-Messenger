@@ -1,0 +1,58 @@
+/* Default styles for large screens */
+.header-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    position: relative;
+    left: 1px;
+    gap: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    top: 10px;
+    height: 660px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
+    border-radius: 10px;
+    transition: all 0.5s ease;
+  }
+  
+  #logout {
+    display: flex;
+    height: 45px;
+    position: relative;
+    bottom: 20px;
+    left: 1300px;
+  }
+  
+  /* Styles for screens smaller than 1200px */
+  @media (max-width: 1200px) {
+    .header-view {
+      height: 600px; 
+    }
+  
+    #logout {
+      left: 1000px; 
+    }
+  }
+  
+  /* Styles for screens smaller than 800px */
+  @media (max-width: 800px) {
+    .header-view {
+      height: 550px; 
+    }
+  
+    #logout {
+      left: 700px; 
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .header-view {
+      height: 500px; 
+    }
+  
+    #logout {
+      left: 400px; 
+    }
+  }
