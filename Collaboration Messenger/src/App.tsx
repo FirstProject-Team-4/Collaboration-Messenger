@@ -15,6 +15,7 @@ import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
+import MyCalendar from './views/MyCalendar/MyCalendar';
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -56,7 +57,6 @@ function App() {
           <div className="main-content">
             <Routes>
               <Route path="/" element={<About />} />
-              
               <Route path='/profile/:id' element={<Profile />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
@@ -69,6 +69,7 @@ function App() {
             
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path='/calendar' element={<MyCalendar/>} />
               <Route path="*" element={<h1> 404 Not Found</h1>} />
             </Routes>
           </div>
