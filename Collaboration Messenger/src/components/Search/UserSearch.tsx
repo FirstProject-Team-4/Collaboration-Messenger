@@ -22,7 +22,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-  
+
     const navigate = useNavigate();
 
     console.log('UserSearch');
@@ -35,7 +35,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
 
     const handleSearch = (value: string) => {
         setSearch(value);
-      
+
         if (value !== '') {
             searchUser();
         } else {
@@ -62,13 +62,13 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         } else {
             update(ref(db, `/chats/${chatId}`), { user1: { username: user.username, uid: user.uid }, user2: { username: userData.username, uid: userData.uid } });
             update(ref(db, `/users/${userData.username}/privateChats/${chatId}`), { username: user.username, uid: user.uid });
-           update(ref(db, `/users/${user.username}/privateChats/${chatId}`), { username: userData.username, uid: userData.uid });
+            update(ref(db, `/users/${user.username}/privateChats/${chatId}`), { username: userData.username, uid: userData.uid });
         }
         setSearch('');
         setUsers([]);
 
     }
-  
+
 
     const handleAddFriend = async (user: { username: string, uid: string }) => {
         const db = getDatabase();
@@ -84,15 +84,25 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     return (
 
         <div>
-            {<Button onClick={() => setIsModalOpen(true)} id='btn-search' ><PersonSearchIcon fontSize="small" />  {type}</Button>}
+            {<Button
+                onClick={() => setIsModalOpen(true)}
+                id='btn-search'
+                className="bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 text-white px-4 py-2 font-bold rounded-md hover:opacity-80"
+            >
+                <PersonSearchIcon fontSize="small" />
+                {type}
+            </Button>}
 
             {isModalOpen && (
                 <div className="modal-backdrop">
                     <div className="modal">
 
-                        <button onClick={() => setIsModalOpen(false)}>  <HighlightOffIcon /> </button>
+                        <button className="close-search-btn" onClick={() => setIsModalOpen(false)}>  <HighlightOffIcon /> </button>
                         <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => handleSearch(e.target.value)} />
-                        <Button onClick={searchUser}>Search</Button>
+                        <Button
+                            onClick={searchUser}
+                            className="bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 text-white px-4 py-2 font-bold rounded-md hover:opacity-80"
+                        >Search</Button>
                         <div className="inf">
                             {users.map((user: any) => {
 
@@ -102,10 +112,10 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
                                 return (
                                     <div className="border-users" key={user.uid}>
                                         <div className="information">
-                                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                            <Button onClick={() => handleChat(user)}><QuestionAnswerIcon/></Button>
+                                            <NavLink className='user-profile-btn' to={`/profile/${user.username}`}>{user.username}</NavLink>
+                                            <Button className="chat-search-btn" onClick={() => handleChat(user)}><QuestionAnswerIcon /></Button>
 
-                                            {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested && <Button onClick={() => handleAddFriend(user)}>Add Friend</Button>}
+                                            {userData?.username !== user?.username && !isAlreadyFriend && !isAlreadyRequested && <Button className='search-modal-btn' onClick={() => handleAddFriend(user)}>Add Friend</Button>}
                                         </div>
                                     </div>
                                 );

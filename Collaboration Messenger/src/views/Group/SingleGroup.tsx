@@ -214,9 +214,13 @@ export default function SingleGroup() {
 
                     {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay playsInline style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} ></video>}
                     {isCallStarted && remoteStream.map((element, index) => (
-                        <video key={index} style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline 
-                           
-                        ></video>
+                        <video key={index} style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => {
+                            if (video) {
+                                video.srcObject = element.stream;
+                                video.play()
+                                console.log('video element after setting srcObject', video); // Check if the video element is displaying the stream correctly
+                            }
+                        }}></video>
                     ))}
                     {!isCallStarted && <Chat type={'group'} />}
                 </div>

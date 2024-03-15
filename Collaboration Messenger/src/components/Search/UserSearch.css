@@ -15,19 +15,167 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
 .modal {
-    background-color: white;
+    background-color: #2d3748;
     padding: 20px;
     border-radius: 10px;
-    width: 50%; 
-    max-height: 70%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
-    transition: all 0.3s ease-out;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal input,
+.modal textarea {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #2d3748;
+    border: 1px solid #4a5568;
+    border-radius: 5px;
+    color: #fff;
+    position: relative;
+    right: 8px;
+    margin-bottom: 10px;
+}
+
+
+/* button in search  add*/
+.search-modal-btn {
+    --bg: #000;
+    --hover-bg: #a774d6;
+    --hover-text: #000;
+    color: #fff;
+    border: 1px solid var(--bg);
+    border-radius: 4px;
+    padding: 0.8em 2em;
+    background: var(--bg);
+    transition: 0.2s;
+    margin: 10px;
+    position: relative;
+    right: 60px;
+}
+
+.search-modal-btn:hover {
+    color: var(--hover-text);
+    transform: translate(0.25rem,-0.25rem);
+    background: var(--hover-bg);
+    box-shadow: -0.25rem 0.25rem var(--bg);
+}
+
+.search-modal-btn:active {
+    transform: translate(0);
+    box-shadow: none;
+}
+ 
+/* search and add friends btn start */
+.bg-gradient-to-r {
+    background: linear-gradient(to right, #6B46C1, #7F9CF5);
+}
+
+.from-purple-600 {
+    --tw-gradient-from: #6B46C1;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(107, 70, 193, 0));
+}
+
+.via-purple-400 {
+    --tw-gradient-stops: var(--tw-gradient-from), #9F7AEA, var(--tw-gradient-to, rgba(159, 122, 234, 0));
+}
+
+.to-blue-500 {
+    --tw-gradient-to: #4299E1;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.rounded-md {
+    border-radius: 0.375rem;
+}
+
+.hover\:opacity-80:hover {
+    opacity: 0.8;
+}
+
+/* search and add button end */
+
+/* search modal chat */
+
+.chat-search-btn {
+    --bg: #000;
+    --hover-bg: #90beff;
+    --hover-text: #000;
+    color: #fff;
+    border: 1px solid var(--bg);
+    border-radius: 4px;
+    background: var(--bg);
+    transition: 0.2s;
+  
+    position: relative;
+    right: 60px;
+}
+
+.chat-search-btn:hover {
+    color: var(--hover-text);
+    transform: translate(0.25rem,-0.25rem);
+    background: var(--hover-bg);
+    box-shadow: -0.25rem 0.25rem var(--bg);
+}
+
+.chat-search-btn:active {
+    transform: translate(0);
+    box-shadow: none;
+}
+
+/* close buttnon */
+
+.close-search-btn {
+    --bg: #000;
+    --hover-bg: #c259ff5e;
+    --hover-text: #000;
+    color: #fff;
+    border: 1px solid var(--bg);
+    border-radius: 4px;
+    background: var(--bg);
+    transition: 0.2s;
+    position: relative;
+    left: 150px;
+    margin-bottom: 23px;
+  
+}
+
+.close-search-btn:hover {
+    color: var(--hover-text);
+    transform: translate(0.25rem,-0.25rem);
+    background: var(--hover-bg);
+    box-shadow: -0.25rem 0.25rem var(--bg);
+}
+
+.close-search-btn:active {
+    transform: translate(0);
+    box-shadow: none;
+}
+
+.user-profile-btn{
+    margin-right: 70px;
+}
+
+#btn-search{
+    position: relative;
+    left: 250px;
 }

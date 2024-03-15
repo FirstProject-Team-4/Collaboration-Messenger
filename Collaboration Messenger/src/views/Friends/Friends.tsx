@@ -27,11 +27,11 @@ export default function Friends() {
     return (
         <div className="view-frineds">
             <div className="header-frineds">
-                <Button onClick={() => setView('friendsList')}>Friends</Button>
-                <Button onClick={() => setView('status')}>Status</Button>
-                <Button onClick={() => setView('friendsRequest')}>Requests</Button>
-                <Button onClick={() => setView('block')}>Block</Button>
-                <UserSearch type="Add friend" />
+                <Button className="friends-button" onClick={() => setView('friendsList')}><span>Friends</span></Button>
+                <Button  className="friends-button" onClick={() => setView('status')}><span>Status</span></Button>
+                <Button  className="friends-button" onClick={() => setView('friendsRequest')}><span>Requests</span></Button>
+                <Button  className="friends-button" onClick={() => setView('block')}><span>Block</span></Button>
+                <UserSearch  type="Add friend" />
             </div>
             <div className="view">
                 {handleViewChange(view)}
