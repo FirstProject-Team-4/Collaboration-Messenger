@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { onValue, ref, set } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { sendMessage } from "../../service/friends";
-import Button from "../Button";
+import Button from "../button/Button";
 import Messages from "./Messages";
 import './Chat.css';
 import { sendGroupMessage } from "../../service/group";
