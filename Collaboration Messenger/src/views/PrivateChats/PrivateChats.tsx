@@ -6,7 +6,7 @@ import UserSearch from '../../components/Search/UserSearch';
 import { useEffect } from 'react';
 // import Profile from '../Profile/Profile';
 import UserProfile from '../UserProfile/UserProfile';
-import VideoChats from '../../components/VideoChats/VideoChats';
+
 
 
 
@@ -29,7 +29,6 @@ const PrivateChats = () => {
             </div>
             <div className="chat-container">
                 <Chat type={'private'} />
-                <VideoChats otherUserId={id || ''} /> 
             </div>
             <div className="user-profile">
                 <UserProfile />

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
-import { twilio } from 'twilio';
+
 import './Group.css';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -69,160 +69,14 @@ export default function SingleGroup() {
 
 
 
-
-
-    async function fetchAccessTokenFromYourServer(username:string, groupName:string) {
-      
-
-        const twilioAccountSid = 'USc4ee701e87c5dafe82ef17aae0386e6d';
-        const twilioApiKey = 'SKe78d687cc3a39e8daa219e2514b1798a';
-      
-
-        const twilioApiSecret = 'dFwovPTul8hzf7WL3fEiCBLX1QwfEfMM';
-
-        const identity = username; // The identity of the user
-        const roomName = groupName; // The name of the room the user is joining
-        const AccessToken = twilio.jwt.AccessToken;
-        const token = new AccessToken(
-            twilioAccountSid,
-            twilioApiKey,
-            twilioApiSecret,
-            { identity: identity }
-        );
-
-        const videoGrant = new AccessToken.VideoGrant({ room: roomName });
-        token.addGrant(videoGrant);
-        
-        console.log(token.toJwt());
-        return token.toJwt();
-    }
-    
-    const startGroupVideoCall = async () => {
-        try {
-            setIsCallStarted(true);
-    
-            const localTracks = await createLocalTracks({ video: true, audio: true });
-            setLocalStream(localTracks);
-    if(id){
-            const token = await fetchAccessTokenFromYourServer(userData?.username, id);
-            update(ref(db, `GroupCalls/${id}/offers`), {
-                token: token,
-                caller: userData?.username
-            });
-                
-    
-            const room = await connect(token, {
-                name: id,
-                tracks: localTracks
-            });
-    
-            room.on('participantConnected', participant => {
-                console.log(`Participant "${participant.identity}" connected`);
-    
-                participant.on('trackSubscribed', track => {
-                    setRemoteStream(prevStreams => [...prevStreams, { track: track, username: participant.identity }]);
-                });
-            });
-    
-            room.on('participantDisconnected', participant => {
-                console.log(`Participant "${participant.identity}" disconnected`);
-            });
-        }
-        } catch (e) {
-            console.error(e);
-        }
-    }
-    
-    const answerCall = async (offer: any) => {
-        setIsCallStarted(true);
-    
-        const localTracks = await createLocalTracks({ video: true, audio: true });
-        setLocalStream(localTracks);
-    
-        // const token = await fetchAccessTokenFromYourServer(userData?.username, id);
-    
-        const room = await connect(offer.token, {
-            name: id,
-            tracks: localTracks
-        });
-    
-        room.on('participantConnected', participant => {
-            console.log(`Participant "${participant.identity}" connected`);
-    
-            participant.on('trackSubscribed', track => {
-                setRemoteStream(prevStreams => [...prevStreams, { track: track, username: participant.identity }]);
-            });
-        });
-    
-        room.on('participantDisconnected', participant => {
-            console.log(`Participant "${participant.identity}" disconnected`);
-        });
-    }
-
-
-    const handleEndCall = () => {
-        setRemoteStream([]);
-        setIsCallStarted(false);
-
-        localStream?.getTracks().forEach((track: { stop: () => any; }) => track.stop());
-
-        peerConnections.current.forEach(connection => connection.close());
-        peerConnections.current = [];
-    };
-    const startScreenSharing = async () => {
-        try {
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-            if (localVideoRef.current) {
-                localVideoRef.current.srcObject = screenStream;
-                setIsScreenSharing(true);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-    const stopScreenSharing = () => {
-        if (localVideoRef.current) {
-            const screenStream = localVideoRef.current.srcObject as MediaStream;
-            screenStream.getTracks().forEach(track => track.stop());
-            peerConnections.current.forEach(connection => connection.close());
-            peerConnections.current = [];
-            setIsScreenSharing(false);
-        };
-    }
     return (
         <>
             <div className="single-group-container">
                 <div className="chat-container">
-                    <div className='chat-header'>
-                        <button onClick={() => { handleEndCall() }}>End Call</button>
-                        <button onClick={isScreenSharing ? stopScreenSharing : startScreenSharing}>
-                            {isScreenSharing ? 'Stop Sharing Screen' : 'Share Screen'}
-                        </button>
-                        <button onClick={() => {
-                            if (offers.length === 0) {
-                                console.log(remoteStream)
-                                startGroupVideoCall();
-                            }
-                            else {
-                                offers.forEach(offer => {
-                                    answerCall(offer);
-                                });
-                            }
+                   
+                     
 
-                        }}>VideoCall</button>
-                    </div>
-
-                    {isCallStarted && <video ref={localVideoRef} id="localVideo" autoPlay playsInline style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} ></video>}
-                    {isCallStarted && remoteStream.map((element, index) => (
-                        <video key={index} style={{ height: '300px', border: '2px solid red', width: '300px', zIndex: 0 }} autoPlay playsInline ref={video => {
-                            if (video) {
-                                video.srcObject = element.stream;
-                                video.play()
-                                console.log('video element after setting srcObject', video); // Check if the video element is displaying the stream correctly
-                            }
-                        }}></video>
-                    ))}
-                    {!isCallStarted && <Chat type={'group'} />}
+                    
                 </div>
                 <div className="members-container">
                     <div className="members-buttons">

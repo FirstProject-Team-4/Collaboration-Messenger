@@ -47,14 +47,21 @@ function App() {
     
   }, [context.userData]);
 
- 
+  const toggleTheme = () => {
+    document.body.classList.toggle('dark-mode');
+  };
   return (
     <>
    {/* <ToastContainer /> */}
+  
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
           <Header />
           <div className="main-content">
+          <label className="switch">
+  <input type="checkbox" onClick={toggleTheme} />
+  <span className="slider"></span>
+</label>
             <Routes>
               <Route path="/" element={<About />} />
               <Route path='/profile/:id' element={<Profile />} />
