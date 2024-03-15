@@ -51,19 +51,26 @@ const handleUnblock = (id: string) => {
 }
 
 
-    return (
-        <div>
-            <h3>Block List</h3>
-            {blockUsers && blockUsers.map((user: any, index: number) => (
-                <div key={index} className="block-info">
-                    <ImageComp unique={user.username} type={'user'} />
-                    <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                    <button onClick={() => handleUnblock(user.id)}>Unblock</button>
-                    
+return (
+    <>
+        <h3 className="title-friends-view">Block List</h3>
+    <div className="card-container">
+        {blockUsers && blockUsers.map((user: any, index: number) => (
+            <div key={index} className="card">
+                <div className="infos">
+                    <div className="image">
+                        <ImageComp className="image-friends" unique={user.username} type={'user'} />
+                    </div>
+                    <div className="info">
+                        <NavLink className="name" to={`/profile/${user.username}`}>{user.username}</NavLink>
+                    </div>
                 </div>
-            ))}
-        </div>
-    );
+                <button className="request" onClick={() => handleUnblock(user.id)}>Unblock</button>
+            </div>
+        ))}
+    </div>
+    </>
+);
 }
 export default BlockList;
 
