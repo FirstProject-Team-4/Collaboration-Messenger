@@ -50,25 +50,17 @@ export default function SingleGroup() {
 
     }, [id])
     useEffect(() => {
-        if (userData) {
-            onValue(ref(db, `GroupCalls/${id}/offers`), snapshot => {
-                if (!snapshot.exists()) {
-                    return;
-                }
-                const data = snapshot.val();
+        onValue(ref(db, `GroupCalls/${id}/offers/${userData?.username}`), async snapshot => {
+            const data = snapshot.val();
+            if (data) {
+                console.log('Received new offer');
+                console.log(data);
+                setOffers(prevOffers => [...prevOffers, data]);
+            }
+        });
+    }, [id, userData?.username]);
 
-                const offer = Object.keys(data).filter(key => key !== userData.username).map(key => data[key]);
-
-
-                offer.forEach(async (offer: any) => {
-
-                    setOffers([...offers, offer]);
-
-                });
-            });
-        }
-    }, [userData, id]);
-
+    
     const leaveGroup = () => {
         removeGroupMember(currentGroup.id, userData.username);
     }
@@ -80,48 +72,45 @@ export default function SingleGroup() {
     const startGroupVideoCall = async () => {
         try {
             setIsCallStarted(true);
+
             const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            // Set localStream state to be able to display the local video
             setLocalStream(localStream);
             if (localVideoRef.current) {
                 localVideoRef.current.srcObject = localStream;
             }
 
-            // Use for...of instead of forEach
+
+            // For each member in the group, create a new RTCPeerConnection and send an offer to them
             for (const member of groupMembers) {
                 if (member.username === userData?.username) {
                     continue;
                 }
                 const peerConnection = new RTCPeerConnection(stunConfig);
-
+                //Pushing the peer connection to the peerConnections array to be able to close it later
                 peerConnections.current.push(peerConnection);
+
+                //ADDING LOCAL STREAM TO PEER CONNECTION 
                 localStream.getTracks().forEach(track => {
                     peerConnection.addTrack(track, localStream);
 
                 });
+                //CREATING OFFER AND SETTING LOCAL DESCRIPTION
                 const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);
 
                 //LISTENING FOR ANSWERS
                 onValue(ref(db, `GroupCalls/answers/${userData?.username}`), async snapshot => {
-
+                    if (!snapshot.exists()) {
+                        return;
+                    }
                     const data = snapshot.val();
-                    if (data && data.caller === member.username) {
-                        console.log('Received answer from:', member.username);
+                    if (data && data.caller === userData.username) {
+
                         console.log(`${data.answer} THIS SHOULD BE SDP AND TYPE`);
                         const answer = new RTCSessionDescription(data.answer);
                         await peerConnection.setRemoteDescription(answer);
-                        //LISTENING FOR ICE CANDIDATES
-                        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${member.username}`), async snapshot => {
-                            const data = snapshot.val();
-                            console.log(`${data.candidate} THIS SHOULD BE ICE CANDIDATE`)
-                            console.log('Received new ICE candidate');
-                            if (data && data.target === member.username) {
-                                const candidate = new RTCIceCandidate(data.candidate);
-                                console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
-                                await peerConnection.addIceCandidate(candidate);
-                                console.log('Added ICE candidate to peer connection');
-                            }
-                        });
+
                     }
 
                 });
@@ -134,7 +123,7 @@ export default function SingleGroup() {
                             target: member.username,
                             candidate: candidate,
                         };
-                        const newCandidateRef = await update(iceCandidateRef, obj);
+                        await update(iceCandidateRef, obj);
 
                     }
                 };
@@ -155,7 +144,21 @@ export default function SingleGroup() {
                         }
                     });
                 };
-
+                //LISTENING FOR ICE CANDIDATES
+                onValue(ref(db, `GroupCalls/${id}/iceCandidates/${userData.username}`), async snapshot => {
+                    if (!snapshot.exists()) {
+                        return;
+                    }
+                    const data = snapshot.val();
+                    console.log(`${data.candidate} THIS SHOULD BE ICE CANDIDATE`)
+                    console.log('Received new ICE candidate');
+                    if (data && data.target === userData?.username) {
+                        const candidate = new RTCIceCandidate(data.candidate);
+                        console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
+                        await peerConnection.addIceCandidate(candidate);
+                        console.log('Added ICE candidate to peer connection');
+                    }
+                });
 
                 //SENDING OFFERS
                 const offerRef = ref(db, `GroupCalls/${id}/offers/${member.username}`);
@@ -168,7 +171,7 @@ export default function SingleGroup() {
                     }
                 });
                 peerConnection.onconnectionstatechange = () => {
-                    console.log('FAAAAAAAAAAAAAAAAAAAAAAAAAK  Connection state change for:', member.username, 'New state:', peerConnection.connectionState);
+                    console.log('  Connection state change for:', member.username, 'New state:', peerConnection.connectionState);
                 };
             }
         } catch (e) {
@@ -176,13 +179,15 @@ export default function SingleGroup() {
         }
     }
 
-    console.log(remoteStream)
+
 
     const answerCall = async (offer: any) => {
+
         setIsCallStarted(true);
-        console.log(offer);
+;
 
         const peerConnection = new RTCPeerConnection(stunConfig);
+        peerConnections.current.push(peerConnection);
 
         const localStream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (localVideoRef.current) {
@@ -213,10 +218,10 @@ export default function SingleGroup() {
         await peerConnection.setLocalDescription(answer);
 
         // Listen for new ICE candidates and add them to the peer connection
-        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${offer.caller}`), async snapshot => {
+        onValue(ref(db, `GroupCalls/${id}/iceCandidates/${userData.username}`), async snapshot => {
             const data = snapshot.val();
             console.log(data);
-            if (data && data.target === offer.caller) {
+            if (data && data.target === userData?.username) {
                 console.log('ice candidate event called');
                 const candidate = new RTCIceCandidate(data.candidate);
                 console.log(`${candidate} THIS SHOULD BE ICE CANDIDATE`);
@@ -228,7 +233,7 @@ export default function SingleGroup() {
 
         const answerRef = ref(db, `GroupCalls/${id}/answers/${offer.caller}`);
         await set(answerRef, {
-            caller: userData?.username,
+            caller: offer.caller,
             answer: {
                 type: answer.type,
                 sdp: answer.sdp
