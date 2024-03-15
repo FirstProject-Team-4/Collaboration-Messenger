@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
+import { twilio } from 'twilio';
 import './Group.css';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -70,18 +71,30 @@ export default function SingleGroup() {
 
 
 
-    async function fetchAccessTokenFromYourServer(username:string, roomName:string) {
-        const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5175';
-        const response = await fetch(serverUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, roomName })
-        });
-    
-        const data = await response.json();
-        return data.token;
+    async function fetchAccessTokenFromYourServer(username:string, groupName:string) {
+      
+
+        const twilioAccountSid = 'USc4ee701e87c5dafe82ef17aae0386e6d';
+        const twilioApiKey = 'SKe78d687cc3a39e8daa219e2514b1798a';
+      
+
+        const twilioApiSecret = 'dFwovPTul8hzf7WL3fEiCBLX1QwfEfMM';
+
+        const identity = username; // The identity of the user
+        const roomName = groupName; // The name of the room the user is joining
+        const AccessToken = twilio.jwt.AccessToken;
+        const token = new AccessToken(
+            twilioAccountSid,
+            twilioApiKey,
+            twilioApiSecret,
+            { identity: identity }
+        );
+
+        const videoGrant = new AccessToken.VideoGrant({ room: roomName });
+        token.addGrant(videoGrant);
+        
+        console.log(token.toJwt());
+        return token.toJwt();
     }
     
     const startGroupVideoCall = async () => {
