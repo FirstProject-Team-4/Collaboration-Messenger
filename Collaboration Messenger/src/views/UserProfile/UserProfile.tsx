@@ -4,7 +4,7 @@ import { getDatabase, ref, query, orderByChild, equalTo, onValue, set } from "fi
 import { useAppContext } from '../../context/appContext';
 import './UserProfile.css';
 import ImageComp from '../../components/imageComp/ImageComp';
-import Button from '../../components/Button';
+import Button from '../../components/button/Button';
 
 
 type UserProfileData = {
