@@ -5,7 +5,7 @@
   
   .column-inf {
     position: relative;
-    right: 132px;
+    right: 115px;
     top: 15px;
     gap: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -35,17 +35,15 @@
     height: 10%;
     position: relative;
     bottom: 20px;
-    left: 1050px;
+    left: 730px;
   }
   
   .user-profile {
     position: relative;
-    right: 25px;
-    top: 50px;
-    height: 57%;
+    right: 40px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 10px;
-    height: 650px;
+    top: 83px;
+    height: 580px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
