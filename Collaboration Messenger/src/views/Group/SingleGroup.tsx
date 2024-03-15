@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Button from '../../components/Button';
+import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 
 import './Group.css';

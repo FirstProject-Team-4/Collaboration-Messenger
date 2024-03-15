@@ -4,7 +4,7 @@ import { getPublicGroups, joinGroup, removeGroupMember } from "../../service/gro
 import { useAppContext } from "../../context/appContext";
 import ImageComp from "../../components/imageComp/ImageComp";
 import './Group.css';
-import Button from "../../components/Button";
+import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";

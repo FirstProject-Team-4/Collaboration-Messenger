@@ -1,5 +1,4 @@
-import { ref, set } from "firebase/database";
-import { db } from "../config/config-firebase";
+
 
 export const stunConfig = {
     iceServers: [

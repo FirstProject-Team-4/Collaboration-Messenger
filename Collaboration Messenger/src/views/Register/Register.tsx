@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import Button from '../../components/Button';
+import Button from '../../components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../service/auth';
 import { createUserUsername } from '../../service/user';
