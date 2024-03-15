@@ -71,7 +71,8 @@ export default function SingleGroup() {
 
 
     async function fetchAccessTokenFromYourServer(username:string, roomName:string) {
-        const response = await fetch('http://localhost:3000/token', {
+        const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5175';
+        const response = await fetch(serverUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
