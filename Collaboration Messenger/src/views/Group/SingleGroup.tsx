@@ -87,6 +87,7 @@ export default function SingleGroup() {
                     continue;
                 }
                 const peerConnection = new RTCPeerConnection(stunConfig);
+       
                 //Pushing the peer connection to the peerConnections array to be able to close it later
                 peerConnections.current.push(peerConnection);
 
@@ -95,6 +96,7 @@ export default function SingleGroup() {
                     peerConnection.addTrack(track, localStream);
 
                 });
+                console.log(peerConnection)
                 //CREATING OFFER AND SETTING LOCAL DESCRIPTION
                 const offer = await peerConnection.createOffer();
                 await peerConnection.setLocalDescription(offer);

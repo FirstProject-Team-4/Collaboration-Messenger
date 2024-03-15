@@ -62,12 +62,11 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/group/:id" element={<Group/>} />
               <Route path="/group" element={<Group/>} />
-              <Route path="/chat/:id" element />
-              <Route path="/profile/:id" element />
+          
               <Route path="/friends" element={<Friends />} />
               <Route path="/privateChats" element={<PrivateChats />} />
               <Route path="/privateChats/:id" element={<PrivateChats />} />
-              <Route path="/allUsers" element />
+            
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<h1> 404 Not Found</h1>} />
