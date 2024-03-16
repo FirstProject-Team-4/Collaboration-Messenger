@@ -72,10 +72,7 @@
     transition: .4s ease-in-out;
 }
 
-::placeholder {
-    color: #DAA06D;
-    text-align: center;
-}
+
 
 .form .input {
     outline: none;

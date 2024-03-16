@@ -9,7 +9,7 @@ import { onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
 import GroupInvites from '../../components/group-components/GroupInvites';
-import PublicGroups from './PublicGroups';
+import PublicGroups from './PublicGroups/PublicGroups';
 export default function Group() {
     const { userData } = useAppContext();
     const { id } = useParams();

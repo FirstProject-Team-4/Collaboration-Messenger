@@ -1,36 +1,26 @@
-/* .groups-form {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 100%;
-    width: 180px;
-    border: 2px solid #d16464;
-    left: -105px;
-    justify-content: left;
-} */
 .groups-form {
     display: flex;
     flex-direction: column;
     position: relative;
     height: 600px;
     width: 200px;
-    border: 1px solid rgba(255, 255, 255, 0.18); 
-    right:45px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    right: 45px;
     justify-content: left;
     top: 10px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(10px); 
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.14), 
-                0 30px 60px rgba(97, 218, 251, 0.144); 
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.14),
+        0 30px 60px rgba(97, 218, 251, 0.144);
     border-radius: 10px;
     transition: all 0.5s ease;
 }
 
 .groups-form:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.57), 
-                0 30px 60px rgba(0, 0, 0, 0.232); 
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.57),
+        0 30px 60px rgba(0, 0, 0, 0.232);
 }
 
 .groups-form h6 {
@@ -41,14 +31,11 @@
 
 }
 
-
-
 .chat-container {
     display: flex;
     flex-direction: row;
     position: relative;
     right: 40px;
-  
     justify-content: center;
     justify-items: center;
     align-items: center;
@@ -60,20 +47,8 @@
 .single-group-container {
     display: flex;
     flex-direction: row;
-
-
 }
 
-/* .members-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    right: 25px;
-    height: 100%;
-    width: 250px;
-    border: 2px solid #d16464;
-}
-*/
 .members-buttons {
     display: flex;
     flex-direction: row;
@@ -83,7 +58,7 @@
     gap: 20px;
     left: 35px;
 
-} 
+}
 
 .members-container {
     display: flex;
@@ -91,34 +66,34 @@
     position: relative;
     height: 100%;
     width: 250px;
-    border: 1px solid rgba(255, 255, 255, 0.18); 
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(10px); 
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 
-                0 30px 60px rgba(97, 218, 251, 0.3); 
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
     border-radius: 10px;
-    transition: all 0.5s ease; /* Add transition */
+    transition: all 0.5s ease;
+    /* Add transition */
 }
-.chat-header{
+
+.chat-header {
     display: absolute;
     flex-direction: row;
-   top: 200px;
+    top: 200px;
     border: 1px solid #d16464;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(10px); 
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 
-                0 30px 60px rgba(97, 218, 251, 0.3); 
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+        0 30px 60px rgba(97, 218, 251, 0.3);
     border-radius: 10px;
-    transition: all 0.5s ease; /* Add transition */
+    transition: all 0.5s ease;
+    /* Add transition */
 
 }
 
-
-
-
-.public-groups-container {
+/* .public-groups-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: flex-start;
@@ -130,14 +105,16 @@
     border: 1px solid #d16464;
     flex-grow: 1;
     overflow-y: auto;
-}
+} */
 
 .public-single-group-container {
     position: relative;
+    left: 80px;
+    top: 35px;
     flex: 0 0 calc(33.333% - 20px);
     height: 300px;
     width: 200px;
-    border: 1px solid #d16464;
+
 }
 
 .public-single-group-container img {
@@ -148,7 +125,7 @@
 
 .public-single-group-container p {
     flex-wrap: wrap;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 
 }
 
@@ -159,15 +136,19 @@
     width: 30px;
     border: 1px solid #d16464;
 }
-.public-groups-view{
+
+.public-groups-view {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.public-groups-view input{
+
+.public-groups-view input {
     width: 50%;
     align-self: center;
     height: 30px;
-    border: 1px solid #d16464;
+    border: 1px solid #9164d1;
     margin: 10px;
+    border-radius: 30px;
+    background-color: #a185c89e;
 }
