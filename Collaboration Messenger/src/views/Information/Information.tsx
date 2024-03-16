@@ -35,18 +35,19 @@ const Information: React.FC = () => {
 
   return (
     <div className="column-inf">
-      <h3>Messages information </h3>
-      <p>Choose with who to chat</p>
+      <h3>Messages</h3>
+
 
       {chats.map((chat) => (
         <div key={chat.id}>
-
-          <NavLink to={`/privateChats/${chat.id}`}>
-            <div className="chat-user">
-              <ImageComp unique={chat.username} type={'user'} />
-              <p>{chat.username}</p>
-            </div>
-          </NavLink>
+          {userData?.username !== chat.username &&
+            <NavLink to={`/privateChats/${chat.id}`}>
+              <div className="chat-user">
+                <ImageComp className={'image-inf-message'} unique={chat.username} type={'user'} />
+                <p>{chat.username}</p>
+              </div>
+            </NavLink>
+          }
         </div>
       ))}
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 import './Group.css';
-import CreateGroup from './CreateGroup';
+import CreateGroup from './CreateGroup/CreateGroup';
 import { NavLink, useParams } from 'react-router-dom';
 import { getGroupsByUser } from '../../service/group';
 import JoinedGroups, { Group } from '../../components/group-components/JoinedGroup';

@@ -41,47 +41,7 @@
 
 }
 
-.create-group {
-    display: fixed;
-    position: absolute;
-    height: 40px;
-    border: 2px solid #dcdcdc;
-    width: 150px;
-    bottom: 0px;
-}
 
-.create-group-btn {
-    display: fixed;
-    width: 50%;
-    height: 100%;
-    bottom: 0px;
-    font-size: medium;
-    margin: 0px;
-    padding-right: 15px;
-  
-}
-
-.create-group-form {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    height: 500px;
-    width: 500px;
-    border: 2px solid #d16464;
-    left: -70px;
-    justify-content: left;
-}
-
-.create-group-img {
-
-    height: 50px;
-    width: 50px;
-    border: 1px solid #d16464;
-    border-radius: 20px;
-}
 
 .chat-container {
     display: flex;

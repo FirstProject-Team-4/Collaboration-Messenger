@@ -3,6 +3,7 @@
   flex-direction: row;
   align-items: center;
   padding: 10px 20px;
+  
 }
 
 .view-frineds {
@@ -66,3 +67,4 @@
       rgba(99, 88, 238, 1) 94.3%);
   transition: all 0.475s;
 }
+
