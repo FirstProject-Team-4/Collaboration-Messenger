@@ -16,7 +16,7 @@ export default function GroupInvites({groupId}:{groupId:string}) {
 console.log('GroupInvites')
 const acceptGroupRequest=()=>{
     update(ref(db, `users/${userData.username}/groupInvitation`),{[groupId]:null});
-    update(ref(db, `groups/${groupId}/members`),{[userData.username]:true});
+    update(ref(db, `groups/${groupId}/members`),{[userData.username]:true,status:'online',id:userData.id});
     update(ref(db, `users/${userData.username}/groups`),{[groupId]:{title:group.title,image:group.image}});
 }
     return (

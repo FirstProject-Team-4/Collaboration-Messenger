@@ -4,6 +4,7 @@ import ImageComp from "../imageComp/ImageComp";
 export interface MembersProps{
     username:string;
     status:string;
+    id:string;
 }
 
 export default function GroupMembers({members , owner}: { members: MembersProps[] , owner:string}) {

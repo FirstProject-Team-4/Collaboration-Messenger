@@ -35,7 +35,7 @@ export default function PublicGroups() {
 
     }
     const joinPublicGroup = (group: { id: string, image: string, title: string }) => {
-        joinGroup(group, userData.username);
+        joinGroup(group, userData);
         // const filteredGroups = groups.filter((g: any) => g.id !== group.id);
         // filteredGroups.push({...group,members:{[userData.username]:userData.username}});
         // setGroups(filteredGroups);

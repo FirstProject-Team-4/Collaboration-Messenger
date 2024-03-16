@@ -6,7 +6,8 @@ export interface Group {
     id:string,
     title:string,
     members:{},
-    owner:string
+    owner:string,
+    image:string|null
 }
 
 export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {

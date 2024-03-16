@@ -42,7 +42,7 @@ export default function CreateGroup() {
             owner: userData.username
         }
 
-        createGroup(group);
+        createGroup(group,userData);
     }
     return (
         <div className="create-group-form">
