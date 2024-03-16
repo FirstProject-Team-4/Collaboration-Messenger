@@ -5,6 +5,7 @@ import ImageComp from "../../../components/imageComp/ImageComp";
 import { useNavigate } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../../config/config-firebase";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import './PublicGroups.css';
 // import './Group.css';
 
@@ -59,9 +60,9 @@ export default function PublicGroups() {
                         return <div className="public-single-group-container card-group" key={index}>
                             <ImageComp className='group-img image' unique={group.id} type={'group'} />
                             <h3 className="title-group">{group.title}</h3>
-                            <p className="info">{group.description}</p>
-                            <p>{group.members ? Object.keys(group.members).length : 0} members</p>
-                            {group.members && Object.keys(group.members).includes(userData.username) ? <button className="btn-group" onClick={() => leavePublicGroup(group.id)}>Leave </button> : <button onClick={() => { joinPublicGroup(group) }}>Join </button>}
+                            <p className="info">About group: {group.description}</p>
+                            <p><PeopleAltIcon/> {group.members ? Object.keys(group.members).length : 0} members</p>
+                            {group.members && Object.keys(group.members).includes(userData.username) ? <button className="btn-leave" onClick={() => leavePublicGroup(group.id)}>Leave </button> : <button className='btn-join' onClick={() => { joinPublicGroup(group) }}>Join </button>}
                         </div>
                     })}
                 </div>
