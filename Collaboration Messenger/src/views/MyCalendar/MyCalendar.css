@@ -1,0 +1,40 @@
+.my-calendar-container {
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .my-calendar {
+    height: 100%;
+    background-color: #a7c2fd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rbc-calendar .rbc-row-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #99c7fa;
+  }
+  
+  .rbc-calendar .rbc-month-view .rbc-date-cell {
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .rbc-calendar .rbc-month-view .rbc-date-cell.rbc-now {
+    background-color: #a7c2fd;
+  }
+  
+  .rbc-calendar .rbc-month-view .rbc-day-bg .rbc-off-range {
+    background-color: #a7c2fd;
+  }
+  
+  .rbc-calendar .rbc-event {
+    background-color: #476cff;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    cursor: pointer;
+  }
+  

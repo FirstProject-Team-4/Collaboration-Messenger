@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { onValue, ref, set } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { sendMessage } from "../../service/friends";
-import Button from "../Button";
+import Button from "../button/Button";
 import Messages from "./Messages";
 import './Chat.css';
 import { sendGroupMessage } from "../../service/group";
@@ -197,8 +197,8 @@ const Chat = ({ type }: { type: string }) => {
                     onClick={() => setShowEmojiPicker(false)}
                     onChange={(e) => { setCurrentMessage(e.target.value); }}
                 />
-                <Button onClick={openFileSystem}><NoteAddIcon/></Button>
-                <button onClick={(event) =>{
+                <Button className="file-add-btn" onClick={openFileSystem}><NoteAddIcon/></Button>
+                <button className="add-reaction" onClick={(event) =>{
                     setShowEmojiPicker(!showEmojiPicker)
                     event.stopPropagation();
                 }
@@ -218,7 +218,7 @@ const Chat = ({ type }: { type: string }) => {
                     />
                     </div>)}
                     
-                <input
+                <input 
                     type="file"
                     ref={fileInputRef}
                     style={{ display: 'none' }}
@@ -233,7 +233,7 @@ const Chat = ({ type }: { type: string }) => {
 
                 />
                 
-                <Button onClick={sendCurrentMessage}><SendIcon/></Button>
+                <Button className="send-btn" onClick={sendCurrentMessage}><SendIcon/></Button>
             </div>
         )
     );

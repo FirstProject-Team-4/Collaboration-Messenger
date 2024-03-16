@@ -5,7 +5,7 @@ import CreateGroup from './CreateGroup';
 import { NavLink, useParams } from 'react-router-dom';
 import { getGroupsByUser } from '../../service/group';
 import JoinedGroups, { Group } from '../../components/group-components/JoinedGroup';
-import { onChildAdded, onChildRemoved, onValue, ref } from 'firebase/database';
+import { onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
 import GroupInvites from '../../components/group-components/GroupInvites';

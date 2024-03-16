@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import InviteSearch from '../Search/InviteSearch';
 import { useAppContext } from '../../context/appContext';
-import Button from '../Button';
+import Button from '../button/Button';
 import { inviteToGroup } from '../../service/group';
 import { useParams } from 'react-router-dom';
 

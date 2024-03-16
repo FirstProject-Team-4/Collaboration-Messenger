@@ -10,7 +10,6 @@ import UserProfile from '../UserProfile/UserProfile';
 
 
 
-
 const PrivateChats = () => {
     const { id } = useParams<{ id: string }>();
     console.log('PrivateChats');

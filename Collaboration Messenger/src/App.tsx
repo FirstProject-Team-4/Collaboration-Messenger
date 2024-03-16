@@ -8,13 +8,14 @@ import About from './views/About/About';
 import { getUserData } from './service/user';
 import { AppContext } from './context/appContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Header } from './components/Header';
+import { Header } from './components/header/Header';
 import Home from './views/Home/Home';
 import Group from './views/Group/Group';
 import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
+import MyCalendar from './views/MyCalendar/MyCalendar';
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -46,17 +47,23 @@ function App() {
     
   }, [context.userData]);
 
- 
+  const toggleTheme = () => {
+    document.body.classList.toggle('dark-mode');
+  };
   return (
     <>
    {/* <ToastContainer /> */}
+  
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
           <Header />
           <div className="main-content">
+          <label className="switch">
+  <input type="checkbox" onClick={toggleTheme} />
+  <span className="slider"></span>
+</label>
             <Routes>
               <Route path="/" element={<About />} />
-              
               <Route path='/profile/:id' element={<Profile />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
@@ -69,6 +76,7 @@ function App() {
             
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path='/calendar' element={<MyCalendar/>} />
               <Route path="*" element={<h1> 404 Not Found</h1>} />
             </Routes>
           </div>

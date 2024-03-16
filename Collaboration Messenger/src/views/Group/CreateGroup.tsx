@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import'./Group.css';
-import Button from '../../components/Button';
+import Button from '../../components/button/Button';
 import { createGroup } from '../../service/group';
 import { useAppContext } from '../../context/appContext';
 import { checkGroupData } from '../../validations/groupData';

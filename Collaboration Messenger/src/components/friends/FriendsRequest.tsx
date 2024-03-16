@@ -4,7 +4,8 @@ import { useAppContext } from '../../context/appContext';
 import { onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import { NavLink } from 'react-router-dom';
-import ImageComp from '../../components/imageComp/ImageComp';
+import ImageComp from '../imageComp/ImageComp';
+import './FriendsList.css';
 
 interface Request {
     id: string;
@@ -70,16 +71,24 @@ export default function FriendsRequest() {
     console.log('FriendsRequest');
 
     return (
-        <div>
-            <h4>Friend Requests</h4>
+        <>
+            <h4 className="title-friends-view">Friend Requests</h4>
+        <div className="card-container">
             {requests.map(request => (
-                <div key={request.id}>
-                    <ImageComp unique={request.username} type={'user'} />
-                    <NavLink to={`/profile/${request.username}`} >{request.username}</NavLink>
-                    <button onClick={() => handleAccept(request)}>Accept</button>
-                    <button onClick={() => handleReject(request)}>Reject</button>
+                <div key={request.id} className="card">
+                    <div className="infos">
+                        <div className="image">
+                            <ImageComp className="image-friends" unique={request.username} type={'user'} />
+                        </div>
+                        <div className="info">
+                            <NavLink className="name" to={`/profile/${request.username}`}>{request.username}</NavLink>
+                        </div>
+                    </div>
+                    <button className="request" onClick={() => handleAccept(request)}>Accept</button>
+                    <button className="request" onClick={() => handleReject(request)}>Reject</button>
                 </div>
             ))}
         </div>
+        </>
     );
 }

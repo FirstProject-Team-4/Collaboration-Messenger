@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { db } from "../../config/config-firebase";
 import { useAppContext } from "../../context/appContext";
-import ImageComp from "../../components/imageComp/ImageComp";
+import ImageComp from "../imageComp/ImageComp";
 import { commbineId} from "../../service/friends";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-
+import './FriendsList.css';
 
 export default function FriendsList() {
     const [friendList, setFriendList] = useState<any>([]);
@@ -65,17 +65,42 @@ export default function FriendsList() {
         await remove(friendRef2);
     }
    
+    // return (
+    //     <>
+    //         <h4>Friends</h4>
+    //         {friendList && friendList.map((friend: any, index: number) => (
+    //             <div key={index} className="friend-info">
+    //                 <ImageComp unique={friend.username} type={'user'} />
+    //                 <NavLink to={`/profile/${friend.username}`}>{friend.username}</NavLink>
+    //                 <button onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
+    //                 <button onClick={() => handleRemoveFriend(friend)}>Remove </button>
+    //             </div>
+    //         ))}
+    //     </>
+    // );
+
     return (
         <>
-            <h4>Friends</h4>
+            <h4 className="title-friends-view">Friends</h4>
+        <div className="card-container">
+          
             {friendList && friendList.map((friend: any, index: number) => (
-                <div key={index} className="friend-info">
-                    <ImageComp unique={friend.username} type={'user'} />
-                    <NavLink to={`/profile/${friend.username}`}>{friend.username}</NavLink>
-                    <button onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
-                    <button onClick={() => handleRemoveFriend(friend)}>Remove </button>
+                <div key={index} className="card">
+                    <div className="infos">
+                        <div className="image">
+                            <ImageComp className="image-friends" unique={friend.username} type={'user'} />
+                        </div>
+                        <div className="info">
+                            <NavLink className="name" to={`/profile/${friend.username}`}>{friend.username}</NavLink> 
+                        </div>
+                    </div>
+                    <button className="request" onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
+                    <button className="request" onClick={() => handleRemoveFriend(friend)}>Remove </button>
                 </div>
             ))}
+            
+        </div>
         </>
     );
+   
 }

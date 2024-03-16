@@ -1,10 +1,10 @@
 import './Header.css';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
-import { logoutUser } from "../service/auth";
+import { useAppContext } from "../../context/appContext";
+import { logoutUser } from "../../service/auth";
 import { ref, update } from 'firebase/database';
-import { db } from '../config/config-firebase';
+import { db } from '../../config/config-firebase';
 import ChatIcon from '@mui/icons-material/Chat';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Diversity2Icon from '@mui/icons-material/Diversity2';
