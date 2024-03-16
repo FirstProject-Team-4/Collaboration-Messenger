@@ -11,20 +11,18 @@
   position: relative;
   flex-direction: column;
   width: 1230px;
-  border: 1px solid #fffafa3d;
+  border: 1px solid #1009093d;
   right: 1%;
   top: 10px;
   border-radius: 10px;
   background-color: rgba(211, 14, 241, 0.085);
   box-sizing: border-box;
 }
-
-/* .view {
+/* 
+.view {
 
 
 } */
-
-
 
 
 
