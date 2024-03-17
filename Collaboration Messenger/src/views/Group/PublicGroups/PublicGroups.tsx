@@ -7,6 +7,8 @@ import { onValue, ref } from "firebase/database";
 import { db } from "../../../config/config-firebase";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import './PublicGroups.css';
+
+import { Group } from "../../../components/group-components/JoinedGroup";
 // import './Group.css';
 
 export default function PublicGroups() {
@@ -34,14 +36,14 @@ export default function PublicGroups() {
         }
 
     }
-    const joinPublicGroup = (group: { id: string, image: string, title: string }) => {
+    const joinPublicGroup = (group:Group) => {
         joinGroup(group, userData);
         // const filteredGroups = groups.filter((g: any) => g.id !== group.id);
         // filteredGroups.push({...group,members:{[userData.username]:userData.username}});
         // setGroups(filteredGroups);
         // // nav(`/group/${group.id}`)
 
-
+        
     }
     const handleSearch = (value: string) => {
         setSearch(value);
