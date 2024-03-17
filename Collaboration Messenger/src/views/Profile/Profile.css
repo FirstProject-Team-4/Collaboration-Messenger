@@ -32,20 +32,24 @@
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
+ 
 }
 
 .info-profile{
     position: relative;
     left: 700px;
-    bottom: 270px;
+    bottom: 310px;
     font-family: "Gloria Hallelujah", cursive;
     font-weight: 400;
     font-size: 20px;
-    color: #000000;
-    background-color: #c68ac5a1;
+    color: #ffffff;
+    background: linear-gradient(82.3deg,
+    rgb(181, 151, 226) 10.8%,
+    rgb(86, 83, 140) 94.3%);
     box-shadow: 0 8px 32px 0 rgba(135, 31, 133, 0.37),
     0 30px 60px rgba(124, 121, 203, 0.414);
-    padding: 10px 20px;
+    padding:50px;
+    padding-right: 50px;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -68,3 +72,21 @@
 .file-input-label:hover {
     background-color: #6f7be8;
 }
+
+.button-profile{
+    position: relative;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 2rem;
+    margin: 10px;
+    border-radius: 1.5rem;
+    background: linear-gradient(82.3deg,
+        rgb(181, 151, 226) 10.8%,
+        rgb(86, 83, 140) 94.3%);
+    background-size: 400%;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+  }
+  
+  
