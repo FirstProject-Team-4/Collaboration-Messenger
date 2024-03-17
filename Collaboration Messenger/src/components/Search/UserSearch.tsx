@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, getUserData } from "../../service/user";
+import { getAllUsers} from "../../service/user";
 import Button from "../button/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, getDatabase, ref, remove, update } from "firebase/database";
+import { get, getDatabase, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -16,7 +16,7 @@ interface UserSearchProps {
     type?: string;
 }
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
-    const { userData, setContext } = useAppContext();
+    const { userData} = useAppContext();
     const [users, setUsers] = useState<any>([]);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
