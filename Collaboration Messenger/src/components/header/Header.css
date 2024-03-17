@@ -7,8 +7,8 @@
     left: 1px;
     gap: 30px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 10px;
-    height: 660px;
+    top: 50px;
+    height: 615px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),

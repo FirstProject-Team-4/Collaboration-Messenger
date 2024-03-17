@@ -5,11 +5,11 @@
   flex-direction: column;
   align-items: center;
   width: 900px;
-  height: 695px;
+  height: 670px;
   border: 1px solid #fffafa3d;
   /* left: %; */
   right: 12px;
-  top: 10px;
+  top: 50px;
   border-radius: 10px;
   background-color: rgba(211, 14, 241, 0.085);
   box-sizing: border-box;
