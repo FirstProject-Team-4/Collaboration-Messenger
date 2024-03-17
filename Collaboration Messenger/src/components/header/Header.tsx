@@ -1,7 +1,7 @@
 import './Header.css';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import { CallContext, useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
 import { ref, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
@@ -13,7 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { DyteCameraToggle, DyteControlbar, DyteMeeting, DyteMicToggle } from '@dytesdk/react-ui-kit';
 // import logo from '/image/busyChat_logo.png';
 /**
  * Renders the header component.
@@ -25,6 +26,24 @@ export const Header = () => {
     const navigate = useNavigate();
     const { userData, setContext } = useAppContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { meeting, initMeeting } = useDyteContext();
+    const { inCall, setInCall } = useCallContext();
+    const [minimizedMeeting, setMinimizedMeeting] = useState(false);
+
+  useEffect(() => {
+        if(meeting){
+        meeting.self.on('roomLeft', () => { //Handle Navigation
+        setInCall(false);
+
+        });
+        meeting.self.on(`roomJoined`,() => {//Send message to chat
+            console.log("roomJoined")
+        })
+    }
+      }, [meeting]);
+
+
+
 
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -48,10 +67,11 @@ export const Header = () => {
         navigate(`/profile/${userData?.username}`);
     }
 
+
     return (
         userData &&
         <>
-             
+
             <div className="header-view">
                 {/* <NavLink to='/home' className='logo'>
                     <img src={logo} alt="Logo" />
@@ -83,7 +103,19 @@ export const Header = () => {
                 <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
                 <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
             </Menu>
-            <div className="top-div">This is a hardcoded div at the top of the page</div>
+            {inCall&&<div onClick={()=>{setMinimizedMeeting(!minimizedMeeting)}} className="top-div">
+                <p  onClick={()=>{setMinimizedMeeting(!minimizedMeeting)}} >{minimizedMeeting?'return to meeting':'minimize'}</p>
+                
+                    {/* <DyteMicToggle meeting={meeting} />
+                    <DyteCameraToggle meeting={meeting} /> */}
+
+               
+            </div>}
+
+            {inCall&&<div className={minimizedMeeting?"dyte-meeting-minimized-container":"dyte-meeting-fullscreen-container"}>
+                    <DyteMeeting meeting={meeting} />
+                  </div>}
         </>
     );
 }
+

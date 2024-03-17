@@ -19,8 +19,8 @@ const acceptGroupRequest=()=>{
     update(ref(db, `users/${userData.username}/groupInvitation`),{[groupId]:null});
     update(ref(db, `groups/${groupId}/members`),{[userData.username]:true,status:'online',id:userData.id});
     update(ref(db, `users/${userData.username}/groups`),{[groupId]:{title:group.title,image:group.image}});
-   
-    sendParticipantToken(group.room,userData,groupId);
+    const member={username:userData.username,id:userData.uid , status:'online'};
+    sendParticipantToken(group.room,member,groupId);
 }
     return (
         <div className="group-invites">

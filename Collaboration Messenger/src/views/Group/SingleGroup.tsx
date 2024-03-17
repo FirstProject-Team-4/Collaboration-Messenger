@@ -7,11 +7,11 @@ import { onValue, ref } from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
-import { useAppContext } from '../../context/appContext';
+import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
 import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
-import { DyteGrid, DyteHeader, DyteMeeting, DyteMeetingTitle } from '@dytesdk/react-ui-kit';
-import { createDyteRoom } from '../../service/video-audio-calls';
+import { DyteMeeting } from '@dytesdk/react-ui-kit';
+
 import { setStatusToBusy } from '../../service/status';
 
 import CallIcon from '@mui/icons-material/Call';
@@ -19,12 +19,13 @@ import './Group.css';
 
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
-    const [isCallStarted, setIsCallStarted] = useState(false);
+
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
     const { userData } = useAppContext();
     const [token, setToken] = useState<string>("");
-    const [meeting, initMeeting] = useDyteClient();
+    const {meeting, initMeeting} = useDyteContext();
+    const {inCall, setInCall} = useCallContext();
 
 
 
@@ -66,10 +67,7 @@ export default function SingleGroup() {
   
     useEffect(() => {
         if(meeting){
-        meeting.self.on('roomLeft', () => { //Handle Navigation
-        nav(`/group/${id}`);
-        setIsCallStarted(false);
-        });
+       
         meeting.self.on(`roomJoined`,() => {//Send message to chat
             console.log("roomJoined")
         })
@@ -80,7 +78,7 @@ export default function SingleGroup() {
         removeGroupMember(currentGroup.id, userData.username);
     }
     return (
-        !isCallStarted ? <>
+        
             <div className="single-group-container">
                 <div className="chat-container">
                     <button onClick={async () => {
@@ -91,7 +89,7 @@ export default function SingleGroup() {
                                     video: false,
                                 },
                             });
-                            setIsCallStarted(true); 
+                           setInCall(true);
                             setStatusToBusy(userData)
                     }
                     }><CallIcon/></button>
@@ -108,16 +106,7 @@ export default function SingleGroup() {
                     <GroupMembers members={groupMembers} owner={currentGroup.owner} />
                 </div>
             </div>
-        </> :
-          
-               
-             
-         <div>
-                {meeting&& <DyteProvider value={meeting}>
-                    <DyteMeeting meeting={meeting} />
-               
-                </DyteProvider>}
-                </div>
+       
                 
     )
 }

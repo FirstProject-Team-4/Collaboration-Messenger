@@ -6,7 +6,7 @@ import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import About from './views/About/About';
 import { getUserData } from './service/user';
-import { AppContext } from './context/appContext';
+import { AppContext, CallContext, DyteContext } from './context/appContext';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Header } from './components/header/Header';
 import Home from './views/Home/Home';
@@ -16,11 +16,14 @@ import Friends from './views/Friends/Friends';
 import { toggleStatus } from './service/status';
 import Profile from './views/Profile/Profile';
 import MyCalendar from './views/MyCalendar/MyCalendar';
+import { useDyteClient } from '@dytesdk/react-web-core';
 // import { ToastContainer } from 'react-toastify';
 
 
 
 function App() {
+  const [meeting, initMeeting] = useDyteClient();
+  const [inCall, setInCall] = useState(false)
   const [context, setContext] = useState({
     user: {} as any,
     userData: {} as any,
@@ -41,10 +44,10 @@ function App() {
 
   useEffect(() => {
     if (context.userData) {
-     
+
       toggleStatus(context.userData);
     }
-    
+
   }, [context.userData]);
 
   const toggleTheme = () => {
@@ -52,35 +55,39 @@ function App() {
   };
   return (
     <>
-   {/* <ToastContainer /> */}
-  
+      {/* <ToastContainer /> */}
+
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
-          <Header />
-          <div className="main-content">
-          <label className="switch">
-  <input type="checkbox" onClick={toggleTheme} />
-  <span className="slider"></span>
-</label>
-            <Routes>
-              <Route path="/" element={<About />} />
-              <Route path='/profile/:id' element={<Profile />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/group/:id" element={<Group/>} />
-              <Route path="/group" element={<Group/>} />
-          
-              <Route path="/friends" element={<Friends />} />
-              <Route path="/privateChats" element={<PrivateChats />} />
-              <Route path="/privateChats/:id" element={<PrivateChats />} />
-            
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path='/calendar' element={<MyCalendar/>} />
-              <Route path="*" element={<h1> 404 Not Found</h1>} />
-            </Routes>
-          </div>
-          {/* <Footer /> */}
+          <DyteContext.Provider value={{ meeting, initMeeting }}>
+            <CallContext.Provider value={{inCall,setInCall}}>
+            <Header />
+            <div className="main-content">
+              <label className="switch">
+                <input type="checkbox" onClick={toggleTheme} />
+                <span className="slider"></span>
+              </label>
+              <Routes>
+                <Route path="/" element={<About />} />
+                <Route path='/profile/:id' element={<Profile />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/group/:id" element={<Group />} />
+                <Route path="/group" element={<Group />} />
+
+                <Route path="/friends" element={<Friends />} />
+                <Route path="/privateChats" element={<PrivateChats />} />
+                <Route path="/privateChats/:id" element={<PrivateChats />} />
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path='/calendar' element={<MyCalendar />} />
+                <Route path="*" element={<h1> 404 Not Found</h1>} />
+              </Routes>
+            </div>
+            {/* <Footer /> */}
+            </CallContext.Provider>
+          </DyteContext.Provider>
         </AppContext.Provider>
       </BrowserRouter>
     </>
