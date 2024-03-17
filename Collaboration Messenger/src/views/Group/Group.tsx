@@ -51,7 +51,7 @@ export default function Group() {
                 })}
                 <div className='create-group'>
                     <NavLink className='create-group-btn' to={`/group/createGroup`}>Create</NavLink>
-                    <NavLink className='create-group-btn' to={`/group/join`}>Join </NavLink>
+                    <NavLink className='join-group-btn' to={`/group/join`}>Join </NavLink>
                 </div>
             </div>
             {id === 'createGroup' && <CreateGroup />}

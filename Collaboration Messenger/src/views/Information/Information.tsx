@@ -38,7 +38,7 @@ const Information: React.FC = () => {
           {userData?.username !== chat.username &&
             <NavLink to={`/privateChats/${chat.id}`}>
               <div className="chat-user">
-                <ImageComp className={'image-inf-message'} unique={chat.username} type={'user'} />
+                <ImageComp className={'image-inf-message image'} unique={chat.username} type={'user'} />
                 <p id="user-name">{chat.username}</p>
               </div>
             </NavLink>
