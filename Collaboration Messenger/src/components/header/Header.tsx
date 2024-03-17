@@ -51,10 +51,18 @@ export const Header = () => {
     return (
         userData &&
         <>
-        <div className='header'>
-        <span className="header-logo">
-            <span>logo</span>
-        <IconButton
+             
+            <div className="header-view">
+                {/* <NavLink to='/home' className='logo'>
+                    <img src={logo} alt="Logo" />
+                </NavLink> */}
+                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
+                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink>
+                <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
+                <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
+
+            </div>
+            <IconButton
                 id="logout"
                 aria-controls="logout-menu"
                 aria-haspopup="true"
@@ -75,22 +83,7 @@ export const Header = () => {
                 <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
                 <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
             </Menu>
-        </span>
-
-
-            <div className="header-view">
-                {/* <NavLink to='/home' className='logo'>
-                    <img src={logo} alt="Logo" />
-                </NavLink> */}
-                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
-                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink>
-                <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
-                <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
-
-            </div>
-          
-            </div> 
-       
+            <div className="top-div">This is a hardcoded div at the top of the page</div>
         </>
     );
 }
