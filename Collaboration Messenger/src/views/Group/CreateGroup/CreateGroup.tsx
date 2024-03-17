@@ -47,7 +47,7 @@ export default function CreateGroup() {
     }
     return (
         <div className='create-group-form '>
-            <h2 className="heading">CreateGroup</h2>
+            <h2 className="heading">Create Group</h2>
             <div className="form">
                 {currentGroup.image && <img src={currentGroup.image} alt="group" className='create-group-img' />}
                 <form>

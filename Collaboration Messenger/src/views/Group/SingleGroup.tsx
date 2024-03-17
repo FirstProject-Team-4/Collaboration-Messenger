@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
-
-import './Group.css';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { get, onValue, push, ref, set, update } from 'firebase/database';
+import { onValue, ref } from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
@@ -15,12 +12,14 @@ import Chat from '../../components/chat/Chat';
 import { useDyteClient } from '@dytesdk/react-web-core';
 import { DyteMeeting } from '@dytesdk/react-ui-kit';
 import { createDyteRoom } from '../../service/video-audio-calls';
+import CallIcon from '@mui/icons-material/Call';
+import './Group.css';
 
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
+    const [isCallStarted, setIsCallStarted] = useState(false);
     const [groupMembers, setGroupMembers] = useState<MembersProps[]>([]);
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
-    const [isCallStarted, setIsCallStarted] = useState(false);
     const { userData } = useAppContext();
     const [token, setToken] = useState<string>("");
     const [meeting, initMeeting] = useDyteClient();
@@ -71,14 +70,6 @@ export default function SingleGroup() {
 
 
 
-
-
-
-
-
-
-
-
 console.log(token)
     return (
        !isCallStarted? <>
@@ -92,8 +83,7 @@ console.log(token)
                             setIsCallStarted(true);
                         }
                     }
-
-                    }>Start Call</button>
+                    }><CallIcon/></button>
 
                      <Chat type={'group'} />
                 </div>
