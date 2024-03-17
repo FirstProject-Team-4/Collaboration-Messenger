@@ -24,7 +24,7 @@ const acceptGroupRequest=()=>{
 }
     return (
         <div className="group-invites">
-            <ImageComp className="group-img" unique={groupId} type='group'/>
+            <ImageComp className="group-img" unique={group} type='group'/>
             <h4>{group.title}</h4>
             <Button onClick={acceptGroupRequest}>Accept</Button>
             <Button onClick={()=>{}}>Decline</Button>

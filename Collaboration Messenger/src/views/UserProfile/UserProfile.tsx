@@ -108,7 +108,9 @@ const UserProfile = () => {
                 <div>
                     <h1>User Profile</h1>
                     <div>
-                        <ImageComp unique={userProfileData?.username} type={'user'} />
+                        
+                        <ImageComp unique={userProfileData} type={'user'} />
+                        
                         <Button onClick={() => { handleBlockUser() }}>{toggleBlock()}</Button>
 
                         {/* <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>

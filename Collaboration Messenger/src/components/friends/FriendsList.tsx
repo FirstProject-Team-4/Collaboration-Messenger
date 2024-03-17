@@ -88,7 +88,7 @@ export default function FriendsList() {
                 <div key={index} className="card">
                     <div className="infos">
                         <div className="image">
-                            <ImageComp className="image-friends" unique={friend.username} type={'user'} />
+                            <ImageComp className="image-friends" unique={friend} type={'user'} />
                         </div>
                         <div className="info">
                             <NavLink className="name" to={`/profile/${friend.username}`}>{friend.username}</NavLink> 

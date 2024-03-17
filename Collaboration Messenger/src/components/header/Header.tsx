@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
 import { DyteCameraToggle, DyteControlbar, DyteMeeting, DyteMicToggle } from '@dytesdk/react-ui-kit';
+import { setStatusToBusy, updateStatusToOnline } from '../../service/status';
 // import logo from '/image/busyChat_logo.png';
 /**
  * Renders the header component.
@@ -34,9 +35,11 @@ export const Header = () => {
         if(meeting){
         meeting.self.on('roomLeft', () => { //Handle Navigation
         setInCall(false);
+        updateStatusToOnline(userData);
 
         });
         meeting.self.on(`roomJoined`,() => {//Send message to chat
+            setStatusToBusy(userData);
             console.log("roomJoined")
         })
     }

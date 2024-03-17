@@ -13,7 +13,7 @@ export default function GroupMembers({members , owner}: { members: MembersProps[
     const [offlineMembers, setOfflineMembers] = useState<MembersProps[]>([]);
     useEffect(() => {
 
-        const online = members.filter((member) => member.status === 'online');
+        const online = members.filter((member) => member.status !== 'offline');
         const offline = members.filter((member) => member.status === 'offline');
         setOnlineMembers(online);
         setOfflineMembers(offline);
@@ -24,7 +24,7 @@ export default function GroupMembers({members , owner}: { members: MembersProps[
             <h5>{`Online:${onlineMembers.length}`}</h5>
             {onlineMembers.map((member,index) => {
                     return <div key={index} className="group-members">
-                    <ImageComp className='group-members-img' unique={member.username} type={'user'}/>
+                    <ImageComp className='group-members-img' unique={member} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>
                     </div>
@@ -32,7 +32,7 @@ export default function GroupMembers({members , owner}: { members: MembersProps[
             <h5>{`Offline:${offlineMembers.length}`}</h5>
             {offlineMembers.map((member,index) => {
                     return <div key={index} className="group-members">
-                    <ImageComp className='img-member' unique={member.username} type={'user'}/>
+                    <ImageComp className='img-member' unique={member} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>
                     </div>
