@@ -23,10 +23,10 @@ import React from 'react';
 export const Header = () => {
 
     const navigate = useNavigate();
-    const {userData, setContext } = useAppContext();
+    const { userData, setContext } = useAppContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event:any) => {
+    const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -34,55 +34,55 @@ export const Header = () => {
     };
     // const location = useLocation();
     const logout = async () => {
-        update(ref(db, `users/${userData.username}/status`), { status:'offline'});
-        const groups=userData.groups?Object.keys(userData.groups):[]
-        groups.forEach(id=>{
-            update(ref(db, `groups/${id}/members/${userData.username}`), { status:'offline'});
+        update(ref(db, `users/${userData.username}/status`), { status: 'offline' });
+        const groups = userData.groups ? Object.keys(userData.groups) : []
+        groups.forEach(id => {
+            update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'offline' });
         })
         await logoutUser();
         setContext({ user: null, userData: null });
         navigate('/about');
     }
- 
-const profile = () => {
-    navigate(`/profile/${userData?.username}`);
-}
+
+    const profile = () => {
+        navigate(`/profile/${userData?.username}`);
+    }
 
     return (
         userData &&
-             <>
-        <div className="header-view">
-        {/* <NavLink to='/home' className='logo'>
+        <>
+            <div className="header-view">
+                {/* <NavLink to='/home' className='logo'>
                     <img src={logo} alt="Logo" />
                 </NavLink> */}
-            <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon/><br/>Chats </NavLink>
-            <NavLink to="/group" className={'header-nav'} ><Groups2Icon/><br/>Groups</NavLink>
-            <NavLink to='/friends' className={'header-nav'}><Diversity2Icon/><br/>Friends</NavLink>
-            <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon/><br/>Calendar </NavLink>
-            
-        </div>          
+                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
+                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink>
+                <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
+                <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
+
+            </div>
             <IconButton
-  id="logout"
-  aria-controls="logout-menu"
-  aria-haspopup="true"
-  onClick={handleClick}
-  className="logout-button"
-  style={{color:'white'}}
->
-  <LogoutIcon />
-</IconButton>
-<Menu
-  id="logout-menu"
-  anchorEl={anchorEl}
-  keepMounted
-  open={Boolean(anchorEl)}
-  onClose={handleClose}
-//   className="logout-menu"
->
-  <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
-  <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
-</Menu>
-         
-            </>
+                id="logout"
+                aria-controls="logout-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                className="logout-button"
+                style={{ color: 'white' }}
+            >
+                <LogoutIcon />
+            </IconButton>
+            <Menu
+                id="logout-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            //   className="logout-menu"
+            >
+                <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
+                <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
+            </Menu>
+
+        </>
     );
 }

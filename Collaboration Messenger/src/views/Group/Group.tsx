@@ -45,7 +45,7 @@ export default function Group() {
                 groupInvitation.map((group: any, index: any) => {
                     return <GroupInvites groupId={group} key={index} />
                 })}
-                <h6>Groups</h6>
+                <h6 className='group-title-inf'>Groups</h6>
                 {groups.map((group: any, index: any) => {
                     return <JoinedGroups singleGroup={group} key={index} />
                 })}

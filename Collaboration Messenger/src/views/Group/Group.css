@@ -1,5 +1,5 @@
 .groups-form {
-     position: relative;
+    position: relative;
     right: 25px;
     top: 15px;
     gap: 10px;
@@ -15,12 +15,12 @@
 }
 
 
-
 .groups-form h6 {
-    font-size: 12px;
+    font-size: 18px;
     align-self: center;
-    left: 50%;
-    margin-left: 2px;
+    font-family: "Gloria Hallelujah", cursive;
+    position: relative;
+    bottom: 10px;
 
 }
 
@@ -130,4 +130,5 @@
     margin: 10px;
     border-radius: 30px;
     background-color: #a185c89e;
+    color: rgb(240, 240, 240);
 }
