@@ -3,7 +3,7 @@ import './imageComp.css'
 import { get, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 
-export default function ImageComp({unique,type}:{unique:string,type:string, className:string}) {
+export default function ImageComp({unique,type}:{unique:string,type:string, className?:string}) {
     const [data, setData] = useState<any>(null)
     useEffect(() => {
         (async () => {

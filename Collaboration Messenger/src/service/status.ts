@@ -18,3 +18,17 @@ export const toggleStatus = async (userData: any) => {
         onDisconnect(ref(db, `users/${friend}/friends/${userData.username}`)).update({ status: 'offline' });
     })
 }
+export const setStatusToBusy = async (userData: any) => {
+    if (!userData.username) {
+        return;
+    }
+    const groups = userData.groups ? Object.keys(userData.groups) : []
+    const friends = userData.friends ? Object.keys(userData.friends) : []
+    update(ref(db, `users/${userData.username}`), { status: 'busy' });
+    groups.forEach(id => {
+        update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'busy' });
+    })
+    friends.forEach(friend => {
+        update(ref(db, `users/${friend}/friends/${userData.username}`), { status: 'busy' });
+    })
+}

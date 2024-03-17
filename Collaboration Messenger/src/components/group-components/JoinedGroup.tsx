@@ -8,6 +8,7 @@ export interface Group {
     members:{},
     owner:string,
     image:string|null
+    room:{id:string}
 }
 
 export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {

@@ -6,6 +6,7 @@ import Button from "../button/Button";
 import { ref, update } from "firebase/database";
 import { useAppContext } from "../../context/appContext";
 import { db } from "../../config/config-firebase";
+import { sendParticipantToken } from "../../service/video-audio-calls";
 
 export default function GroupInvites({groupId}:{groupId:string}) {
     const {userData}=useAppContext();
@@ -18,10 +19,12 @@ const acceptGroupRequest=()=>{
     update(ref(db, `users/${userData.username}/groupInvitation`),{[groupId]:null});
     update(ref(db, `groups/${groupId}/members`),{[userData.username]:true,status:'online',id:userData.id});
     update(ref(db, `users/${userData.username}/groups`),{[groupId]:{title:group.title,image:group.image}});
+   
+    sendParticipantToken(group.room,userData,groupId);
 }
     return (
         <div className="group-invites">
-            <ImageComp unique={groupId} type='group'/>
+            <ImageComp unique={groupId} type='group' />
             <h4>{group.title}</h4>
             <Button onClick={acceptGroupRequest}>Accept</Button>
             <Button onClick={()=>{}}>Decline</Button>

@@ -8,9 +8,10 @@ import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
+import { Group } from "../../components/group-components/JoinedGroup";
 
 export default function PublicGroups() {
-    const [groups, setGroups] = useState<any>([]);
+    const [groups, setGroups] = useState<Group[]>([]);
     const { userData } = useAppContext();
     const [search, setSearch] = useState('');
     const nav=useNavigate();
@@ -34,7 +35,7 @@ export default function PublicGroups() {
         }
 
     }
-    const joinPublicGroup = (group: { id: string, image: string, title: string }) => {
+    const joinPublicGroup = (group:Group) => {
         joinGroup(group, userData);
         // const filteredGroups = groups.filter((g: any) => g.id !== group.id);
         // filteredGroups.push({...group,members:{[userData.username]:userData.username}});
