@@ -1,4 +1,4 @@
-.joined-groups{
+/* .joined-groups{
     display:flex;
     position: relative;
     top:0px;
@@ -6,10 +6,8 @@
     justify-content:left;
     align-items:center;
     margin-top: 0px;
-    border-top: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
 
-}
+} */
 .group-invites{
     display:flex;
     position: relative;
@@ -50,20 +48,41 @@
     padding: 0px;
     margin-left: 2px;
 }
+
+.joined-groups {
+    display: flex;
+    position: relative;
+    top: 2px;
+    gap: 15px;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-top: 10px;
+    perspective: 1000px; 
+    transform-style: preserve-3d; 
+    /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.418), 0 6px 6px rgba(0, 0, 0, 0.23);  */
+    transition: transform 0.5s; 
+    border-radius: 10px;
+    border: 2px solid #be76dd4c;
+    background-color: #090909;
+}
+
+.joined-groups:hover {
+    transform: scale3d(1.05, 1.05, 1); 
+}
+
 .invite-members-form{
     display:flex;
     width: 500px;
     height: 500px;
     background-color: black;
     border: 1px solid #e0e0e0;
-
     flex-direction:column;
-   
     align-items:center;
     margin-top: 10px;
-    margin-bottom: 10px;
-    
+    margin-bottom: 10px;  
 }
+
 .invite-members-header{
     display:flex;
     position: relative;
@@ -72,32 +91,27 @@
     gap: 32%;
     background-color: #090909;
     border-bottom:1px solid #e0e0e0;
-   
-    flex-direction:row;
-    
-    
-    
+    flex-direction:row; 
 }
+
 .invite-members-header button{
     background-color: #131111;
     color: white;
-  
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
 }
+
 .invite-members-close-btn{
     position: fixed;
-
     top: 545px;
     align-self:center;
-    
     background-color: #131111;
     color: white;
     font-size: 20px;
-    
     cursor: pointer;
 }
+
 .invite-members-container {
     position: fixed;
     top: 0;
@@ -121,5 +135,5 @@
     margin-top: 0px;
     border-top: 1px solid #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
-
 }
+

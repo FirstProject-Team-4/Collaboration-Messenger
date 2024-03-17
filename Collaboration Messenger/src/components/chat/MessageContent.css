@@ -1,12 +1,11 @@
 .message-content {
-    /* Your existing styles for message content */
     position: relative;
   }
   
   .message-options {
     position: absolute;
-    top: -35px; /* Adjust this value to position the buttons properly */
-    right: 10px; /* Adjust this value to position the buttons properly */
+    top: -35px; 
+    right: 10px; 
     display: none;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;

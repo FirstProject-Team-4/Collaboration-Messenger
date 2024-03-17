@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 import './Group.css';
-import CreateGroup from './CreateGroup';
+import CreateGroup from './CreateGroup/CreateGroup';
 import { NavLink, useParams } from 'react-router-dom';
 import { getGroupsByUser } from '../../service/group';
 import JoinedGroups, { Group } from '../../components/group-components/JoinedGroup';
@@ -9,7 +9,7 @@ import { onChildRemoved, onValue, ref } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
 import GroupInvites from '../../components/group-components/GroupInvites';
-import PublicGroups from './PublicGroups';
+import PublicGroups from './PublicGroups/PublicGroups';
 export default function Group() {
     const { userData } = useAppContext();
     const { id } = useParams();
@@ -45,13 +45,13 @@ export default function Group() {
                 groupInvitation.map((group: any, index: any) => {
                     return <GroupInvites groupId={group} key={index} />
                 })}
-                <h6>Groups</h6>
+                <h6 className='group-title-inf'>Groups</h6>
                 {groups.map((group: any, index: any) => {
                     return <JoinedGroups singleGroup={group} key={index} />
                 })}
                 <div className='create-group'>
                     <NavLink className='create-group-btn' to={`/group/createGroup`}>Create</NavLink>
-                    <NavLink className='create-group-btn' to={`/group/join`}>Join </NavLink>
+                    <NavLink className='join-group-btn' to={`/group/join`}>Join </NavLink>
                 </div>
             </div>
             {id === 'createGroup' && <CreateGroup />}

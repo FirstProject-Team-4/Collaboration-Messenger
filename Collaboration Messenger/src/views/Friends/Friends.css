@@ -3,10 +3,10 @@
   flex-direction: row;
   align-items: center;
   padding: 10px 20px;
+  
 }
 
 .view-frineds {
-
   display: flex;
   position: relative;
   flex-direction: column;
@@ -16,15 +16,11 @@
   top: 10px;
   border-radius: 10px;
   background-color: rgba(211, 14, 241, 0.085);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(135, 31, 133, 0.37),
+      0 30px 60px rgba(124, 121, 203, 0.414);
   box-sizing: border-box;
 }
-/* 
-.view {
-
-
-} */
-
-
 
 .friends-button {
   position: relative;
@@ -66,3 +62,4 @@
       rgba(99, 88, 238, 1) 94.3%);
   transition: all 0.475s;
 }
+

@@ -15,7 +15,7 @@ export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {
     return (
         <NavLink to={`/group/${singleGroup.id}`}>
         <div className="joined-groups"> 
-        <ImageComp unique={singleGroup.id} type={'group'}/>
+        <ImageComp className='group-image' unique={singleGroup.id} type={'group'}/>
         <h4>{singleGroup.title}</h4>
         </div>
         </NavLink>

@@ -9,7 +9,7 @@ import './Profile.css';
 
 const Profile = () => {
     // const { id } = useParams<{ id: string }>();
-    const {  userData, setContext } = useAppContext();
+    const { userData, setContext } = useAppContext();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [showEdit, setShowEdit] = useState(false);
@@ -41,13 +41,17 @@ const Profile = () => {
 
     return (
         <div>
-            <h1>Profile</h1>
+            <h1 className='profile'>Profile</h1>
             <div className="profile-container">
                 <div className="profile-img">
                     {userData && userData.image && <img src={userData.image} alt="Profile" />}
                 </div>
-                <input type="file" onChange={handleImage} />
-                {userData && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
+                <div className="profile-edit">
+                    {/* <input type="file" onChange={handleImage} /> */}
+                    <label htmlFor="file-input" className='file-input-label'>Upload Image</label>
+                    <input type="file" id="file-input" className='file-input' onChange={handleImage} />
+                    {userData && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
+                </div>
             </div>
             {showEdit ? (
                 <form onSubmit={handleSubmit}>
@@ -64,7 +68,7 @@ const Profile = () => {
                 </form>
             ) : null}
 
-            <div>
+            <div className='info-profile'>
                 <p>First Name: {userData?.firstName}</p>
                 <p>Last Name: {userData?.lastName}</p>
                 <p>Username: {userData?.username}</p>

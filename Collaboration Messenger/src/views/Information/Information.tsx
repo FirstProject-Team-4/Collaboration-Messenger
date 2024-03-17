@@ -3,13 +3,12 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import { NavLink } from "react-router-dom";
 import ImageComp from "../../components/imageComp/ImageComp";
 import { useAppContext } from "../../context/appContext";
+import './Information.css';
 
 interface Chat {
   uid: string;
   id: string;
   username: string;
-
-
 }
 
 const Information: React.FC = () => {
@@ -29,24 +28,21 @@ const Information: React.FC = () => {
   }, [userData]);
 
 
-
-
-
-
   return (
     <div className="column-inf">
-      <h3>Messages information </h3>
-      <p>Choose with who to chat</p>
+      <h3 >Messages</h3>
+
 
       {chats.map((chat) => (
         <div key={chat.id}>
-
-          <NavLink to={`/privateChats/${chat.id}`}>
-            <div className="chat-user">
-              <ImageComp unique={chat.username} type={'user'} />
-              <p>{chat.username}</p>
-            </div>
-          </NavLink>
+          {userData?.username !== chat.username &&
+            <NavLink to={`/privateChats/${chat.id}`}>
+              <div className="chat-user">
+                <ImageComp className={'image-inf-message image'} unique={chat.username} type={'user'} />
+                <p id="user-name">{chat.username}</p>
+              </div>
+            </NavLink>
+          }
         </div>
       ))}
     </div>

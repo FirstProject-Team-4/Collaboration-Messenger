@@ -24,7 +24,7 @@ export default function GroupMembers({members , owner}: { members: MembersProps[
             <h5>{`Online:${onlineMembers.length}`}</h5>
             {onlineMembers.map((member,index) => {
                     return <div key={index} className="group-members">
-                    <ImageComp unique={member.username} type={'user'}/>
+                    <ImageComp className='group-members-img' unique={member.username} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>
                     </div>
@@ -32,7 +32,7 @@ export default function GroupMembers({members , owner}: { members: MembersProps[
             <h5>{`Offline:${offlineMembers.length}`}</h5>
             {offlineMembers.map((member,index) => {
                     return <div key={index} className="group-members">
-                    <ImageComp unique={member.username} type={'user'}/>
+                    <ImageComp className='img-member' unique={member.username} type={'user'}/>
                     <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
                     <h5>{member.username!==owner&&member.username}</h5>
                     </div>
