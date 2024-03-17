@@ -8,6 +8,7 @@ import { getDatabase, onValue, push, ref } from 'firebase/database';
 import { useAppContext } from '../../context/appContext';
 import UserSearch from '../../components/Search/UserSearch';
 import { getAllUsers } from '../../service/user';
+import { useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -30,7 +31,8 @@ const MyCalendar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserListVisible, setIsUserListVisible] = useState(false);
   const { userData } = useAppContext();
-
+  const navigate = useNavigate();
+  
   const [users, setUsers] = useState<any>([]);
 
   useEffect(() => {
@@ -44,17 +46,17 @@ const MyCalendar: React.FC = () => {
 
   useEffect(() => {
     const db = getDatabase();
-    const eventsRef = ref(db, 'events');
-    onValue(eventsRef, (snapshot) => {
+    const userEventsRef = ref(db, `users/${userData?.username}/events`);
+    onValue(userEventsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const events = Object.keys(data).map((key) => {
+        const userEvents = Object.keys(data).map((key) => {
           return {
             id: key,
             ...data[key]
           }
-        })
-        setEvents(events);
+        });
+        setEvents(userEvents);
       } else {
         setEvents([]);
       }
@@ -62,35 +64,29 @@ const MyCalendar: React.FC = () => {
   }, [userData]);
 
   const handleSelect = (slotInfo: SlotInfo) => {
+    console.log('handleSelect called', slotInfo);
+    setIsModalOpen(true);// Open the modal when a slot is selected
     setSelectedSlot(slotInfo);
-    setModalIsOpen(true);
+    setStart(slotInfo.start.toISOString());
+    setEnd(slotInfo.end.toISOString());
+    
   };
 
-  // const handleUserSelect = (userId: string) => {
-  //   setSelectedUsers(prevSelectedUsers => {
-  //     if (prevSelectedUsers.includes(userId)) {
-  //       return prevSelectedUsers.filter(id => id !== userId); // Deselect if already selected
-  //     } else {
-  //       return [...prevSelectedUsers, userId]; // Select if not already selected
-  //     }
-  //   });
-  // };
   const handleUserSelect = (userId: string) => {
     setSelectedUsers([userId]);
   };
-
   const handleSave = () => {
     const db = getDatabase();
     const newEvent = {
       title,
-      start,
-      end,
+      start, // Use the start time of the selected slot
+      end, // Use the end time of the selected slot
       attendees,
-      sharedWith: selectedUsers // Include selected users/groups
+      sharedWith: selectedUsers // Include selected users/group in the event 
     };
-
+  
     // Save the event to the 'events' node
-    push(ref(db, 'events'), newEvent)
+    push(ref(db, `users/${userData?.username}/events`), newEvent)
       .then(() => {
         console.log('Event saved!');
         // Reset the state values after saving the event
@@ -99,25 +95,46 @@ const MyCalendar: React.FC = () => {
         setEnd(new Date().toISOString());
         setAttendees([]);
         setSelectedUsers([]);
-        setModalIsOpen(false); // Close the modal after saving
+        setIsModalOpen(false); // Close the modal after saving
       })
       .catch((error) => {
         console.error('Error saving event: ', error);
       });
+  
+    // Save the event to the selected user's node
+    selectedUsers.forEach((userId) => {
+      push(ref(db, `users/${userId}/events`), newEvent)
+        .then(() => {
+          console.log(`Event saved in user ${userId}'s database!`);
+        })
+        .catch((error) => {
+          console.error(`Error saving event in user ${userId}'s database: `, error);
+        });
+    });
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
   const toggleUserList = () => {
     setIsUserListVisible(prevIsUserListVisible => !prevIsUserListVisible);
   };
 
+
+
+  // const handleSelectEvent = (event: Event) => {
+  //   // Find the chat that corresponds to the user
+  //   const chat = chats.find(chat => chat.uid === event.sharedWith[0]);
+  
+  //   if (chat) {
+  //     // If the chat is found, navigate to the chat with the user
+  //     navigate(`/privateChats/${chat.id}`);
+  //   } else {
+  //     // If the chat is not found, handle the error (e.g., show an error message)
+  //     console.error('Chat not found');
+  //   }
+  // };
 
   return (
     <>
@@ -128,12 +145,13 @@ const MyCalendar: React.FC = () => {
           defaultView="month"
           events={events}
           onSelectSlot={handleSelect}
+          // onSelectEvent={handleSelectEvent} // Add this line
           selectable
           className="my-calendar"
         />
       </div>
       <div>
-        {!isModalOpen && (
+        {isModalOpen && (
           <div className="modal">
             <h2>New Event</h2>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
