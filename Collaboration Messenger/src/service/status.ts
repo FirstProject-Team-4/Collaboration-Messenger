@@ -32,3 +32,31 @@ export const setStatusToBusy = async (userData: any) => {
         update(ref(db, `users/${friend}/friends/${userData.username}`), { status: 'busy' });
     })
 }
+export const changeStatusToAway = async (userData: any) => {
+    if (!userData.username) {
+        return;
+    }
+    const groups = userData.groups ? Object.keys(userData.groups) : []
+    const friends = userData.friends ? Object.keys(userData.friends) : []
+    update(ref(db, `users/${userData.username}`), { status: 'away' });
+    groups.forEach(id => {
+        update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'away' });
+    })
+    friends.forEach(friend => {
+        update(ref(db, `users/${friend}/friends/${userData.username}`), { status: 'away' });
+    })
+}
+export const updateStatusToOnline = async (userData: any) => {
+    if (!userData.username) {
+        return;
+    }
+    const groups = userData.groups ? Object.keys(userData.groups) : []
+    const friends = userData.friends ? Object.keys(userData.friends) : []
+    update(ref(db, `users/${userData.username}`), { status: 'online' });
+    groups.forEach(id => {
+        update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'online' });
+    })
+    friends.forEach(friend => {
+        update(ref(db, `users/${friend}/friends/${userData.username}`), { status: 'online' });
+    })
+}

@@ -59,7 +59,7 @@ return (
             <div key={index} className="card">
                 <div className="infos">
                     <div className="image">
-                        <ImageComp className="image-friends" unique={user.username} type={'user'} />
+                        <ImageComp className="image-friends" unique={user} type={'user'} />
                     </div>
                     <div className="info">
                         <NavLink className="name" to={`/profile/${user.username}`}>{user.username}</NavLink>

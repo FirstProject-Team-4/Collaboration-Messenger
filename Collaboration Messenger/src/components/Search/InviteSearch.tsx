@@ -62,7 +62,7 @@ console.log(groupMembers);
                     return (
                         <div className="border-users" key={user.uid}>
                             <div className="information">
-                                <ImageComp unique={user.username} type='user' />
+                                <ImageComp unique={user} type='user' />
                                 <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
                                 {invited[user.username]?'Invited': <Button onClick={() => handleInvite(user)}>Invite</Button>}
                             </div>

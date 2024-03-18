@@ -60,7 +60,7 @@ export default function PublicGroups() {
                     {groups.map((group: any, index: any) => {
                         console.log(group.id);
                         return <div className="public-single-group-container card-group" key={index}>
-                            <ImageComp className='group-img image' unique={group.id} type={'group'} />
+                            <ImageComp className='group-img image' unique={group} type={'group'} />
                             <h3 className="title-group">{group.title}</h3>
                             <p className="info-group">About group: {group.description}</p>
                             <p><PeopleAltIcon/> {group.members ? Object.keys(group.members).length : 0} members</p>

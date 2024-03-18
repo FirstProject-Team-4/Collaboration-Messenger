@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { auth } from './config/config-firebase';
+import { auth, db } from './config/config-firebase';
 import { useState, useEffect } from 'react';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
@@ -13,10 +13,11 @@ import Home from './views/Home/Home';
 import Group from './views/Group/Group';
 import PrivateChats from './views/PrivateChats/PrivateChats';
 import Friends from './views/Friends/Friends';
-import { toggleStatus } from './service/status';
+import { toggleStatus, updateStatusToOnline } from './service/status';
 import Profile from './views/Profile/Profile';
 import MyCalendar from './views/MyCalendar/MyCalendar';
 import { useDyteClient } from '@dytesdk/react-web-core';
+import { ref, update } from 'firebase/database';
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -53,6 +54,16 @@ function App() {
   const toggleTheme = () => {
     document.body.classList.toggle('dark-mode');
   };
+  const updateLastClick=()=>{
+    if(context.userData){
+      const lastClick=Number(Date.now());
+      update(ref(db, `users/${context.userData.username}`),{lastClick:lastClick})
+      if(context.userData.status==='away'){
+       updateStatusToOnline(context.userData);
+      }
+   
+    }
+  }
   return (
     <>
       {/* <ToastContainer /> */}
@@ -62,7 +73,7 @@ function App() {
           <DyteContext.Provider value={{ meeting, initMeeting }}>
             <CallContext.Provider value={{inCall,setInCall}}>
             <Header />
-            <div className="main-content">
+            <div onClick={()=>{updateLastClick()}} className="main-content">
               <label className="switch">
                 <input type="checkbox" onClick={toggleTheme} />
                 <span className="slider"></span>

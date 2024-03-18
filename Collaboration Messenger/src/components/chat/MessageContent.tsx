@@ -104,7 +104,7 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
                 })}
                 <div className="message-reactions">
                     {reaction.map((r:any, i:number) => {
-                        return <> {r.users.length>0&&( <div key={i} className="reaction">
+                        return <div key={i}> {r.users.length>0&&( <div key={i} className="reaction">
                             <span className='emodji-reaction' onClick={()=>
                                 {addCurrentEmojiToMessage(r.emoji,message)
                                     if(r.users.includes(userData.username)){
@@ -116,7 +116,7 @@ export default function MessageContent({ message, type,setReplyMessage }: { mess
                                 }}>{r.emoji}</span>
                            {r.users.length>1&& <span>{r.users.length}</span>}
                         </div>)}
-                        </> 
+                        </div>
                     })}
                 </div>
                 {showEmojiPicker && 

@@ -9,9 +9,14 @@ import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
+import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
+import { DyteMeeting } from '@dytesdk/react-ui-kit';
+import { ToastContainer } from 'react-toastify';
+
 import { setStatusToBusy } from '../../service/status';
 import CallIcon from '@mui/icons-material/Call';
 import './Group.css';
+import { toast } from 'react-toastify';
 
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
@@ -22,6 +27,7 @@ export default function SingleGroup() {
     const [token, setToken] = useState<string>("");
     const {meeting, initMeeting} = useDyteContext();
     const {inCall, setInCall} = useCallContext();
+    const[status,setStatus]=useState('');
 
 
 
@@ -46,8 +52,13 @@ export default function SingleGroup() {
                 })
             });
         }
+        onValue(ref(db, `users/${userData.username}/status`), (snapshot) => {
+            if (snapshot.exists()) {
+                setStatus(snapshot.val());
+            }
+        })
 
-    }, [id])
+    }, [id,userData])
     useEffect(() => {
 
         onValue(ref(db, `groups/${id}/members/${userData.username}/token`), (snapshot) => {
@@ -57,18 +68,12 @@ export default function SingleGroup() {
             }
         });
     }, [userData]);
+    
 
 
 
   
-    useEffect(() => {
-        if(meeting){
-       
-        meeting.self.on(`roomJoined`,() => {//Send message to chat
-            console.log("roomJoined")
-        })
-    }
-      }, [meeting]);
+
 
       const leaveGroup = () => {
         removeGroupMember(currentGroup.id, userData.username);
@@ -78,6 +83,12 @@ export default function SingleGroup() {
             <>
                 <div className="chat-container">
                     <button onClick={async () => {
+                        console.log(status)
+                        if (status === 'busy'|| status==='offline') {
+                            console.log(status)
+                            console.log('You are currently set to busy.')
+                            return;
+                        }
                             await initMeeting({
                                 authToken: token,
                                 defaults: {
