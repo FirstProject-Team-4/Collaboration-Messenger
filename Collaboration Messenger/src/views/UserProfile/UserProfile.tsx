@@ -7,7 +7,7 @@ import ImageComp from '../../components/imageComp/ImageComp';
 import Button from '../../components/button/Button';
 
 
-type UserProfileData = {
+ export type UserProfileData = {
 
     username: string;
     email: string;
@@ -26,8 +26,8 @@ const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
     const [myBlockList, setMyBlockList] = useState<string[]>([]);
-    const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
     const [friendRequestStatus, setFriendRequestStatus] = useState('none'); // 'none', 'pending', 'accepted'
+    const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
 
     const currentId = id?.split(userData.uid).join('');
 

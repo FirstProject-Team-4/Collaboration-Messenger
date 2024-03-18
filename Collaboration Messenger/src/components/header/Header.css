@@ -1,82 +1,141 @@
 /* Default styles for large screens */
 .header-view {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    position: relative;
-    left: 1px;
-    gap: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 50px;
-    height: 615px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
-        0 30px 60px rgba(97, 218, 251, 0.3);
-    border-radius: 10px;
-    transition: all 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  position: relative;
+  left: 1px;
+  gap: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  top: 50px;
+  height: 615px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 30px 60px rgba(97, 218, 251, 0.3);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+#logout {
+  display: flex;
+  height: 45px;
+  position: relative;
+  bottom: 10px;
+  left: 1370px;
+  background-color: rgb(0, 0, 0);
+}
+
+/* Styles for screens smaller than 1200px */
+@media (max-width: 1200px) {
+  .header-view {
+    height: 600px;
   }
-  
+
   #logout {
-    display: flex;
-    height: 45px;
-    position: relative;
-    bottom: 10px;
-    left: 1370px;
-   background-color: rgb(0, 0, 0);
+    left: 1000px;
   }
-  
-  /* Styles for screens smaller than 1200px */
-  @media (max-width: 1200px) {
-    .header-view {
-      height: 600px; 
-    }
-  
-    #logout {
-      left: 1000px; 
-    }
+}
+
+/* Styles for screens smaller than 800px */
+@media (max-width: 800px) {
+  .header-view {
+    height: 550px;
   }
-  
-  /* Styles for screens smaller than 800px */
-  @media (max-width: 800px) {
-    .header-view {
-      height: 550px; 
-    }
-  
-    #logout {
-      left: 700px; 
-    }
+
+  #logout {
+    left: 700px;
   }
-  
-  @media (max-width: 600px) {
-    .header-view {
-      height: 500px; 
-    }
-  
-    #logout {
-      left: 400px; 
-    }
+}
+
+@media (max-width: 600px) {
+  .header-view {
+    height: 500px;
   }
-  .top-div {
-    position: absolute;
-    width: 30%;
-    top: 0;
-    left: 35%;
-   align-self: center;
-    
-    border: 1px solid #d16464;
-    height: 50px; /* adjust as needed */
-    background-color: #f8f9fa; /* adjust as needed */
-    z-index: 100; /* adjust as needed to ensure the div is above other elements */
+
+  #logout {
+    left: 400px;
   }
-  .dyte-meeting-fullscreen-container {
-    position: fixed; /* or 'absolute' */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99; /* adjust as needed to ensure the div is above other elements */
-  }
-  .dyte-meeting-minimized-container{
-    display: none;
-  }
+}
+
+.top-div {
+  position: absolute;
+  width: 10%;
+  top: 0;
+  left: 46%;
+  align-self: center;
+  align-items: center;
+  height: 50px;
+  background-color: black;
+  border-radius: 6px;
+  color: white;
+
+  z-index: 100;
+  /* adjust as needed to ensure the div is above other elements */
+}
+
+.dyte-meeting-fullscreen-container {
+  position: fixed;
+  /* or 'absolute' */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  /* adjust as needed to ensure the div is above other elements */
+}
+
+.dyte-meeting-minimized-container {
+  display: none;
+}
+
+#custom-toast {
+  display: flex;
+  flex-direction: start;
+  gap: 12px;
+  width: 400px;
+  height: 30px;
+}
+
+#custom-toast .status-circle {
+  display: none;
+}
+
+#custom-toast .letter {
+  position: absolute;
+  font-size: 25px;
+  top: 0px;
+  left: 0px;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 55px;
+  border-radius: 0px;
+  border: none;
+  border-right: 2px solid #0c0c0c;
+
+}
+
+#custom-toast button {
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 10px;
+
+}
+
+#custom-toast img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-left: 0px;
+  padding-left: 0px;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 0px;
+  border: none;
+  border-right: 2px solid #0c0c0c;
+
+}

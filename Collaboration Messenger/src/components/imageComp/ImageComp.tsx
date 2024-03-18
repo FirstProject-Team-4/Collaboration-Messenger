@@ -26,7 +26,7 @@ export default function ImageComp({ unique, type }: { unique:any, type: string, 
         })()
     }, [unique,userData])
 
-console.log('status',status)
+
 useEffect(() => {
     if(type==='user'){
   const timer = setInterval(async () => {

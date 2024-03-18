@@ -99,3 +99,49 @@
       left: 300px; 
     }
   }
+  #custom-toast{
+    display: flex;
+    flex-direction: start;
+    gap:12px;
+    width: 300px;
+    height: 30px;
+  }
+  #custom-toast .status-circle{
+    display: none;
+  }
+  #custom-toast  .letter{
+    position:absolute;
+ font-size: 25px;
+top:0px;
+ left: 0px;
+ justify-content: center;
+ align-items: center;
+    width: 45px;
+    height: 55px;
+    border-radius: 0px;
+    border: none;
+    border-right: 2px solid #0c0c0c;
+
+  }
+  #custom-toast  button{
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 10px;
+
+  }
+  #custom-toast  img{
+    position:absolute;
+   top:0px;
+    left: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    justify-content: center;
+    align-items: center;
+       width: 55px;
+       height: 55px;
+       border-radius: 0px;
+       border: none;
+       border-right: 2px solid #0c0c0c;
+  
+    }

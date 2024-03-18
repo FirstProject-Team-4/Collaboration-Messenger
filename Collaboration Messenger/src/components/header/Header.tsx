@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CallContext, useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
-import { ref, update } from 'firebase/database';
+import { off, onChildAdded, onValue, ref, remove, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import ChatIcon from '@mui/icons-material/Chat';
 import Groups2Icon from '@mui/icons-material/Groups2';
@@ -16,6 +16,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
 import { DyteCameraToggle, DyteControlbar, DyteMeeting, DyteMicToggle } from '@dytesdk/react-ui-kit';
 import { setStatusToBusy, updateStatusToOnline } from '../../service/status';
+import CallAudio from '../../Audio/ringtone-126505.mp3';
+import toast from 'react-hot-toast';
+import ImageComp from '../imageComp/ImageComp';
 // import logo from '/image/busyChat_logo.png';
 /**
  * Renders the header component.
@@ -31,19 +34,70 @@ export const Header = () => {
     const { inCall, setInCall } = useCallContext();
     const [minimizedMeeting, setMinimizedMeeting] = useState(false);
 
-  useEffect(() => {
-        if(meeting){
-        meeting.self.on('roomLeft', () => { //Handle Navigation
-        setInCall(false);
-        updateStatusToOnline(userData);
+    useEffect(() => {
+        if (meeting) {
+            meeting.self.on('roomLeft', () => { //Handle Navigation
+                setInCall(false);
+                updateStatusToOnline(userData);
+            });
+            meeting.self.on(`roomJoined`, () => {//Send message to chat
+                setStatusToBusy(userData);
+                console.log("roomJoined")
+            })
+        }
+    }, [meeting, userData]);
+    useEffect(() => {
+        onValue(ref(db, `users/${userData.username}/callNotification`), (snapshot) => {
+            if (snapshot.exists()) {
+                if (snapshot.val().status !== 'pending') {
+                    remove(ref(db, `users/${userData.username}/callNotification`));
+                    return;
+                }
+                const data = snapshot.val();
+                console.log(data)
+                const callAudio = new Audio()
+                callAudio.play()
+                const toastID = toast((t) => (
+                    <div id='custom-toast'>
+                        <ImageComp unique={data.caller} type='user'></ImageComp>
+                        Incoming Call <b>{data.caller.username}</b>
+                        <button onClick={() => {
+                            update(ref(db, `users/${userData.username}/callNotification`), { status: 'declined' });
 
-        });
-        meeting.self.on(`roomJoined`,() => {//Send message to chat
-            setStatusToBusy(userData);
-            console.log("roomJoined")
+                            toast.dismiss(t.id)
+                            callAudio.pause()
+                            callAudio.currentTime = 0;
+                        }}>
+                            Decline
+                        </button>
+                        <button onClick={async () => {
+
+
+                            await initMeeting({
+                                authToken: data.offer,
+                                defaults: {
+                                    audio: false,
+                                    video: false,
+                                },
+                            });
+                            update(ref(db, `users/${userData.username}/callNotification`), { status: 'accepted' });
+                            callAudio.pause()
+                            callAudio.currentTime = 0;
+                            toast.dismiss(t.id)
+                            setInCall(true);
+                        }}>
+                            Accept
+                        </button>
+                    </div>
+                ), {
+                    duration: 20000
+                })
+
+
+            }
         })
-    }
-      }, [meeting]);
+
+    }, [userData])
 
 
 
@@ -106,18 +160,19 @@ export const Header = () => {
                 <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
                 <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
             </Menu>
-            {inCall&&<div onClick={()=>{setMinimizedMeeting(!minimizedMeeting)}} className="top-div">
-                <p  onClick={()=>{setMinimizedMeeting(!minimizedMeeting)}} >{minimizedMeeting?'return to meeting':'minimize'}</p>
-                
-                    {/* <DyteMicToggle meeting={meeting} />
+            {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} className="top-div">
+
+                <p onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>
+
+                {/* <DyteMicToggle meeting={meeting} />
                     <DyteCameraToggle meeting={meeting} /> */}
 
-               
+
             </div>}
 
-            {inCall&&<div className={minimizedMeeting?"dyte-meeting-minimized-container":"dyte-meeting-fullscreen-container"}>
-                    <DyteMeeting meeting={meeting} />
-                  </div>}
+            {inCall && <div className={minimizedMeeting ? "dyte-meeting-minimized-container" : "dyte-meeting-fullscreen-container"}>
+                <DyteMeeting meeting={meeting} />
+            </div>}
         </>
     );
 }

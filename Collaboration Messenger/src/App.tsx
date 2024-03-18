@@ -17,7 +17,8 @@ import { toggleStatus, updateStatusToOnline } from './service/status';
 import Profile from './views/Profile/Profile';
 import MyCalendar from './views/MyCalendar/MyCalendar';
 import { useDyteClient } from '@dytesdk/react-web-core';
-import { ref, update } from 'firebase/database';
+import { get, ref, set, update } from 'firebase/database';
+import { Toaster } from 'react-hot-toast';
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -45,20 +46,23 @@ function App() {
 
   useEffect(() => {
     if (context.userData) {
-
       toggleStatus(context.userData);
     }
 
-  }, [context.userData]);
-
+  }, []);
+ 
   const toggleTheme = () => {
     document.body.classList.toggle('dark-mode');
   };
-  const updateLastClick=()=>{
+  const updateLastClick=async()=>{
     if(context.userData){
       const lastClick=Number(Date.now());
+      console.log(context.userData)
       update(ref(db, `users/${context.userData.username}`),{lastClick:lastClick})
-      if(context.userData.status==='away'){
+      const status= await get(ref(db, `users/${context.userData.username}/status`));
+      console
+      if(status.val()==='away'||status.val()==='offline'){
+        setContext({user,userData:{...context.userData,status:'online'}});
        updateStatusToOnline(context.userData);
       }
    
@@ -72,6 +76,7 @@ function App() {
         <AppContext.Provider value={{ ...context, setContext }}>
           <DyteContext.Provider value={{ meeting, initMeeting }}>
             <CallContext.Provider value={{inCall,setInCall}}>
+              <Toaster />
             <Header />
             <div onClick={()=>{updateLastClick()}} className="main-content">
               <label className="switch">

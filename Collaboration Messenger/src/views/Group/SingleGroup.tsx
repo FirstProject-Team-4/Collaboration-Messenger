@@ -17,7 +17,8 @@ import { setStatusToBusy } from '../../service/status';
 
 import CallIcon from '@mui/icons-material/Call';
 import './Group.css';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
+import { duration } from 'moment';
 
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
@@ -85,7 +86,11 @@ export default function SingleGroup() {
                 <div className="chat-container">
                     <button onClick={async () => {
                         console.log(status)
-                        if (status === 'busy'|| status==='offline') {
+                        if (status === 'busy') {
+                            toast.error('You are already in a call'),{
+                                duration:8000
+                            }
+                           
                             console.log(status)
                             console.log('You are currently set to busy.')
                             return;
