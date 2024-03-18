@@ -191,6 +191,7 @@ const MyCalendar: React.FC = () => {
       </div>
       <div>
   {isModalOpen && (
+     <div className="modal-overlay">
     <div className="modal">
       <h2>New Event</h2>
       <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -221,8 +222,10 @@ const MyCalendar: React.FC = () => {
         </select>
       </div>
     </div>
+    </div>
   )}
 </div>
+
     </>
   );
 };
