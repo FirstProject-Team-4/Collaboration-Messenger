@@ -9,11 +9,7 @@ import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
-import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
-import { DyteMeeting } from '@dytesdk/react-ui-kit';
-
 import { setStatusToBusy } from '../../service/status';
-
 import CallIcon from '@mui/icons-material/Call';
 import './Group.css';
 
@@ -79,7 +75,7 @@ export default function SingleGroup() {
     }
     return (
         
-            <div className="single-group-container">
+            <>
                 <div className="chat-container">
                     <button onClick={async () => {
                             await initMeeting({
@@ -105,7 +101,7 @@ export default function SingleGroup() {
                     </div>
                     <GroupMembers members={groupMembers} owner={currentGroup.owner} />
                 </div>
-            </div>
+            </>
        
                 
     )
