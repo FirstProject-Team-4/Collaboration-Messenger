@@ -57,13 +57,13 @@ useEffect(() => {
 
     if (type === 'user') {
         return (
-            data && <div className="img">
-                {data?.image ?<div className="img">
-                    <img className="img" src={data?.image} alt="user" />
+            data && <div className="img-user">
+                {data?.image ?<div className="img-user">
+                    <img className="img-user" src={data?.image} alt="user" />
                     <div className={`status-circle ${status}`}></div>
                     </div>
                     :
-                    <div className="img">
+                    <div className="img-user">
                     <span className="letter">
                     {data.username && data.username[0]}
                     </span>

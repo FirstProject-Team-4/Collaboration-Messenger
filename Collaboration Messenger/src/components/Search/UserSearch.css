@@ -1,4 +1,4 @@
-.information{
+.information {
     display: fixed;
     position: relative;
     left: 120px;
@@ -15,8 +15,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px); /* Add this line */
-    z-index: 9999; /* Add this line */
+    backdrop-filter: blur(5px);
+    /* Add this line */
+    z-index: 9999;
+    /* Add this line */
 }
 
 .modal {
@@ -26,7 +28,8 @@
     width: 90%;
     max-width: 400px;
     position: absolute;
-    z-index: 10000; /* Add this line */
+    z-index: 10000;
+    /* Add this line */
 }
 
 .modal input,
@@ -57,12 +60,13 @@
     transition: 0.2s;
     margin: 10px;
     position: relative;
-    right: 60px;
+    right: 70px;
+    top:2px;
 }
 
 .search-modal-btn:hover {
     color: var(--hover-text);
-    transform: translate(0.25rem,-0.25rem);
+    transform: translate(0.25rem, -0.25rem);
     background: var(--hover-bg);
     box-shadow: -0.25rem 0.25rem var(--bg);
 }
@@ -71,7 +75,7 @@
     transform: translate(0);
     box-shadow: none;
 }
- 
+
 /* search and add friends btn start */
 .bg-gradient-to-r {
     background: linear-gradient(to right, #6B46C1, #7F9CF5);
@@ -129,13 +133,14 @@
     border-radius: 4px;
     background: var(--bg);
     transition: 0.2s;
-  
-    right: 60px;
+    position: relative;
+    right: 90px;
+    top:6px;
 }
 
 .chat-search-btn:hover {
     color: var(--hover-text);
-    transform: translate(0.25rem,-0.25rem);
+    transform: translate(0.25rem, -0.25rem);
     background: var(--hover-bg);
     box-shadow: -0.25rem 0.25rem var(--bg);
 }
@@ -159,12 +164,12 @@
     position: relative;
     left: 150px;
     margin-bottom: 23px;
-  
+
 }
 
 .close-search-btn:hover {
     color: var(--hover-text);
-    transform: translate(0.25rem,-0.25rem);
+    transform: translate(0.25rem, -0.25rem);
     background: var(--hover-bg);
     box-shadow: -0.25rem 0.25rem var(--bg);
 }
@@ -174,11 +179,14 @@
     box-shadow: none;
 }
 
-.user-profile-btn{
-    margin-right: 70px;
+.user-profile-btn {
+    position: absolute;
+    right: 430px;
+    top: 15px;
+    font-size: 20px;
 }
 
-#btn-search{
+#btn-search {
     position: relative;
     left: 250px;
 }

@@ -6,10 +6,9 @@
   .column-inf {
     position: relative;
     right: 115px;
-    top: 15px;
     gap: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 50px;
+    top: 30px;
     height: 615px;
     padding: 20px;
     backdrop-filter: blur(10px);
@@ -39,12 +38,12 @@
   }
   
   .user-profile {
-    position: relative;
-    right: 40px;
+    position: absolute;
+    right: 20px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     top: 83px;
     height: 580px;
-    padding: 20px;
+    padding: 6px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
         0 30px 60px rgba(97, 218, 251, 0.3);

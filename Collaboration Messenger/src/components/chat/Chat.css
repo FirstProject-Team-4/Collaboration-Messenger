@@ -1,15 +1,14 @@
 /* Chat container */
 .chat-container {
   display: flex;
-  position: relative;
+  position: absolute;
   flex-direction: column;
   align-items: center;
-  width: 900px;
-  height: 670px;
+  width: 880px;
+  height: 650px;
   border: 1px solid #fffafa3d;
-  /* left: %; */
-  right: 12px;
-  top: 50px;
+  left: 170px;
+  top: 30px;
   border-radius: 10px;
   background-color: rgba(211, 14, 241, 0.085);
   box-sizing: border-box;
@@ -17,7 +16,7 @@
 
 .column-chat {
   width: 70%;
-  height: 100%;
+  height: 70%;
 }
 
 
@@ -141,7 +140,7 @@
   transition: all 0.3s ease;
   outline: none;
   font-size: 18px;
-
+color: black;
   position: relative;
   bottom: 10px;
   left: 50px;
@@ -164,14 +163,14 @@
 .file-add-btn {
   position: relative;
   bottom: 6px;
-  right:520px
+  right:570px
 }
 
 /* emodji */
 .add-reaction {
   position: relative;
   bottom: 65px;
-  right:200px
+  right:230px
 }
 
 /* edit */

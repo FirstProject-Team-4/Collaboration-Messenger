@@ -4,8 +4,8 @@
     top: 15px;
     gap: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 50px;
-    height: 620px;
+    top: 30px;
+    height: 610px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(17, 24, 116, 0.37),
@@ -24,19 +24,6 @@
 
 }
 
-/* .chat-container {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    right: 40px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    height: 100%;
-    width: 770px;
-    border: 2px solid #d16464;
-} */
-
 .single-group-container {
     display: flex;
     flex-direction: row;
@@ -54,12 +41,13 @@
 }
 
 .members-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    /* display: flex;
+    flex-direction: column; */
+    position: absolute;
+    left:1070px;
     height: 92%;
-    top:60px;
-    width: 250px;
+    top: 60px;
+    width: 240px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -67,9 +55,19 @@
         0 30px 60px rgba(97, 218, 251, 0.3);
     border-radius: 10px;
     transition: all 0.5s ease;
-    
+    padding-left: 20px;
+
 }
 
+.members-container h5{
+    font-size: 15px;
+    align-self: center;
+    font-family: "Gloria Hallelujah", cursive;
+    position: relative;
+    bottom: 5px;
+    left: 20px;
+
+}
 .chat-header {
     display: absolute;
     flex-direction: row;
@@ -161,12 +159,12 @@
     background-color: #bd63d369;
     overflow: hidden;
     position: relative;
-    z-index: 10;
+    /* z-index: 10; */
 }
 
 .join-group-btn::after {
     content: "";
-    position: absolute;
+    position: relative;
     background-color: #199fab;
     border-radius: 50%;
     left: 5px;
@@ -189,17 +187,17 @@
     background-color: #bd63d369;
     overflow: hidden;
     position: relative;
-    z-index: 10;
+
 }
 
 .create-group-btn::after {
     content: "";
-    position: absolute;
     background-color: #199fab;
     border-radius: 50%;
     left: 5px;
     top: 5%;
     transform: translate(-50%, -50%);
     transition: all .3s ease-in;
-    z-index: -1;
+
 }
+

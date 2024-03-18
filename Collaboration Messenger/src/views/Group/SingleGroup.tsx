@@ -14,7 +14,6 @@ import { DyteMeeting } from '@dytesdk/react-ui-kit';
 import { ToastContainer } from 'react-toastify';
 
 import { setStatusToBusy } from '../../service/status';
-
 import CallIcon from '@mui/icons-material/Call';
 import './Group.css';
 import { toast } from 'react-hot-toast';
@@ -82,7 +81,7 @@ export default function SingleGroup() {
     }
     return (
         
-            <div className="single-group-container">
+            <>
                 <div className="chat-container">
                     <button onClick={async () => {
                         console.log(status)
@@ -118,7 +117,7 @@ export default function SingleGroup() {
                     </div>
                     <GroupMembers members={groupMembers} owner={currentGroup.owner} />
                 </div>
-            </div>
+            </>
        
                 
     )

@@ -1,8 +1,4 @@
 import React, { type Dispatch, type SetStateAction } from 'react'
-import { DyteProvider, useDyteClient } from '@dytesdk/react-web-core';
-
-
-
 
 export type User = {
   username: string;

@@ -106,7 +106,7 @@ const UserProfile = () => {
         <div>
             {userProfileData && (
                 <div>
-                    <h1>User Profile</h1>
+                    <h1>Profile</h1>
                     <div>
                         
                         <ImageComp unique={userProfileData} type={'user'} />

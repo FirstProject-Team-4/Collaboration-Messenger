@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppContext } from "../../context/appContext";
 import { saveImage } from "../../service/storage";
 import { ref, update } from "firebase/database";
@@ -9,13 +9,18 @@ import './Profile.css';
 
 const Profile = () => {
     // const { id } = useParams<{ id: string }>();
-    const { userData, setContext } = useAppContext();
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const { userData } = useAppContext();
     const [showEdit, setShowEdit] = useState(false);
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [image, setImage] = useState<string>('');
     const [errorMessage] = useState('');
 
-
+useEffect(() => {
+        setFirstName(userData.firstName);
+        setLastName(userData.lastName);
+        setImage(userData.image);
+}, [userData]);
 
 
     //for the image
@@ -23,21 +28,22 @@ const Profile = () => {
         const file = e.target.files && e.target.files[0];
         if (file) {
             const imgUrl = await saveImage(file);
-            update(ref(db, `users/${userData.username}`), { image: imgUrl });
-            setContext({ ...userData, image: imgUrl });
+            update(ref(db, `users/${userData.username}/`), { image: imgUrl });
+           
         }
     };
+
     //for the first and last name (edit)
     const handleSubmit = () => {
-        update(ref(db, `users/${userData.username}`), { firstName, lastName });
-        setContext({ ...userData, firstName, lastName });
+        update(ref(db, `users/${userData.username}/`), { firstName: firstName, lastName: lastName });
+       
     };
     const loadUserProfile = () => {
-        setFirstName(userData.firstName);
-        setLastName(userData.lastName);
-
+        setFirstName(userData?.firstName || ''); 
+        setLastName(userData?.lastName || ''); 
+        setImage(userData?.image || '');
         setShowEdit(!showEdit);
-    }
+      }
 
     return (
         <div>
@@ -47,24 +53,25 @@ const Profile = () => {
                     {userData && userData.image && <img src={userData.image} alt="Profile" />}
                 </div>
                 <div className="profile-edit">
-                    {/* <input type="file" onChange={handleImage} /> */}
                     <label htmlFor="file-input" className='file-input-label'>Upload Image</label>
                     <input type="file" id="file-input" className='file-input' onChange={handleImage} />
                     {userData && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
                 </div>
             </div>
             {showEdit ? (
-                <form onSubmit={handleSubmit}>
+                <form  className='edit-form-overlay'>
+                    <div className='edit-form'>
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     <label>
                         First Name:
-                        <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                        <input className='edit-info-input' type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
                     </label><br></br>
                     <label>
                         Last Name:
-                        <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
+                        <input className='edit-info-input' type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
                     </label><br></br><br></br>
-                    <input type="submit" value="Submit" />
+                    {userData && <button onClick={handleSubmit} className="button-profile">Submit</button>}
+                  </div>
                 </form>
             ) : null}
 

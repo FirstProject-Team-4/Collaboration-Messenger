@@ -1,18 +1,19 @@
-.profile-img img{ 
+.profile-img img {
+    position: relative;
     width: 50px;
     height: 50px;
 }
 
-.profile{
+.profile {
     font-family: "Gloria Hallelujah", cursive;
     font-weight: 400;
     position: relative;
-    left: 500px;  
+    left: 500px;
     top: 23px;
 }
 
 
-.profile-img img{
+.profile-img img {
     position: relative;
     left: 250px;
     top: 40px;
@@ -21,7 +22,7 @@
     border-radius: 50%;
 }
 
-.profile-edit{
+.profile-edit {
     position: relative;
     left: 250px;
     top: 40px;
@@ -32,23 +33,23 @@
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
- 
+
 }
 
-.info-profile{
-    position: relative;
+.info-profile {
+    position: absolute;
     left: 700px;
-    bottom: 310px;
+    bottom: 120px;
     font-family: "Gloria Hallelujah", cursive;
     font-weight: 400;
     font-size: 20px;
     color: #ffffff;
     background: linear-gradient(82.3deg,
-    rgb(181, 151, 226) 10.8%,
-    rgb(86, 83, 140) 94.3%);
+            rgb(181, 151, 226) 10.8%,
+            rgb(86, 83, 140) 94.3%);
     box-shadow: 0 8px 32px 0 rgba(135, 31, 133, 0.37),
-    0 30px 60px rgba(124, 121, 203, 0.414);
-    padding:50px;
+        0 30px 60px rgba(124, 121, 203, 0.414);
+    padding: 50px;
     padding-right: 50px;
     border-radius: 10px;
     cursor: pointer;
@@ -73,7 +74,7 @@
     background-color: #6f7be8;
 }
 
-.button-profile{
+.button-profile {
     position: relative;
     overflow: hidden;
     height: 3rem;
@@ -81,12 +82,52 @@
     margin: 10px;
     border-radius: 1.5rem;
     background: linear-gradient(82.3deg,
-        rgb(181, 151, 226) 10.8%,
-        rgb(86, 83, 140) 94.3%);
+            rgb(181, 151, 226) 10.8%,
+            rgb(86, 83, 140) 94.3%);
     background-size: 400%;
     color: #000000;
     border: none;
     cursor: pointer;
-  }
-  
-  
+}
+
+.edit-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    padding: 30px;
+    padding-top: 30px;
+    border-radius: 10px;
+    background-color: #19181a;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-family: "Gloria Hallelujah", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.edit-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.edit-info-input{
+    outline: none;
+    border: 1px solid #655988;
+    color: #000000;
+    width: 14em;
+    height: 2em;
+   margin: 2px;
+   margin-left: 10px;
+    border-radius: 10px;
+    background-color: #cbcaea;
+    text-align: center;
+    font-size: 15px;
+    font-family: "Gloria Hallelujah", cursive;
+}
