@@ -13,11 +13,13 @@ const Profile = () => {
     const [showEdit, setShowEdit] = useState(false);
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
+    const [image, setImage] = useState<string>('');
     const [errorMessage] = useState('');
 
 useEffect(() => {
         setFirstName(userData.firstName);
         setLastName(userData.lastName);
+        setImage(userData.image);
 }, [userData]);
 
 
@@ -27,19 +29,19 @@ useEffect(() => {
         if (file) {
             const imgUrl = await saveImage(file);
             update(ref(db, `users/${userData.username}/`), { image: imgUrl });
-            // setContext({ ...userData, image: imgUrl });
+           
         }
     };
+
     //for the first and last name (edit)
     const handleSubmit = () => {
-        console.log('1');
-
         update(ref(db, `users/${userData.username}/`), { firstName: firstName, lastName: lastName });
-        // setContext({ ...userData, firstName, lastName });
+       
     };
     const loadUserProfile = () => {
         setFirstName(userData?.firstName || ''); 
         setLastName(userData?.lastName || ''); 
+        setImage(userData?.image || '');
         setShowEdit(!showEdit);
       }
 

@@ -3,10 +3,11 @@ import { Calendar, momentLocalizer, SlotInfo ,Views} from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './MyCalendar.css';
-import { getDatabase, onValue, push, ref } from 'firebase/database';
+import { get, getDatabase, onValue, push, ref } from 'firebase/database';
 import { useAppContext } from '../../context/appContext';
 import { getAllUsers } from '../../service/user';
 import { useNavigate } from 'react-router-dom';
+import { commbineId } from '../../service/friends';
 
 
 const localizer = momentLocalizer(moment);
@@ -108,17 +109,25 @@ const MyCalendar: React.FC = () => {
     const group = groups.find(group => group.id === groupId);
     if (group) {
       setSelectedUsers(group.members);
+      
+      
     }
   };
 
-  const handleSave = () => {
+  
+  const handleSave = async() => {
     const db = getDatabase();
+    const userId=await get(ref(db, `users/${selectedUsers[0]}/uid`))
+    console.log('userId',userId.val());
+    console.log('userData',userData.uid);
+    const chatId=commbineId(userId.val(),userData.uid);
+
     const newEvent = {
       title,
       start,
       end,
       attendees,
-      sharedWith: selectedUsers
+      sharedWith: chatId 
     };
 
     // Save the event to the 'events' node
@@ -131,6 +140,7 @@ const MyCalendar: React.FC = () => {
         setEnd(new Date().toISOString());
         setAttendees([]);
         setSelectedUsers([]);
+        setSelectedGroup('');//group?
         setIsModalOpen(false); // Close the modal after saving
       })
       .catch((error) => {
@@ -156,23 +166,19 @@ const MyCalendar: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const toggleUserList = () => {
-    setIsUserListVisible(prevIsUserListVisible => !prevIsUserListVisible);
-  };
-
-
-
-  // const handleSelectEvent = (event: Event) => {
-
-
-  //   if (chat) {
-  //     // If the chat is found, navigate to the chat with the user
-  //     navigate(`/privateChats/${priva.id}`);
-  //   } else {
-  //     // If the chat is not found, handle the error (e.g., show an error message)
-  //     console.error('Chat not found');
-  //   }
+  // const toggleUserList = () => {
+  //   setIsUserListVisible(prevIsUserListVisible => !prevIsUserListVisible);
   // };
+
+
+  const handleSelectEvent = (event: Event) => {
+    console.log('handleSelectEvent called', event);
+  
+    if (event.sharedWith) {
+      navigate(`/privateChats/${event.sharedWith}`);
+    }
+    
+  };
  
   return (
     <>
@@ -184,7 +190,7 @@ const MyCalendar: React.FC = () => {
           events={events}
           onSelectSlot={handleSelect}
           views={['month', 'day', 'agenda']} // Only these views will be enabled
-          // onSelectEvent={handleSelectEvent} // Add this line
+          onSelectEvent={handleSelectEvent} // Add this line
           selectable
           className="my-calendar"
         />
@@ -216,7 +222,7 @@ const MyCalendar: React.FC = () => {
           handleGroupSelect(e.target.value)}>
           {groups.map((group: any) => (
             <option key={group.id} value={group.id}>
-              {group.username}
+              {group.title}
             </option>
           ))}
         </select>
