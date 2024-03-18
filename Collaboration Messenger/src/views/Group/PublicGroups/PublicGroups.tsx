@@ -27,6 +27,7 @@ export default function PublicGroups() {
     }, [userData])
 
     const leavePublicGroup = (groupId: string) => {
+        //toast to confirm
         if (window.confirm('Are you sure you want to leave this group?')) {
             removeGroupMember(groupId, userData.username)
             //    const filteredGroups = groups.filter((g: any) => g.id !== groupId);

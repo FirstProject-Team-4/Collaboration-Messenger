@@ -41,12 +41,13 @@
 }
 
 .members-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    /* display: flex;
+    flex-direction: column; */
+    position: absolute;
+    left:1070px;
     height: 92%;
     top: 60px;
-    width: 250px;
+    width: 240px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -54,9 +55,19 @@
         0 30px 60px rgba(97, 218, 251, 0.3);
     border-radius: 10px;
     transition: all 0.5s ease;
+    padding-left: 20px;
 
 }
 
+.members-container h5{
+    font-size: 15px;
+    align-self: center;
+    font-family: "Gloria Hallelujah", cursive;
+    position: relative;
+    bottom: 5px;
+    left: 20px;
+
+}
 .chat-header {
     display: absolute;
     flex-direction: row;

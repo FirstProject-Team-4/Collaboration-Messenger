@@ -11,11 +11,13 @@
     color: black;
 }
 
-.img {
+.img-user {
     width: 30px;
-    margin-left: 3px;
+    /* margin-left: 3px; */
     height: 30px;
     border-radius: 20%;
+    position: relative;
+
 
 
 }
@@ -24,10 +26,10 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    position: absolute;
+    position: relative;
     /* adjust the position as needed */
-    left:0 ;
-    bottom: 0;
+    left:25px ;
+    bottom: 30px;
 }
 
 .status-circle.online {
