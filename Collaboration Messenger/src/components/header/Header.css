@@ -1,25 +1,25 @@
 /* Default styles for large screens */
 .header-view {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    position: relative;
-    left: 1px;
-    gap: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 30px;
-    height: 615px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
-        0 30px 60px rgba(97, 218, 251, 0.3);
-    border-radius: 10px;
-    transition: all 0.5s ease;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  position: relative;
+  left: 1px;
+  gap: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  top: 30px;
+  height: 615px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 30px 60px rgba(97, 218, 251, 0.3);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
 
-  #logout {
-    left: 1000px;
-  }
+#logout {
+  left: 1000px;
+}
 
 
 /* Styles for screens smaller than 800px */
@@ -124,12 +124,10 @@
   border-right: 2px solid #0c0c0c;
 
 }
-.logo{
+
+.logo {
   position: absolute;
   z-index: 100;
-  bottom:20px;
-left:-5px;
-
-
-
+  top: -13px;
+  left: 14px;
 }
