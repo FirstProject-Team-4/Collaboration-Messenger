@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 // import Profile from '../Profile/Profile';
 import UserProfile, { UserProfileData } from '../UserProfile/UserProfile';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
-import { equalTo, getDatabase, off, onValue, orderByChild, query, ref, remove, set, update } from 'firebase/database';
+import { equalTo, getDatabase, off, onValue, orderByChild, query, ref, remove, update } from 'firebase/database';
 import { toast } from 'react-hot-toast';
 import { createDytePrivateRoom, sendPrivateParticipantToken } from '../../service/video-audio-calls';
 import { db } from '../../config/config-firebase';

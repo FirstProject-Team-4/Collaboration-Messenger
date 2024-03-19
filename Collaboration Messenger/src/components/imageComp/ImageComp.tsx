@@ -75,7 +75,7 @@ useEffect(() => {
     else {
         return (
             data && <>
-                {data?.image ? <img className="img" src={data?.image} alt="group" /> :
+                {data?.image ? <img className="img-user" src={data?.image} alt="group" /> :
                     <span className="letter">
                         {data.title && data.title[0] ? data.title[0] : null}
                     </span>}
