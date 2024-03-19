@@ -56,7 +56,7 @@ console.log(groupMembers);
     return (
         <div>
             <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => setSearch(e.target.value)} />
-            <Button onClick={searchUser} id='btn-search'>Search</Button>
+            <Button onClick={searchUser} id='btn-search-inv'>Search</Button>
             <div className="inf">
                 {users.map((user: any) => {
                     return (

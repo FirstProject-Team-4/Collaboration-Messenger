@@ -200,7 +200,7 @@
     font-size: 20px;
 }
 
-#btn-search {
+#btn-search-inv {
     position: relative;
     left: 30px;
     top: 15px;
@@ -208,7 +208,13 @@
     background-color: #ff9b82;
 }
 
-
+#btn-search {
+    position: relative;
+    left: 230px;
+    top: 5px;
+    font-family: "Gloria Hallelujah", cursive;
+    background-color: #ff9b82;
+}
 .border-users{
  position: relative;
  flex-direction: row;

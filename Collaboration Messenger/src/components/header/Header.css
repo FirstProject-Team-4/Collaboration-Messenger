@@ -136,7 +136,7 @@
 .logout {
   position: relative;
   left: 1360px;
-  top: 5px;
+  bottom: 2px;
   z-index: 90;
   background-color: #0c0c0c;
   border-radius: 50%;
