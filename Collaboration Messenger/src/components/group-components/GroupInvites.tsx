@@ -16,8 +16,9 @@ export default function GroupInvites({groupId}:{groupId:string}) {
     }, [groupId])
 console.log('GroupInvites')
 const acceptGroupRequest=()=>{
+    console.log(groupId,userData.username,userData.id,group.room)
     update(ref(db, `users/${userData.username}/groupInvitation`),{[groupId]:null});
-    update(ref(db, `groups/${groupId}/members`),{[userData.username]:true,status:'online',id:userData.id});
+    update(ref(db, `groups/${groupId}/members/${userData.username}`),{username:userData.username,id:userData.uid,status:'online'});
     update(ref(db, `users/${userData.username}/groups`),{[groupId]:{title:group.title,image:group.image}});
     const member={username:userData.username,id:userData.uid , status:'online'};
     sendParticipantToken(group.room,member,groupId);
