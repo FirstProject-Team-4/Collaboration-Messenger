@@ -28,6 +28,7 @@ useEffect(() => {
         const file = e.target.files && e.target.files[0];
         if (file) {
             const imgUrl = await saveImage(file);
+            imgUrl&&setImage(imgUrl);
             update(ref(db, `users/${userData.username}/`), { image: imgUrl });
            
         }
@@ -50,7 +51,7 @@ useEffect(() => {
             <h1 className='profile'>Profile</h1>
             <div className="profile-container">
                 <div className="profile-img">
-                    {userData && userData.image && <img src={userData.image} alt="Profile" />}
+                    {userData && userData.image && <img src={image} alt="Profile" />}
                 </div>
                 <div className="profile-edit">
                     <label htmlFor="file-input" className='file-input-label'>Upload Image</label>
