@@ -21,7 +21,7 @@ const PrivateChats = () => {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
     const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
-    const {setInCall}=useCallContext();
+    const {inCall,setInCall}=useCallContext();
     const {initMeeting}=useDyteContext();
     const [callRequest, setCallRequest] = useState(false);
 
@@ -62,12 +62,19 @@ const PrivateChats = () => {
             });
             return;
         }
+        if(inCall){
+            toast.error('You are busy!', {
+                duration: 5000
+            });
+            return;
+        }
+
   setCallRequest(true);
-        callAudio.play()
+        //callAudio.play()
         const toastID = toast((t) => (
             <div id='custom-toast'>
                 <ImageComp unique={calleeData} type='user'></ImageComp>
-                Calling... <b>{calleeData?.username}</b>
+                <div>Calling...</div> <b>{calleeData?.username}</b>
                 <button onClick={() => {
                     remove(ref(db, `users/${calleeData?.username}/callNotification`))
                     toast.dismiss(t.id)
