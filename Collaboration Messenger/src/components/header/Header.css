@@ -20,7 +20,7 @@
   #logout {
     left: 1000px;
   }
-}
+
 
 /* Styles for screens smaller than 800px */
 @media (max-width: 800px) {
@@ -109,7 +109,7 @@
 
 }
 
-#custom-toast img {
+#custom-toast .img-user {
   position: absolute;
   top: 0px;
   left: 0px;

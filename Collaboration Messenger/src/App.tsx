@@ -49,7 +49,7 @@ function App() {
       toggleStatus(context.userData);
     }
 
-  }, []);
+  }, [context.userData]);
  
   const toggleTheme = () => {
     document.body.classList.toggle('dark-mode');

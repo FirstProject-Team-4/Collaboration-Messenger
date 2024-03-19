@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 // import Profile from '../Profile/Profile';
 import UserProfile, { UserProfileData } from '../UserProfile/UserProfile';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
-import { equalTo, getDatabase, onValue, orderByChild, query, ref, remove, set, update } from 'firebase/database';
+import { equalTo, getDatabase, off, onValue, orderByChild, query, ref, remove, set, update } from 'firebase/database';
 import { toast } from 'react-hot-toast';
 import { createDytePrivateRoom, sendPrivateParticipantToken } from '../../service/video-audio-calls';
 import { db } from '../../config/config-firebase';
@@ -23,6 +23,7 @@ const PrivateChats = () => {
     const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
     const {setInCall}=useCallContext();
     const {initMeeting}=useDyteContext();
+    const [callRequest, setCallRequest] = useState(false);
 
     const currentId = id?.split(userData.uid).join('');
     const callAudio = new Audio(callSound)
@@ -52,7 +53,7 @@ const PrivateChats = () => {
             });
             return;
         }
-  
+  setCallRequest(true);
         callAudio.play()
         const toastID = toast((t) => (
             <div id='custom-toast'>
@@ -63,6 +64,7 @@ const PrivateChats = () => {
                     toast.dismiss(t.id)
                     callAudio.pause()
                     callAudio.currentTime = 0;
+                    setCallRequest(false);
 
                 }}>
                     Cancel
@@ -81,11 +83,14 @@ const PrivateChats = () => {
             toast.dismiss(toastID)
             callAudio.pause()
             callAudio.currentTime = 0;
+            setCallRequest(false);
           }, 20000);
+          let declinedMessageShown = false;
         onValue(ref(db, `users/${calleeData?.username}/callNotification`), async (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
                 if (data.status === 'accepted') {
+                    declinedMessageShown = true;
                    clearTimeout(timeoutID);
                    
                     await initMeeting({
@@ -99,8 +104,9 @@ const PrivateChats = () => {
                     toast.dismiss(toastID)
                     callAudio.pause()
                     callAudio.currentTime = 0;
+                    setCallRequest(false);
                 }
-                else if (data.status === 'declined'){
+                else if (data.status === 'declined' && !declinedMessageShown){
                     toast.dismiss(toastID)
                     toast.error('The user declined the call!', {
                         duration: 5000
@@ -108,6 +114,8 @@ const PrivateChats = () => {
                     callAudio.pause()
                     callAudio.currentTime = 0;
                     clearTimeout(timeoutID);
+                    setCallRequest(false);
+                    off(ref(db, `users/${calleeData?.username}/callNotification`));
                 
                 }
             }
@@ -129,7 +137,7 @@ const PrivateChats = () => {
             </div>
 
             <div className="chat-container">
-                {id&&<button onClick={() => { sendCallRequest(userProfileData) }} className="btn-profile">Profile</button>}
+                {!callRequest&&id&&<button onClick={() => { sendCallRequest(userProfileData) }} className="btn-profile">Profile</button>}
                 <Chat type={'private'} />
             </div>
             <div className="user-profile">

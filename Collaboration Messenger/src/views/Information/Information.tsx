@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import ImageComp from "../../components/imageComp/ImageComp";
 import { useAppContext } from "../../context/appContext";
 import './Information.css';
+import { db } from "../../config/config-firebase";
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 interface Chat {
   uid: string;
@@ -13,6 +15,7 @@ interface Chat {
 
 const Information: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
+  const [privateNotifications, setPrivateNotifications] = useState<string[]>([]);
   const { userData } = useAppContext();
   useEffect(() => {
     const db = getDatabase();
@@ -25,6 +28,17 @@ const Information: React.FC = () => {
     });
 
     return () => unsubscribe();
+  }, [userData]);
+  useEffect(() => {
+    if(!userData){
+      return;
+    }
+    onValue(ref(db, `users/${userData.username}/privateNotifications`), (snapshot) => {
+      if (!snapshot.exists()) {
+        setPrivateNotifications([]);
+      }
+      setPrivateNotifications(Object.keys(snapshot.val()));
+    })
   }, [userData]);
 
 
@@ -40,6 +54,7 @@ const Information: React.FC = () => {
               <div className="chat-user">
                 <ImageComp className={'image-inf-message image'} unique={chat} type={'user'} />
                 <p id="user-name">{chat.username}</p>
+                {privateNotifications.includes(chat.id)&&<span><NotificationsIcon/></span>}
               </div>
             </NavLink>
           }

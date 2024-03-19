@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CallContext, useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
-import { off, onChildAdded, onValue, ref, remove, update } from 'firebase/database';
+import { off, onChildAdded, onValue, ref, remove, set, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import ChatIcon from '@mui/icons-material/Chat';
 import Groups2Icon from '@mui/icons-material/Groups2';
@@ -19,6 +19,7 @@ import { setStatusToBusy, updateStatusToOnline } from '../../service/status';
 import CallAudio from '../../Audio/ringtone-126505.mp3';
 import toast from 'react-hot-toast';
 import ImageComp from '../imageComp/ImageComp';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 // import logo from '/image/busyChat_logo.png';
 /**
  * Renders the header component.
@@ -33,6 +34,8 @@ export const Header = () => {
     const { meeting, initMeeting } = useDyteContext();
     const { inCall, setInCall } = useCallContext();
     const [minimizedMeeting, setMinimizedMeeting] = useState(false);
+    const [groupNotifications, setGroupNotifications] = useState(false);
+    const [privateNotif, setPrivatNotif] = useState(false);
 
     useEffect(() => {
         if (meeting) {
@@ -98,6 +101,27 @@ export const Header = () => {
         })
 
     }, [userData])
+    useEffect(() => {
+        if (!userData) {
+            return;
+        }
+        onValue(ref(db, `users/${userData.username}/groupNotifications`), (snapshot) => {
+            if (snapshot.exists()) {
+                setGroupNotifications(true);
+            }
+            else {
+                setGroupNotifications(false);
+            }
+        })
+        onValue(ref(db, `users/${userData.username}/privateNotifications`), (snapshot) => {
+            if (snapshot.exists()) {
+                setPrivatNotif(true);
+            }
+            else {
+                setPrivatNotif(false);
+            }
+        })
+    }, [userData])
 
 
 
@@ -125,6 +149,7 @@ export const Header = () => {
     }
 
 
+
     return (
         userData &&
         <>
@@ -133,8 +158,8 @@ export const Header = () => {
                 {/* <NavLink to='/home' className='logo'>
                     <img src={logo} alt="Logo" />
                 </NavLink> */}
-                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
-                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink>
+                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat ' :"Chat"} </NavLink>
+                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
                 <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
                 <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
 

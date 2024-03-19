@@ -98,6 +98,13 @@ export const joinGroup=async(group:Group,userData:{username:string,uid:string})=
     const member={username:userData.username,id:userData.uid , status:'online'};
     sendParticipantToken(group.room,member,group.id);
 }
-export const sendGroupMessage=(groupId:string,message:{})=>{
+export const sendGroupMessage=async(groupId:string,message:{})=>{
+    const group=await getGroupByID(groupId);
+    console.log(group);
+    
+    const members=Object.keys(group?.members);
+    members.forEach((member:any)=>{
+        push(ref(db, `users/${member}/groupNotifications/${groupId}`), message);
+    })
     push(ref(db, `groups/${groupId}/messages`), message);
 }

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { useEffect, useRef, useState } from "react";
-import { onValue, ref, set } from "firebase/database";
+import { equalTo, get, onValue, orderByChild, query, ref, remove, set } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { sendMessage } from "../../service/friends";
 import Button from "../button/Button";
@@ -34,6 +34,7 @@ const Chat = ({ type }: { type: string }) => {
     const messageContainerRef = useRef(null);
     const [isScrolled, setIsScrolled] = useState(false);
     const [replyMessage, setReplyMessage] = useState('');
+    const [otherUserUsername, setOtherUserUsername] = useState('');
 
 
 
@@ -42,7 +43,19 @@ const Chat = ({ type }: { type: string }) => {
         setIsScrolled(false);
 
         if (type === 'private') {
+     
+            const currentId = id?.split(userData.uid).join('');
+            if(currentId){
+            const dbRef = ref(db, "users");
+            const q =  query(dbRef, orderByChild('uid'), equalTo(currentId));
+            get(q).then((snapshot) => {
+                setOtherUserUsername(Object.keys(snapshot.val())[0])
+            });
+           
+            }
+
             const messageRef = ref(db, `/chats/${id}/messages`);
+
             const unsubscribe = onValue(messageRef, (snapshot) => {
                 if (snapshot.exists()) {
                     const messages = Object.keys(snapshot.val()).map((key) => ({
@@ -87,7 +100,18 @@ const Chat = ({ type }: { type: string }) => {
             scrollRef.current && (scrollRef.current as HTMLElement).scrollIntoView({ behavior: 'instant' });
         }
     }, [messageList]);
- ;
+    useEffect(() => {
+        if(!otherUserUsername){
+            return;
+        }
+        const subscribe=onValue(ref(db,`users/${userData.username}/privateNotifications/${id}`),(snapshot)=>{
+            if(snapshot.exists()){
+                remove(ref(db,`users/${userData.username}/privateNotifications/${id}`));
+            }
+        })
+        return ()=>subscribe();
+    },[otherUserUsername])
+ 
 
     const sendCurrentMessage = async () => {
         if (!currentMessage && !file.length) {
@@ -117,7 +141,7 @@ const Chat = ({ type }: { type: string }) => {
         if (id) {
             if (type === 'private') {
 
-                sendMessage(id, currentMessageData);
+                sendMessage(id, currentMessageData, otherUserUsername);
 
             }
             else {

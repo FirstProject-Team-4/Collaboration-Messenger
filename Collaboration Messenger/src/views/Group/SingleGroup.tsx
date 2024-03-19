@@ -3,7 +3,7 @@ import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { onValue, ref } from 'firebase/database';
+import { off, onValue, ref, remove } from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
@@ -69,6 +69,17 @@ export default function SingleGroup() {
             }
         });
     }, [userData]);
+    useEffect(() => {
+        if(!userData || !id){
+            return;
+        }
+       const subscribe= onValue(ref(db, `users/${userData.username}/groupNotifications/${id}`), (snapshot) => {
+        remove(ref(db, `users/${userData.username}/groupNotifications/${id}`));
+        
+        });
+        return ()=>subscribe();
+        //off(ref(db, `users/${userData.username}/groupNotifications/${id}`));
+    },[userData,id])
     
 
 

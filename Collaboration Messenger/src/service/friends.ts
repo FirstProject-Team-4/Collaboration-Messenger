@@ -50,8 +50,9 @@ export const chatOwners = async (chatID: string) => {
     return snapshot.val();
 }
 
-export const sendMessage = (chatID: string, message: { author: string|any, createdOn: number, content: string,files:[]|any,type:string }) => {
+export const sendMessage = (chatID: string, message: { author: string|any, createdOn: number, content: string,files:[]|any,type:string },otherPersonUsername:string) => {
     push(ref(db, `/chats/${chatID}/messages`), message);
+    update(ref(db,`/users/${otherPersonUsername}/privateNotifications/${chatID}`),{lastMessage:message.content,lastMessageTime:message.createdOn});
 }
 
 
