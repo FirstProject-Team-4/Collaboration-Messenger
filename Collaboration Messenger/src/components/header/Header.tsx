@@ -1,5 +1,5 @@
 import './Header.css';
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CallContext, useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
@@ -29,6 +29,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 export const Header = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
     const { userData, setContext } = useAppContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { meeting, initMeeting } = useDyteContext();
@@ -50,6 +51,9 @@ export const Header = () => {
         }
     }, [meeting, userData]);
     useEffect(() => {
+        if (!userData) {
+            return;
+        }
         onValue(ref(db, `users/${userData.username}/callNotification`), (snapshot) => {
             if (snapshot.exists()) {
                 if (snapshot.val().status !== 'pending') {
@@ -134,22 +138,24 @@ export const Header = () => {
     };
     // const location = useLocation();
     const logout = async () => {
+        await logoutUser();
         update(ref(db, `users/${userData.username}/status`), { status: 'offline' });
         const groups = userData.groups ? Object.keys(userData.groups) : []
         groups.forEach(id => {
             update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'offline' });
         })
-        await logoutUser();
+     
         setContext({ user: null, userData: null });
-        navigate('/about');
+        navigate('/login');
     }
 
     const profile = () => {
         navigate(`/profile/${userData?.username}`);
     }
 
-
-
+    if (location.pathname === '/login' || location.pathname === '/register') {
+        return null;
+    }
     return (
         userData &&
         <>

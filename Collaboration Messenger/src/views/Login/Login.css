@@ -1,12 +1,13 @@
 .login-view-img {
-    width: 1538px;
-    height: 800px;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
     /* background-image: url('/image/login1.jpg'); */
     background-image: url('/image/register.jpg');
     background-size: cover;
-    position: absolute;
+    
     right: 0px;
-    bottom: -40px;
+    /* bottom: -40px; */
 }
 
 .login-form {

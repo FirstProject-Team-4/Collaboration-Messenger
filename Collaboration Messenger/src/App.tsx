@@ -57,7 +57,7 @@ function App() {
   const updateLastClick=async()=>{
     if(context.userData){
       const lastClick=Number(Date.now());
-      console.log(context.userData)
+  
       update(ref(db, `users/${context.userData.username}`),{lastClick:lastClick})
       const status= await get(ref(db, `users/${context.userData.username}/status`));
       console
