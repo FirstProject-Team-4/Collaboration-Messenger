@@ -3,6 +3,7 @@
     position: relative;
     left: 120px;
     z-index: 1;
+    
 }
 
 .modal-backdrop {
@@ -188,5 +189,14 @@
 
 #btn-search {
     position: relative;
-    left: 250px;
+    left: 20px;
+}
+
+.border-users{
+ position: relative;
+ flex-direction: row;
+    justify-content: space-between;
+  right:50px
+
+   
 }
