@@ -19,6 +19,7 @@ import MyCalendar from './views/MyCalendar/MyCalendar';
 import { useDyteClient } from '@dytesdk/react-web-core';
 import { get, ref, set, update } from 'firebase/database';
 import { Toaster } from 'react-hot-toast';
+import Authantication from './hoc/Authentacation';
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -68,6 +69,7 @@ function App() {
    
     }
   }
+  console.log(context.userData)
   return (
     <>
       {/* <ToastContainer /> */}
@@ -84,20 +86,20 @@ function App() {
                 <span className="slider"></span>
               </label>
               <Routes>
-                <Route path="/" element={<About />} />
-                <Route path='/profile/:id' element={<Profile />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/group/:id" element={<Group />} />
-                <Route path="/group" element={<Group />} />
+                <Route path="/" element={<Authantication><Home /></Authantication>} />
+                <Route path='/profile/:id' element={<Authantication><Profile /></Authantication>} />
+                {/* <Route path="/about" element={<About />} /> */}
+                <Route path="/home" element={<Authantication><Home /></Authantication>} />
+                <Route path="/group/:id" element={<Authantication><Group /></Authantication>} />
+                <Route path="/group" element={<Authantication><Group /></Authantication>} />
 
-                <Route path="/friends" element={<Friends />} />
-                <Route path="/privateChats" element={<PrivateChats />} />
-                <Route path="/privateChats/:id" element={<PrivateChats />} />
+                <Route path="/friends" element={<Authantication><Friends /></Authantication>} />
+                <Route path="/privateChats" element={<Authantication><PrivateChats /></Authantication>} />
+                <Route path="/privateChats/:id" element={<Authantication><PrivateChats /></Authantication>} />
 
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path='/calendar' element={<MyCalendar />} />
+                <Route path='/calendar' element={<Authantication><MyCalendar /></Authantication>} />
                 <Route path="*" element={<h1> 404 Not Found</h1>} />
               </Routes>
             </div>

@@ -21,9 +21,7 @@ export const createDyteRoom = async (groupMembers: MembersProps,group:{id:string
         const result = await response.json();
         console
     
-        //await addDyteRoomIdToCall(dbCallId, result.data.id);
-    // console.log(result);
-    //     sendParticipantToken(result.data, groupMembers, group.id);
+
     return result.data;
       } catch (error:any) {
         console.log(error.message);

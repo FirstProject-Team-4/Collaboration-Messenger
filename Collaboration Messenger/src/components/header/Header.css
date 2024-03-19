@@ -43,7 +43,7 @@
 .top-div {
   position: absolute;
   width: 10%;
-  top: 0;
+  top: 20px;
   left: 46%;
   align-self: center;
   align-items: center;
