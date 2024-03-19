@@ -1,9 +1,10 @@
 import {  useState } from 'react';
 import Button from '../../components/button/Button';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../service/auth';
 import { createUserUsername } from '../../service/user';
 import { CheckRegister } from '../../validations/register';
+import './Register.css';
 /**
  * Renders the RegisterView component.
  * 
@@ -75,7 +76,9 @@ const errorColor = (property:string): string => {
   return (
     <div className="register-view">
       <div className="register-form">
+      {/* <NavLink to='/about' id='about-link'>About</NavLink> */}
         <h2 id='register-h1'>Register</h2>
+        <NavLink to='/login' id='login-link'>Login</NavLink>
         <label htmlFor="username">Username: </label><br />
         <input style={{ border: `1px solid ${errorColor(`username`)}` }} type="text" name='username' id='username' placeholder="☺ Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
         {error.username && error.username !== 'valid' && <h5 style={{ color: 'red' }}>{error.username}</h5>}

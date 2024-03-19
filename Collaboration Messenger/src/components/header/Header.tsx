@@ -153,13 +153,18 @@ export const Header = () => {
     return (
         userData &&
         <>
-
+            <div className='logo'><NavLink to='/home' className='logo'>
+                <img src='/image/busy-logo.webp' alt="Logo" style={{ width: 130, height: 130 }} />
+            </NavLink></div>
             <div className="header-view">
                 {/* <NavLink to='/home' className='logo'>
                     <img src={logo} alt="Logo" />
                 </NavLink> */}
                 <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat ' :"Chat"} </NavLink>
                 <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
+
+                <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
+                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink>
                 <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
                 <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
 

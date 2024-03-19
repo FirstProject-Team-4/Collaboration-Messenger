@@ -1,72 +1,67 @@
-.login-view-img {
+.register-view {
     width: 1538px;
     height: 800px;
-    /* background-image: url('/image/login1.jpg'); */
     background-image: url('/image/register.jpg');
     background-size: cover;
     position: absolute;
     right: 0px;
     bottom: -40px;
-}
-
-.login-form {
+  }
+  
+  .register-form {
     width: 300px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: rgba(15, 13, 13, 0.726);
-    /* Semi-transparent white */
+    background-color: rgba(15, 13, 13, 0.785);
     backdrop-filter: blur(10px);
-    /* Blur the background */
     color: #ffffff;
     position: relative;
     right: 80px;
-    top: 160px;
-}
-
-.login-form h2 {
+    top: 80px;
+  }
+  
+  .register-form h2 {
     text-align: center;
     color: #ffffff;
-}
-
-.login-form .label-login {
+  }
+  
+  .register-form label {
     display: block;
-    /* margin-bottom: 5px; */
     position: relative;
     right: 90px;
     top: 20px;
-}
-
-.login-form input {
+  }
+  
+  .register-form input {
     width: 80%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.login-form #login-btn {
+  }
+  
+  .register-form .register-btn {
     text-align: center;
-}
-
-.login-form button {
+  }
+  
+  .register-form button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #ca8ed5;
+    background-color: #79c2d4;
     color: #fff;
     cursor: pointer;
-}
-
-.login-form button:hover {
+  }
+  
+  .register-form button:hover {
     background-color: #5d1f80;
-}
+  }
 
-#register-link{
-   
+  #login-link{
     color: #d8a2e9;
     position: relative;
     left: 120px;
     bottom: 80px;
-}
+  }
