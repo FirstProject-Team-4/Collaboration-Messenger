@@ -20,7 +20,7 @@
   #logout {
     left: 1000px;
   }
-}
+
 
 /* Styles for screens smaller than 800px */
 @media (max-width: 800px) {
@@ -122,5 +122,14 @@
   border-radius: 0px;
   border: none;
   border-right: 2px solid #0c0c0c;
+
+}
+.logo{
+  position: absolute;
+  z-index: 100;
+  bottom:20px;
+left:-5px;
+
+
 
 }
