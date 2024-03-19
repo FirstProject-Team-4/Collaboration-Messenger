@@ -60,7 +60,10 @@ body.dark-mode {
   display: inline-block;
   width: 3.5em;
   height: 2em;
-left: 1260px;
+left: 1240px;
+top: 10px;
+  z-index: 90;
+ 
 }
 
 /* Hide default HTML checkbox */

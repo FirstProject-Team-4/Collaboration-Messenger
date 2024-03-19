@@ -36,9 +36,9 @@ console.log(groupMembers);
             return;
         }
         const allUsers = await getAllUsers();
-        const filtered=allUsers.filter((user: any) => {
-            return user.username.toLowerCase().includes(search.toLowerCase())&&user.username!==userData.username&&!groupMembers.includes(user.username);
-        });
+        const filtered = allUsers.filter((user: any) => {
+            return user.username && user.username.toLowerCase().includes(search.toLowerCase()) && user.username !== userData.username && !groupMembers.includes(user.username);
+          });
         setUsers(filtered);
            
         }
@@ -61,9 +61,9 @@ console.log(groupMembers);
                 {users.map((user: any) => {
                     return (
                         <div className="border-users" key={user.uid}>
-                            <div className="information">
+                            <div className="information-user">
                                 <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                {invited[user.username]?'Invited': <Button onClick={() => handleInvite(user)}>Invite</Button>}
+                                {invited[user.username]?'Invited': <Button id='btn-invite' onClick={() => handleInvite(user)}>Invite</Button>}
                             </div>
                         </div>
                     );

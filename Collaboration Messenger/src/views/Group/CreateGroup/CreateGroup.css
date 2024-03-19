@@ -10,14 +10,13 @@
 }
 
 .create-group-form {
-    /* display: flex; */
     position: relative;
     flex-direction: column;
     width: 1120px;
     height: 98%;
     border: 1px solid #1009093d;
     right: 1%;
-    top: 40px;
+    top: 36px;
     border-radius: 10px;
     background-color: rgba(216, 106, 229, 0.085);
     backdrop-filter: blur(10px);

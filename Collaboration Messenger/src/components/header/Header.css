@@ -7,14 +7,16 @@
   left: 1px;
   gap: 30px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  top: 30px;
-  height: 615px;
+  top: 34px;
+  height: 610px;
   padding: 20px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
     0 30px 60px rgba(97, 218, 251, 0.3);
   border-radius: 10px;
   transition: all 0.5s ease;
+  z-index: 101;
+  padding-bottom: 20px;
 }
 
 
@@ -25,7 +27,7 @@
     height: 550px;
   }
 
- 
+
 }
 
 @media (max-width: 600px) {
@@ -123,14 +125,22 @@
 .logo {
   position: absolute;
   z-index: 100;
-  top: -13px;
-  left: 14px;
+  top: -9px;
+  left: -7px;
+  padding-left: 20px;
+  /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 30px 60px rgba(97, 218, 251, 0.3); */
+  border-radius: 5px;
 }
 
-.logout{
- position: relative;
- left:1380px;
- z-index: 90;
-background-color: #0c0c0c;
-height: 38px;
+.logout {
+  position: relative;
+  left: 1360px;
+  top: 5px;
+  z-index: 90;
+  background-color: #0c0c0c;
+  border-radius: 50%;
+  height: 40px;
+
+
 }

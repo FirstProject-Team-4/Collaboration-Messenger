@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { useEffect, useRef, useState } from "react";
-import { equalTo, get, onValue, orderByChild, query, ref, remove, set } from "firebase/database";
+import { equalTo, get, onValue, orderByChild, query, ref, remove} from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { sendMessage } from "../../service/friends";
 import Button from "../button/Button";

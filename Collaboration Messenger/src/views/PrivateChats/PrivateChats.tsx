@@ -4,7 +4,7 @@ import Information from "../Information/Information";
 import { useParams } from 'react-router-dom';
 import UserSearch from '../../components/Search/UserSearch';
 import { useEffect, useState } from 'react';
-// import Profile from '../Profile/Profile';
+import CallIcon from '@mui/icons-material/Call';
 import UserProfile, { UserProfileData } from '../UserProfile/UserProfile';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import { equalTo, getDatabase, off, onValue, orderByChild, query, ref, remove, update } from 'firebase/database';
@@ -153,7 +153,7 @@ const PrivateChats = () => {
             </div>
 
             <div className="chat-container">
-                {!callRequest&&id&&<button onClick={() => { sendCallRequest(userProfileData) }} className="btn-profile">Profile</button>}
+                {!callRequest&&id&&<button onClick={() => { sendCallRequest(userProfileData) }} className="btn-profile"><CallIcon/></button>}
                 <Chat type={'private'} />
             </div>
             <div className="user-profile">

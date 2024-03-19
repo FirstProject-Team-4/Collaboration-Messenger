@@ -1,6 +1,6 @@
 .groups-form {
     position: relative;
-    right: 25px;
+    right: 32px;
     top: 15px;
     gap: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -44,12 +44,12 @@
     /* display: flex;
     flex-direction: column; */
     position: absolute;
-    left:1070px;
-    height: 92%;
+    right:19px;
+    height: 620px;
     top: 60px;
     width: 240px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.1);
+    /* background: rgba(255, 255, 255, 0.1); */
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
         0 30px 60px rgba(97, 218, 251, 0.3);
