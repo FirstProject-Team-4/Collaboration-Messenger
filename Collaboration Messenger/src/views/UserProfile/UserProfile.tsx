@@ -7,7 +7,7 @@ import ImageComp from '../../components/imageComp/ImageComp';
 import Button from '../../components/button/Button';
 
 
- export type UserProfileData = {
+export type UserProfileData = {
 
     username: string;
     email: string;
@@ -19,7 +19,7 @@ import Button from '../../components/button/Button';
     lastName?: string;
     uid?: string;
     isBlock?: boolean;
-    blockedUsers?:any
+    blockedUsers?: any
     friendsRequest?: Record<string, unknown>;
 };
 
@@ -87,13 +87,12 @@ const UserProfile = () => {
                 <div>
                     <h1>Profile</h1>
                     <div>
-                        
-                        <ImageComp unique={userProfileData} type={'user'} />
-                        
+
+                        <ImageComp unique={userProfileData} type={'user'} style={{ width: '300px', height: '200px' }} />
+                        <h2>{userProfileData.username}</h2>
                         <Button onClick={() => { handleBlockUser() }}>{toggleBlock()}</Button>
 
-                       
-                        <h2>{userProfileData.username}</h2>
+
                         <p>{userProfileData?.firstName ? userProfileData.firstName : ''}</p>
                         <p>{userProfileData?.lastName ? userProfileData.lastName : ''}</p>
                         <p>Email: {userProfileData.email}</p>

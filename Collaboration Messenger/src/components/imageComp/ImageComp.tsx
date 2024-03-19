@@ -5,7 +5,7 @@ import { db } from "../../config/config-firebase";
 import { changeStatusToAway } from "../../service/status";
 import { useAppContext } from "../../context/appContext";
 
-export default function ImageComp({ unique, type }: { unique: any, type: string, className?: string }) {
+export default function ImageComp({ unique, type }: { unique: any, type: string, className?: string, style?: any}) {
     const [data, setData] = useState<any>(null)
     const [status, setStatus] = useState('');
     const { userData } = useAppContext();

@@ -63,7 +63,7 @@ console.log(groupMembers);
                         <div className="border-users" key={user.uid}>
                             <div className="information-user">
                                 <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                                {invited[user.username]?'Invited': <Button id='btn-invite' onClick={() => handleInvite(user)}>Invite</Button>}
+                                {invited[user.username]?'       Invited': <Button id='btn-invite' onClick={() => handleInvite(user)}>Invite</Button>}
                             </div>
                         </div>
                     );
