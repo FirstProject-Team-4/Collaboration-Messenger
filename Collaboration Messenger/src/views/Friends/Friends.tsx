@@ -17,9 +17,6 @@ export default function Friends() {
                 return <FriendsRequest />;
             case 'block':
                 return <BlockList />;
-            //add ---> only status
-            // case 'status':
-            //     return < />;//status
             default:
                 return <FriendsList />;//status
         }
@@ -29,7 +26,6 @@ export default function Friends() {
           
             <div className="header-frineds">
                 <Button className="friends-button" onClick={() => setView('friendsList')}><span>Friends</span></Button>
-                <Button className="friends-button" onClick={() => setView('status')}><span>Status</span></Button>
                 <Button className="friends-button" onClick={() => setView('friendsRequest')}><span>Requests</span></Button>
                 <Button className="friends-button" onClick={() => setView('block')}><span>Block</span></Button>
                 <UserSearch type="Add friend" />
