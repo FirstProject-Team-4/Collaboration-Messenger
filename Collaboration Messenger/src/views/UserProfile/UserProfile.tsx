@@ -27,7 +27,6 @@ const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
     const [myBlockList, setMyBlockList] = useState<string[]>([]);
-    const [friendRequestStatus, setFriendRequestStatus] = useState('none'); // 'none', 'pending', 'accepted'
     const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
 
     const currentId = id?.split(userData.uid).join('');
@@ -81,27 +80,6 @@ const UserProfile = () => {
     console.log(myBlockList);
 
 
-    const handleAddFriend = async (user: UserProfileData) => {
-        const db = getDatabase();
-        const requestRef = ref(db, `users/${user?.username}/friendsRequest/${userData.username}`);
-
-        const newRequest = {
-            username: userData.username,
-            uid: userData.uid,
-        };
-        await set(requestRef, newRequest);
-        setFriendRequestStatus('pending');
-
-    }
-
-    const handleRemoveFriend = async (user: UserProfileData) => {
-        const db = getDatabase();
-        const friendRef = ref(db, `users/${userData.username}/friends/${user.username}`);
-        await set(friendRef, null);
-        const friendRef2 = ref(db, `users/${user.username}/friends/${userData.username}`);
-        await set(friendRef2, null);
-        setFriendRequestStatus('accepted');
-    }
 
     return (
         <div>
@@ -114,17 +92,7 @@ const UserProfile = () => {
                         
                         <Button onClick={() => { handleBlockUser() }}>{toggleBlock()}</Button>
 
-                        {/* <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>
-                        <button onClick={() => handleRemoveFriend(userProfileData)}>Remove Friend</button> */}
-                        {friendRequestStatus === 'none' && (
-                            <button onClick={() => handleAddFriend(userProfileData)}>Add Friend</button>
-                        )}
-                        {friendRequestStatus === 'pending' && (
-                            <button disabled>Waiting for request acceptance</button>
-                        )}
-                        {friendRequestStatus === 'accepted' && (
-                            <button onClick={() => handleRemoveFriend(userProfileData)}>Remove Friend</button>
-                        )}
+                       
                         <h2>{userProfileData.username}</h2>
                         <p>{userProfileData?.firstName ? userProfileData.firstName : ''}</p>
                         <p>{userProfileData?.lastName ? userProfileData.lastName : ''}</p>
