@@ -17,9 +17,6 @@
   transition: all 0.5s ease;
 }
 
-#logout {
-  left: 1000px;
-}
 
 
 /* Styles for screens smaller than 800px */
@@ -28,9 +25,7 @@
     height: 550px;
   }
 
-  #logout {
-    left: 700px;
-  }
+ 
 }
 
 @media (max-width: 600px) {

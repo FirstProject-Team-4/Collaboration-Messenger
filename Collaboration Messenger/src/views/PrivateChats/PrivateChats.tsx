@@ -44,8 +44,17 @@ const PrivateChats = () => {
             }
         })()
     }, [id, userData])
+    console.log(userProfileData)
 
     const sendCallRequest = async (calleeData: UserProfileData | null) => {
+        const blockedUsers=userProfileData?.blockedUsers?Object.keys(userProfileData?.blockedUsers):[];
+        console.log(blockedUsers)
+        if (blockedUsers.includes(userData?.username)) {
+            toast.error('The user blocked you!...sad face', {
+                duration: 5000
+            });
+            return;
+        }
 
         if (calleeData?.status === 'busy') {
             toast.error('The user is busy!', {
