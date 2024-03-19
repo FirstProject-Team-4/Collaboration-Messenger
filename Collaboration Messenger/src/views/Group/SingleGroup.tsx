@@ -3,7 +3,7 @@ import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { onValue, ref, remove } from 'firebase/database';
+import { onValue, ref, remove, set } from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
 import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
@@ -43,11 +43,20 @@ export default function SingleGroup() {
                     nav('/*');
                 }
             })
-            onValue(ref(db, `groups/${id}/members`), () => {
-                getGroupMembers(id).then((members) => {
-                    setGroupMembers(members);
+            onValue(ref(db, `groups/${id}/members`), (snapshot) => {
+                if(snapshot.exists()){
+                    setGroupMembers(Object.keys(snapshot.val()).map((key)=>{
+                        return{
+                            username:key,
+                            ...snapshot.val()[key]
+                        }
+                    }))
+                }
+                else{
+                    setGroupMembers([]);
+                }
                 })
-            });
+            
         }
         onValue(ref(db, `users/${userData.username}/status`), (snapshot) => {
             if (snapshot.exists()) {
