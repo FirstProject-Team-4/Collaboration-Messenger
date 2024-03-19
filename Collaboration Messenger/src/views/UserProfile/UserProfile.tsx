@@ -19,6 +19,7 @@ import Button from '../../components/button/Button';
     lastName?: string;
     uid?: string;
     isBlock?: boolean;
+    blockedUsers?:any
     friendsRequest?: Record<string, unknown>;
 };
 

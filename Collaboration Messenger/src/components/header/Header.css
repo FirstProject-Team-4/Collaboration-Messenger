@@ -17,9 +17,7 @@
     transition: all 0.5s ease;
   }
 
-  #logout {
-    left: 1000px;
-  }
+
 
 
 /* Styles for screens smaller than 800px */
@@ -28,9 +26,7 @@
     height: 550px;
   }
 
-  #logout {
-    left: 700px;
-  }
+ 
 }
 
 @media (max-width: 600px) {
@@ -127,9 +123,20 @@
 .logo{
   position: absolute;
   z-index: 100;
-  bottom:20px;
-left:-5px;
+ top:-10px;
+left: 0;
+}
+.logout{
+  position: absolute;
+  z-index: 100;
 
-
-
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  background-color: #0c0c0c;
+  /* padding: 10px; */
+  color: black;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }

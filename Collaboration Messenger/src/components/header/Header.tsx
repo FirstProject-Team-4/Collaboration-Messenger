@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
 import { DyteCameraToggle, DyteControlbar, DyteMeeting, DyteMicToggle } from '@dytesdk/react-ui-kit';
-import { setStatusToBusy, updateStatusToOnline } from '../../service/status';
+import { setStatusToBusy, toggleStatus, updateStatusToOnline } from '../../service/status';
 import CallAudio from '../../Audio/ringtone-126505.mp3';
 import toast from 'react-hot-toast';
 import ImageComp from '../imageComp/ImageComp';
@@ -41,7 +41,7 @@ export const Header = () => {
         if (meeting) {
             meeting.self.on('roomLeft', () => { //Handle Navigation
                 setInCall(false);
-                updateStatusToOnline(userData);
+                toggleStatus(userData);
             });
             meeting.self.on(`roomJoined`, () => {//Send message to chat
                 setStatusToBusy(userData);
@@ -169,6 +169,7 @@ export const Header = () => {
                 <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
 
             </div>
+            <div className='logout'>
             <IconButton
                 id="logout"
                 aria-controls="logout-menu"
@@ -178,6 +179,7 @@ export const Header = () => {
                 style={{ color: 'white' }}
             >
                 <LogoutIcon />
+                
             </IconButton>
             <Menu
                 id="logout-menu"
@@ -190,6 +192,8 @@ export const Header = () => {
                 <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
                 <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
             </Menu>
+            </div>
+            
             {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} className="top-div">
 
                 <p onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>
