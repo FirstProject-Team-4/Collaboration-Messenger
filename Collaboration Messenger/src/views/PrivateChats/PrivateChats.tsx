@@ -70,10 +70,10 @@ const PrivateChats = () => {
         }
 
   setCallRequest(true);
-        //callAudio.play()
+        callAudio.play()
         const toastID = toast((t) => (
             <div id='custom-toast'>
-                <ImageComp unique={calleeData} type='user'></ImageComp>
+              
                 <div>Calling...</div> <b>{calleeData?.username}</b>
                 <button onClick={() => {
                     remove(ref(db, `users/${calleeData?.username}/callNotification`))
