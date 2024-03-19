@@ -4,7 +4,7 @@
   height: 100%;
   margin: 0 auto;
   text-align: center;
-  /* overflow: auto; */
+  /* overflow: hidden; */
   /* Add this if you want to enable scrolling when the content overflows the fixed size */
 }
 

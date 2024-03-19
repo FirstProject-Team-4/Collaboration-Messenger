@@ -8,7 +8,7 @@ import { get, ref, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 import { inviteToGroup } from "../../service/group";
-import ImageComp from "../imageComp/ImageComp";
+
 
 
 const InviteSearch = () => {
@@ -62,7 +62,6 @@ console.log(groupMembers);
                     return (
                         <div className="border-users" key={user.uid}>
                             <div className="information">
-                                <ImageComp unique={user} type='user' />
                                 <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
                                 {invited[user.username]?'Invited': <Button onClick={() => handleInvite(user)}>Invite</Button>}
                             </div>

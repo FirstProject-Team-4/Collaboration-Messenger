@@ -130,7 +130,7 @@
 .logout{
  position: relative;
  left:1380px;
- z-index: 100;
+ z-index: 90;
 background-color: #0c0c0c;
 height: 38px;
 }
