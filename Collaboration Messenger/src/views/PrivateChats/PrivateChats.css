@@ -1,140 +1,159 @@
 .container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .column-inf {
-    position: relative;
-    right: 115px;
-    gap: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 30px;
-    height: 615px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
-        0 30px 60px rgba(97, 218, 251, 0.3);
-    border-radius: 10px;
-    transition: all 0.5s ease;
-  }
-  
-  .btn-friends {
-    position: relative;
-    bottom: 20px;
-    right: 230px;
-    top: 15px;
-    padding: 10px;
-    height: 10%;
-    border: 1px solid #fddddd;
-  }
-  
-  .search-users {
-    position: relative;
-    padding: 0;
-    height: 10%;
-    position: relative;
-    bottom: 8px;
-    left: 893px;
-  }
-  
-  .user-profile {
-    position: absolute;
-    right: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    top: 83px;
-    height: 580px;
-    padding: 6px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px 0 rgba(16, 18, 46, 0.37),
-        0 30px 60px rgba(97, 218, 251, 0.3);
-    border-radius: 10px;
-    transition: all 0.5s ease;
-  }
-  
-  /* Styles for screens smaller than 1200px */
-  @media (max-width: 1200px) {
-    .column-inf, .user-profile {
-      right: 120px; 
-      height: 550px; 
-    }
-  
-    .btn-friends {
-      right: 200px; 
-    }
-  
-    .search-users {
-      left: 800px; 
-    }
-  }
-  
-  /* Styles for screens smaller than 800px */
-  @media (max-width: 800px) {
-    .column-inf, .user-profile {
-      right: 80px; 
-      height: 500px; 
-    }
-  
-    .btn-friends {
-      right: 170px; 
-    }
-  
-    .search-users {
-      left: 550px; 
-    }
-  }
-  
-  /* Styles for screens smaller than 600px */
-  @media (max-width: 600px) {
-    .column-inf, .user-profile {
-      right: 40px; 
-      height: 450px; 
-    }
-  
-    .btn-friends {
-      right: 140px; 
-    }
-  
-    .search-users {
-      left: 300px; 
-    }
-  }
-  #custom-toast{
-    display: flex;
-    flex-direction: start;
-    gap:25px;
-    width: 300px;
-    height: 30px;
-  }
-  #custom-toast .status-circle{
-    display: none;
-  }
-  #custom-toast  .letter{
-    font-size: 25px;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 55px;
-    border-radius: 0px;
-    border: none;
-    border-right: 2px solid #0c0c0c;
+  display: flex;
+  flex-direction: row;
+}
 
+.column-inf {
+  position: relative;
+  right: 132px;
+  top: 15px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  top: 33px;
+  height: 582px;
+  padding: 33px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(17, 24, 116, 0.37),
+    0 30px 60px rgba(189, 97, 251, 0.3);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+.column-inf h3{
+  font-size: 20px;
+  align-self: center;
+  font-family: "Gloria Hallelujah", cursive;
+  position: relative;
+  bottom: 10px;
+
+}
+.btn-friends {
+  position: relative;
+  bottom: 20px;
+  right: 230px;
+  top: 15px;
+  padding: 10px;
+  height: 10%;
+  border: 1px solid #fddddd;
+}
+
+.search-users {
+  position: relative;
+  padding: 0;
+  height: 10%;
+  position: relative;
+  bottom: 8px;
+  left: 893px;
+}
+
+.user-profile {
+  position: absolute;
+  right: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  top: 70px;
+  height: 510px;
+  padding: 50px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(88, 96, 194, 0.37),
+    0 30px 60px rgba(71, 39, 81, 0.3);
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+/* Styles for screens smaller than 1200px */
+@media (max-width: 1200px) {
+
+  .column-inf,
+  .user-profile {
+    right: 120px;
+    height: 550px;
   }
-  #custom-toast  button{
+
+  .btn-friends {
+    right: 200px;
+  }
+
+  .search-users {
+    left: 800px;
+  }
+}
+
+/* Styles for screens smaller than 800px */
+@media (max-width: 800px) {
+
+  .column-inf,
+  .user-profile {
+    right: 80px;
+    height: 500px;
+  }
+
+  .btn-friends {
+    right: 170px;
+  }
+
+  .search-users {
+    left: 550px;
+  }
+}
+
+/* Styles for screens smaller than 600px */
+@media (max-width: 600px) {
+
+  .column-inf,
+  .user-profile {
+    right: 40px;
+    height: 450px;
+  }
+
+  .btn-friends {
+    right: 140px;
+  }
+
+  .search-users {
+    left: 300px;
+  }
+}
+
+#custom-toast {
+  display: flex;
+  flex-direction: start;
+  gap: 25px;
+  width: 300px;
+  height: 30px;
+}
+
+#custom-toast .status-circle {
+  display: none;
+}
+
+#custom-toast .letter {
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 55px;
+  border-radius: 0px;
+  border: none;
+  border-right: 2px solid #0c0c0c;
+
+}
+
+#custom-toast button {
   margin-top: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
   margin-bottom: 10px;
 
-  }
-  #custom-toast  .img-user{
-    margin-left: 0px;
-    padding-left: 0px;
-    justify-content: center;
-    align-items: center;
-       width: 55px;
-       height: 55px;
-       border-radius: 0px;
-       border: none;
-       border-right: 2px solid #0c0c0c;
-  
-    }
+}
+
+#custom-toast .img-user {
+  margin-left: 0px;
+  padding-left: 0px;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 0px;
+  border: none;
+  border-right: 2px solid #0c0c0c;
+
+}

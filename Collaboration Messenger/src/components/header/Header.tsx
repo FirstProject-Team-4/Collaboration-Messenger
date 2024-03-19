@@ -1,9 +1,9 @@
 import './Header.css';
 import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { CallContext, useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
+import {useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
-import { off, onChildAdded, onValue, ref, remove, set, update } from 'firebase/database';
+import {  onValue, ref, remove,update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import ChatIcon from '@mui/icons-material/Chat';
 import Groups2Icon from '@mui/icons-material/Groups2';
@@ -14,12 +14,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
-import { DyteCameraToggle, DyteControlbar, DyteMeeting, DyteMicToggle } from '@dytesdk/react-ui-kit';
-import { setStatusToBusy, toggleStatus, updateStatusToOnline } from '../../service/status';
-import CallAudio from '../../Audio/ringtone-126505.mp3';
+import { DyteMeeting} from '@dytesdk/react-ui-kit';
+import { setStatusToBusy, toggleStatus} from '../../service/status';
 import toast from 'react-hot-toast';
 import ImageComp from '../imageComp/ImageComp';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 // import logo from '/image/busyChat_logo.png';
 /**
  * Renders the header component.
@@ -191,7 +189,6 @@ export const Header = () => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-            //   className="logout-menu"
             >
                 <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
                 <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
@@ -201,9 +198,6 @@ export const Header = () => {
             {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} className="top-div">
 
                 <p onClick={() => { setMinimizedMeeting(!minimizedMeeting) }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>
-
-                {/* <DyteMicToggle meeting={meeting} />
-                    <DyteCameraToggle meeting={meeting} /> */}
 
 
             </div>}
