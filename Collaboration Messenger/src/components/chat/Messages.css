@@ -7,6 +7,9 @@
   position: relative;
   align-items: flex-start;
   width: 200px;
+  height: fit-content;
+  min-height: 40px;
+  height: fit-content;
   color: black;
   word-wrap: break-word;
   position: relative;
@@ -66,6 +69,7 @@
   display: flex;
   text-align: end;
   text-wrap: wrap;
+  flex-direction: column;
 }
 
 .messages-container::-webkit-scrollbar {
@@ -80,4 +84,5 @@
   background-color: rgb(136, 116, 134);
   border-radius: 70px;
 }
+
 
