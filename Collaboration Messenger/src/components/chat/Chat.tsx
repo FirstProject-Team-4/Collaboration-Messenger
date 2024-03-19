@@ -49,7 +49,10 @@ const Chat = ({ type }: { type: string }) => {
             const dbRef = ref(db, "users");
             const q =  query(dbRef, orderByChild('uid'), equalTo(currentId));
             get(q).then((snapshot) => {
-                setOtherUserUsername(Object.keys(snapshot.val())[0])
+                if(!snapshot.exists()){
+                    return;
+                }
+               setOtherUserUsername(Object.keys(snapshot.val())[0])
             });
            
             }
