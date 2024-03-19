@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer, SlotInfo } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './MyCalendar.css';
-import { get, getDatabase, onValue, push, ref} from 'firebase/database';
+import { get, getDatabase, onValue, push, ref } from 'firebase/database';
 import { useAppContext } from '../../context/appContext';
 import { getAllUsers } from '../../service/user';
 import { useNavigate } from 'react-router-dom';
@@ -16,9 +16,9 @@ interface Event {
   start: Date;
   end: Date;
   title: string;
-  sharedWith?:  {
+  sharedWith?: {
     type: string;
-   id: string;
+    id: string;
   };
 }
 
@@ -153,7 +153,7 @@ const MyCalendar: React.FC = () => {
       start,
       end,
       attendees,
-      sharedWith: selectedGroup.length > 0 ? {type:'group',id:selectedGroup} : {type:'privateChat',id:chatId} ,
+      sharedWith: selectedGroup.length > 0 ? { type: 'group', id: selectedGroup } : { type: 'privateChat', id: chatId },
     };
 
     // Save the event to the 'events' node
@@ -176,24 +176,26 @@ const MyCalendar: React.FC = () => {
     // Save the event to the 'events' node USER
     selectedUsers.forEach((userId: any) => {
       push(ref(db, `users/${userId}/events`), newEvent)
-        .then(() => {
-          console.log(`Event saved in user ${userId}'s database!`);
-        });
+
     });
 
     //group
     selectedGroup.forEach((groupId: any) => {
       push(ref(db, `groups/${groupId}/events`), newEvent)
-        .then(() => {
-          console.log(`Event saved in group ${groupId}'s database!`);
-        });
+
     });
 
-    // Save the event to the 'events' node CHAT
-    push(ref(db, `chats/${chatId}/events`), newEvent)
-      .then(() => {
-        console.log(`Event saved in chat ${chatId}'s database!`);
+    if (selectedGroup.length > 0) {
+      const snapshot= await get(ref(db, `groups/${selectedGroup}/members`));
+      const members= Object.keys(snapshot.val());
+      members.forEach((member: any) => {
+        push(ref(db, `users/${member}/events`), newEvent)
       });
+    } else {
+      push(ref(db, `users/${userId}/events`), newEvent)
+    }
+   
+
   };
   const closeModal = () => {
     setIsModalOpen(false);
@@ -208,7 +210,7 @@ const MyCalendar: React.FC = () => {
 
     if (event.sharedWith?.type === 'privateChat') {
       navigate(`/privateChats/${event.sharedWith?.id}`);
-    }else{
+    } else {
       navigate(`/group/${event.sharedWith?.id}`);
     }
 
