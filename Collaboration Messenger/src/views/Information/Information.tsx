@@ -36,6 +36,7 @@ const Information: React.FC = () => {
     onValue(ref(db, `users/${userData.username}/privateNotifications`), (snapshot) => {
       if (!snapshot.exists()) {
         setPrivateNotifications([]);
+        return;
       }
       setPrivateNotifications(Object.keys(snapshot.val()));
     })
