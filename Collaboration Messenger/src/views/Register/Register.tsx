@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import Button from '../../components/button/Button';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../service/auth';
@@ -34,9 +34,9 @@ export default function Register() {
    * @returns A Promise that resolves to void.
    */
   const submit = async (): Promise<void> => {
-    const {username,email,password}=await CheckRegister(form.username, form.email, form.password);
-    console.log(username,email,password);
-   
+    const { username, email, password } = await CheckRegister(form.username, form.email, form.password);
+    console.log(username, email, password);
+
     if (username !== 'valid' || email !== 'valid' || password !== 'valid') {
       setError({ username: username, email: email, password: password });
       return;
@@ -59,8 +59,8 @@ export default function Register() {
    * Determines the color of the username/email/password based on the error state.
    * @returns The color as a string ('green', 'red', or 'black').
    */
-  const errorColor = (property:string): string => {
-    if (error[property as keyof typeof error] ==='valid') {
+  const errorColor = (property: string): string => {
+    if (error[property as keyof typeof error] === 'valid') {
       return 'green';
     }
     if (error[property as keyof typeof error] !== '') {

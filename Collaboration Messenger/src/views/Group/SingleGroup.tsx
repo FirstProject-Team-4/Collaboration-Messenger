@@ -3,10 +3,10 @@ import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { onValue, ref, remove} from 'firebase/database';
+import { onValue, ref, remove } from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
-import { getGroupByID,removeGroupMember } from '../../service/group';
+import { getGroupByID, removeGroupMember } from '../../service/group';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
 import { setStatusToBusy } from '../../service/status';
@@ -24,9 +24,9 @@ export default function SingleGroup() {
   const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
   const { userData } = useAppContext();
   const [token, setToken] = useState<string>("");
-  const {meeting, initMeeting} = useDyteContext();
-  const {inCall, setInCall} = useCallContext();
-  const[status,setStatus]=useState('');
+  const { meeting, initMeeting } = useDyteContext();
+  const { inCall, setInCall } = useCallContext();
+  const [status, setStatus] = useState('');
 
 
 
@@ -46,19 +46,19 @@ export default function SingleGroup() {
         }
       });
       onValue(ref(db, `groups/${id}/members`), (snapshot) => {
-        if(snapshot.exists()){
-          setGroupMembers(Object.keys(snapshot.val()).map((key)=>{
-            return{
-              username:key,
+        if (snapshot.exists()) {
+          setGroupMembers(Object.keys(snapshot.val()).map((key) => {
+            return {
+              username: key,
               ...snapshot.val()[key]
             };
           }));
         }
-        else{
+        else {
           setGroupMembers([]);
         }
       });
-            
+
     }
     onValue(ref(db, `users/${userData.username}/status`), (snapshot) => {
       if (snapshot.exists()) {
@@ -66,7 +66,7 @@ export default function SingleGroup() {
       }
     });
 
-  }, [id,userData]);
+  }, [id, userData]);
   useEffect(() => {
 
     onValue(ref(db, `groups/${id}/members/${userData.username}/token`), (snapshot) => {
@@ -77,17 +77,17 @@ export default function SingleGroup() {
     });
   }, [userData]);
   useEffect(() => {
-    if(!userData || !id){
+    if (!userData || !id) {
       return;
     }
-    const subscribe= onValue(ref(db, `users/${userData.username}/groupNotifications/${id}`), (snapshot) => {
+    const subscribe = onValue(ref(db, `users/${userData.username}/groupNotifications/${id}`), (snapshot) => {
       remove(ref(db, `users/${userData.username}/groupNotifications/${id}`));
-        
+
     });
-    return ()=>subscribe();
+    return () => subscribe();
     //off(ref(db, `users/${userData.username}/groupNotifications/${id}`));
-  },[userData,id]);
-    
+  }, [userData, id]);
+
 
 
 
@@ -97,14 +97,14 @@ export default function SingleGroup() {
     removeGroupMember(currentGroup.id, userData.username);
   };
   return (
-        
+
     <>
       <div className="chat-container">
         <button onClick={async () => {
 
           if (status === 'busy') {
-            toast.error('You are already in a call'),{
-              duration:8000
+            toast.error('You are already in a call'), {
+              duration: 8000
             };
             return;
           }
@@ -118,7 +118,7 @@ export default function SingleGroup() {
           setInCall(true);
           setStatusToBusy(userData);
         }
-        }><CallIcon/></button>
+        }><CallIcon /></button>
 
         <Chat type={'group'} />
       </div>
@@ -132,7 +132,7 @@ export default function SingleGroup() {
         <GroupMembers members={groupMembers} owner={currentGroup.owner} />
       </div>
     </>
-       
-                
+
+
   );
 }

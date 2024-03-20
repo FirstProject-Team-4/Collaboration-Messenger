@@ -76,7 +76,7 @@ export default function CreateGroup() {
 
             </input><br></br>
             <label htmlFor="type" id='type-label'>Type:</label>
-            <select  className="input" id="type" value={currentGroup.type} onChange={(e) => setCurrentGroup({ ...currentGroup, type: e.target.value })}>
+            <select className="input" id="type" value={currentGroup.type} onChange={(e) => setCurrentGroup({ ...currentGroup, type: e.target.value })}>
               <option value="public">Public</option>
               <option value="private">Private</option>
             </select>

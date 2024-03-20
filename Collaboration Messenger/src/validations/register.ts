@@ -1,6 +1,6 @@
 import { getUserByUsername } from "../service/user";
 
-export const CheckRegister = async(username:string ,email: string, password: string) => {
+export const CheckRegister = async (username: string, email: string, password: string) => {
   const error = {
     username: '',
     email: '',
@@ -8,7 +8,7 @@ export const CheckRegister = async(username:string ,email: string, password: str
   };
   try {
     const checkUser = await getUserByUsername(username);
-        
+
     if (username.length < 3 || username.length > 16) {
       error.username = 'Username must be between 4 and 16 symbols.';
     }
@@ -26,7 +26,7 @@ export const CheckRegister = async(username:string ,email: string, password: str
   else {
     error.email = 'valid';
   }
-  
+
   if (password.length < 8 || password.length > 20) {
     error.password = 'Password must be between 6 and 20 symbols.';
   }
@@ -39,6 +39,6 @@ export const CheckRegister = async(username:string ,email: string, password: str
   else {
     error.password = 'valid';
   }
-      
+
   return error;
 };

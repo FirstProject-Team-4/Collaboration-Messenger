@@ -22,8 +22,8 @@ const PrivateChats = () => {
   const { id } = useParams<{ id: string }>();
   const { userData } = useAppContext();
   const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
-  const {inCall,setInCall}=useCallContext();
-  const {initMeeting}=useDyteContext();
+  const { inCall, setInCall } = useCallContext();
+  const { initMeeting } = useDyteContext();
   const [callRequest, setCallRequest] = useState(false);
 
   const currentId = id?.split(userData.uid).join('');
@@ -48,7 +48,7 @@ const PrivateChats = () => {
   console.log(userProfileData);
 
   const sendCallRequest = async (calleeData: UserProfileData | null) => {
-    const blockedUsers=userProfileData?.blockedUsers?Object.keys(userProfileData?.blockedUsers):[];
+    const blockedUsers = userProfileData?.blockedUsers ? Object.keys(userProfileData?.blockedUsers) : [];
     console.log(blockedUsers);
     if (blockedUsers.includes(userData?.username)) {
       toast.error('The user blocked you!...sad face', {
@@ -63,7 +63,7 @@ const PrivateChats = () => {
       });
       return;
     }
-    if(inCall){
+    if (inCall) {
       toast.error('You are busy!', {
         duration: 5000
       });
@@ -74,7 +74,7 @@ const PrivateChats = () => {
     callAudio.play();
     const toastID = toast((t) => (
       <div id='custom-toast'>
-              
+
         <div>Calling...</div> <b>{calleeData?.username}</b>
         <button onClick={() => {
           remove(ref(db, `users/${calleeData?.username}/callNotification`));
@@ -84,7 +84,7 @@ const PrivateChats = () => {
           setCallRequest(false);
 
         }}>
-                    Cancel
+          Cancel
         </button>
       </div>
     ), {
@@ -109,7 +109,7 @@ const PrivateChats = () => {
         if (data.status === 'accepted') {
           declinedMessageShown = true;
           clearTimeout(timeoutID);
-                   
+
           await initMeeting({
             authToken: callerToken,
             defaults: {
@@ -123,7 +123,7 @@ const PrivateChats = () => {
           callAudio.currentTime = 0;
           setCallRequest(false);
         }
-        else if (data.status === 'declined' && !declinedMessageShown){
+        else if (data.status === 'declined' && !declinedMessageShown) {
           toast.dismiss(toastID);
           toast.error('The user declined the call!', {
             duration: 5000
@@ -133,10 +133,10 @@ const PrivateChats = () => {
           clearTimeout(timeoutID);
           setCallRequest(false);
           off(ref(db, `users/${calleeData?.username}/callNotification`));
-                
+
         }
       }
-           
+
     });
 
   };
@@ -154,7 +154,7 @@ const PrivateChats = () => {
       </div>
 
       <div className="chat-container">
-        {!callRequest&&id&&<button onClick={() => { sendCallRequest(userProfileData); }} className="btn-profile"><CallIcon/></button>}
+        {!callRequest && id && <button onClick={() => { sendCallRequest(userProfileData); }} className="btn-profile"><CallIcon /></button>}
         <Chat type={'private'} />
       </div>
       <div className="user-profile">

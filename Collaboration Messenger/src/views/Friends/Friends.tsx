@@ -27,7 +27,7 @@ export default function Friends() {
   };
   return (
     <div className="view-frineds">
-          
+
       <div className="header-frineds">
         <Button className="friends-button" onClick={() => setView('friendsList')}><span>Friends</span></Button>
         <Button className="friends-button" onClick={() => setView('friendsRequest')}><span>Requests</span></Button>
@@ -35,7 +35,7 @@ export default function Friends() {
         <UserSearch type="Add friend" />
       </div>
       <div className="view">
-               
+
         {handleViewChange(view)}
       </div>
     </div>

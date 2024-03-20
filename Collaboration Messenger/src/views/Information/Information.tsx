@@ -40,7 +40,7 @@ const Information: React.FC = () => {
   }, [userData]);
 
   useEffect(() => {
-    if(!userData){
+    if (!userData) {
       return;
     }
     onValue(ref(db, `users/${userData.username}/privateNotifications`), (snapshot) => {
@@ -65,7 +65,7 @@ const Information: React.FC = () => {
               <div className="chat-user">
                 <ImageComp className={'image-inf-message image'} unique={chat} type={'user'} />
                 <p id="user-name">{chat.username}</p>
-                {privateNotifications.includes(chat.id)&&<span><NotificationsIcon/></span>}
+                {privateNotifications.includes(chat.id) && <span><NotificationsIcon /></span>}
               </div>
             </NavLink>
           }

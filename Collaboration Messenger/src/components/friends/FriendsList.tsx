@@ -76,12 +76,12 @@ export default function FriendsList() {
     const friendRef2 = ref(db, `/users/${user.username}/friends/${userData.username}`);
     await remove(friendRef2);
   };
-   
+
   return (
     <>
       <h4 className="title-friends-view">Friends</h4>
       <div className="card-container">
-          
+
         {friendList && friendList.map((friend: any, index: number) => (
           <div key={index} className="card">
             <div className="infos">
@@ -89,16 +89,16 @@ export default function FriendsList() {
                 <ImageComp className="image-friends" unique={friend} type={'user'} />
               </div>
               <div className="info">
-                <NavLink className="name" to={`/profile/${friend.username}`}>{friend.username}</NavLink> 
+                <NavLink className="name" to={`/profile/${friend.username}`}>{friend.username}</NavLink>
               </div>
             </div>
             <button className="request" onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
             <button className="request" onClick={() => handleRemoveFriend(friend)}>Remove </button>
           </div>
         ))}
-            
+
       </div>
     </>
   );
-   
+
 }

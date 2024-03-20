@@ -43,8 +43,7 @@ export const getAllUsers = async () => {
     id: key,
     ...snapshot.val()[key],
     createdOn: new Date(snapshot.val()[key].createdOn).toString(),
-  }));    
-
+  }));
 
   return users;
 };

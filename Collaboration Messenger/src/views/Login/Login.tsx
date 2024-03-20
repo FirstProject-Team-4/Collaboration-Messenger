@@ -21,7 +21,7 @@ const Login = () => {
   const login = async (): Promise<void> => {
     try {
       const response = await loginUser(form.email, form.password);
-      setContext({ user: response.user as User | any , userData: null });
+      setContext({ user: response.user as User | any, userData: null });
       navigate('/home');
     } catch (error: Error | any) {
       setError(true);
@@ -34,7 +34,7 @@ const Login = () => {
         <div className="login-form">
           <h2 id='login-h1'>Login</h2>
           <NavLink to='/register' id='register-link'>Register</NavLink>
-          <br/>
+          <br />
           {/* <NavLink to='/about' id='about-link'>About</NavLink> */}
           <label htmlFor="email" className='label-login'>✉ Email:</label><br />
           <input type="text" name='email' id='email' autoComplete='email' placeholder="✉ email..." value={form.email} onChange={(e) => { setForrm({ ...form, email: e.target.value }); }} /><br />

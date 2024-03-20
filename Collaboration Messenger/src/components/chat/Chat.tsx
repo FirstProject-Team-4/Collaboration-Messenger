@@ -17,8 +17,8 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 
 
 type FileObject = {
-    file: File,
-    id: string
+  file: File,
+  id: string
 }
 
 /**
@@ -51,7 +51,7 @@ const Chat = ({ type }: { type: string }) => {
     if (type === 'private') {
 
       const currentId = id?.split(userData.uid).join('');
-        
+
       if (currentId) {
         const dbRef = ref(db, "users");
         const q = query(dbRef, orderByChild('uid'), equalTo(currentId));
@@ -219,7 +219,7 @@ const Chat = ({ type }: { type: string }) => {
               return (
                 <div key={index}>
                   <img className={'image-container'} src={"/image/empty.file.png"} alt="image" />
-                                    
+
                   <span onClick={() => setFile(file.filter(function (current) { return current.id !== f.id; }))}>X</span>
                 </div>
               );

@@ -47,9 +47,9 @@ export default function Group() {
     <>
       <div className="groups-form">
         {groupInvitation &&
-                groupInvitation.map((group: any, index: any) => {
-                  return <GroupInvites groupId={group} key={index} />;
-                })}
+          groupInvitation.map((group: any, index: any) => {
+            return <GroupInvites groupId={group} key={index} />;
+          })}
         <h6 className='group-title-inf'>Groups</h6>
         {groups.map((group: any, index: any) => {
           return <JoinedGroups singleGroup={group} key={index} />;
@@ -60,7 +60,7 @@ export default function Group() {
         </div>
       </div>
       {id === 'createGroup' && <CreateGroup />}
-      {id === 'join' && <PublicGroups/>}
+      {id === 'join' && <PublicGroups />}
       {id !== 'createGroup' && id !== 'join' && id !== undefined && <SingleGroup />}
     </>
   );

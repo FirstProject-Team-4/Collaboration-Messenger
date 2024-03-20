@@ -11,19 +11,19 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 
 export type Message = {
-    author: string,
-    content: string,
-    reactions: any,
-    createdOn: number,
-    type: string,
-    files: File[],
-    id: string,
-    replyMessage?: string
+  author: string,
+  content: string,
+  reactions: any,
+  createdOn: number,
+  type: string,
+  files: File[],
+  id: string,
+  replyMessage?: string
 }
 export type File = {
-    url: string,
-    type: string,
-    name: string
+  url: string,
+  type: string,
+  name: string
 }
 
 /**
@@ -158,30 +158,30 @@ export default function MessageContent({ message, type, setReplyMessage }: { mes
             })}
           </div>
           {showEmojiPicker &&
-                        <div className={'emoji-picker'} >
-                          <button onClick={() => { setShowEmojiPicker(false); }}>X</button>
-                          <Picker
-                            onEmojiClick={(emojiObject) => {
-                              if (emojiObject) {
-                                addCurrentEmojiToMessage(emojiObject.emoji, message);
-                                setShowEmojiPicker(false);
-                              }
-                            }}
-                          />
+            <div className={'emoji-picker'} >
+              <button onClick={() => { setShowEmojiPicker(false); }}>X</button>
+              <Picker
+                onEmojiClick={(emojiObject) => {
+                  if (emojiObject) {
+                    addCurrentEmojiToMessage(emojiObject.emoji, message);
+                    setShowEmojiPicker(false);
+                  }
+                }}
+              />
 
-                        </div>
+            </div>
           }
           {isHovered &&
-                        <div className="message-options">
-                          {userData.username === message.author && <button onClick={() => deleteCurrentMessage(message.id)}><DeleteIcon /></button>}
-                          {userData.username === message.author && <button onClick={() => {
-                            setEdit(true);
-                            setEditValue(message.content);
-                          }}><EditNoteIcon /></button>}
-                          <button onClick={() => setShowEmojiPicker(true)}><AddReactionIcon /></button>
-                          {<button onClick={() => setReplyMessage && setReplyMessage(message.content)}><ReplyAllIcon /></button>}
+            <div className="message-options">
+              {userData.username === message.author && <button onClick={() => deleteCurrentMessage(message.id)}><DeleteIcon /></button>}
+              {userData.username === message.author && <button onClick={() => {
+                setEdit(true);
+                setEditValue(message.content);
+              }}><EditNoteIcon /></button>}
+              <button onClick={() => setShowEmojiPicker(true)}><AddReactionIcon /></button>
+              {<button onClick={() => setReplyMessage && setReplyMessage(message.content)}><ReplyAllIcon /></button>}
 
-                        </div>
+            </div>
           }
         </div>}
     </>

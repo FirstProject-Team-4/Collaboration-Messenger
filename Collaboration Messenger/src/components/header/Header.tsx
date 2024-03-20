@@ -168,56 +168,56 @@ export const Header = () => {
   if (location.pathname === '/login' || location.pathname === '/register') {
     return null;
   }
-  
+
   return (
     userData &&
-        <>
-          <div className='logo'><NavLink to='/home' className='logo'>
-            <img src='/image/busy-logo.webp' alt="Logo" style={{ width: 100, height: 100 }} />
-          </NavLink></div>
-          <div className="header-view">
-            <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat !' :"Chat"} </NavLink>
-            <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
+    <>
+      <div className='logo'><NavLink to='/home' className='logo'>
+        <img src='/image/busy-logo.webp' alt="Logo" style={{ width: 100, height: 100 }} />
+      </NavLink></div>
+      <div className="header-view">
+        <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat !' : "Chat"} </NavLink>
+        <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
 
-            <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
-            <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
+        <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
+        <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
 
-          </div>
-          <div className='logout'>
-            <IconButton
-              id="logout"
-              aria-controls="logout-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-              className="logout-button"
-              style={{ color: 'white' }}
-            >
-              <LogoutIcon />
+      </div>
+      <div className='logout'>
+        <IconButton
+          id="logout"
+          aria-controls="logout-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+          className="logout-button"
+          style={{ color: 'white' }}
+        >
+          <LogoutIcon />
 
-            </IconButton>
-            <Menu
-              id="logout-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
-              <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
-            </Menu>
-          </div>
+        </IconButton>
+        <Menu
+          id="logout-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem className="logout-menu-item" onClick={profile}>Profile</MenuItem>
+          <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
+        </Menu>
+      </div>
 
-          {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} className="top-div">
+      {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} className="top-div">
 
-            <p onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>
+        <p onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>
 
 
-          </div>}
+      </div>}
 
-          {inCall && <div className={minimizedMeeting ? "dyte-meeting-minimized-container" : "dyte-meeting-fullscreen-container"}>
-            <DyteMeeting meeting={meeting} />
-          </div>}
-        </>
+      {inCall && <div className={minimizedMeeting ? "dyte-meeting-minimized-container" : "dyte-meeting-fullscreen-container"}>
+        <DyteMeeting meeting={meeting} />
+      </div>}
+    </>
   );
 };
 

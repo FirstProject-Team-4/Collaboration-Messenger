@@ -6,30 +6,34 @@
     display: block;
     margin-bottom: 20px;
 }
-.profile-user-img{
+
+.profile-user-img {
     width: 200px;
     height: 50px;
-    
+
 }
-.profile-user-img img{
-    position:absolute;
-   bottom: -30px;
-   left: 50px;
+
+.profile-user-img img {
+    position: absolute;
+    bottom: -30px;
+    left: 50px;
     width: 90px;
     height: 90px;
     border-radius: 50%;
-   
+
 }
-.profile-user-img .status-circle{
-   display: none;
+
+.profile-user-img .status-circle {
+    display: none;
 }
-.profile-user-img .letter{
-    position:absolute;
-   bottom: -30px;
-   left: 50px;
-   width: 70px;
-   height: 85px;
+
+.profile-user-img .letter {
+    position: absolute;
+    bottom: -30px;
+    left: 50px;
+    width: 70px;
+    height: 85px;
     font-size: 50px;
     border-radius: 50%;
-   
+
 }

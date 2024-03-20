@@ -100,7 +100,7 @@ const MyCalendar: React.FC = () => {
     });
   }, [userData]);
 
- 
+
   /**
    * Handles the selection of a time slot in the calendar.
    * @param slotInfo - The information about the selected time slot.

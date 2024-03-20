@@ -4,7 +4,7 @@
  * @param {string} groupDescription - The description of the group.
  * @returns {object} - An object containing error messages for invalid group data.
  */
-export const checkGroupData = (groupName:string, groupDescription:string) => {
+export const checkGroupData = (groupName: string, groupDescription: string) => {
   const errors = {
     groupName: '',
     groupDescription: ''

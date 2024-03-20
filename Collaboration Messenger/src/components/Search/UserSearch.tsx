@@ -13,7 +13,7 @@ import './UserSearch.css';
 
 
 interface UserSearchProps {
-    type?: string;
+  type?: string;
 }
 /**
  * UserSearch component for searching and interacting with users.
@@ -21,7 +21,7 @@ interface UserSearchProps {
  * @param type - The type of search (default: 'Search').
  */
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
-  const { userData} = useAppContext();
+  const { userData } = useAppContext();
   const [users, setUsers] = useState<any>([]);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);

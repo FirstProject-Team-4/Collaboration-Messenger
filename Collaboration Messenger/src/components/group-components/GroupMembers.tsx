@@ -3,10 +3,10 @@ import './group-components.css';
 import ImageComp from "../imageComp/ImageComp";
 
 
-export interface MembersProps{
-    username:string;
-    status:string;
-    id:string;
+export interface MembersProps {
+  username: string;
+  status: string;
+  id: string;
 }
 
 /**
@@ -19,7 +19,7 @@ export default function GroupMembers({ members, owner }: { members: MembersProps
 
   const [onlineMembers, setOnlineMembers] = useState<MembersProps[]>([]);
   const [offlineMembers, setOfflineMembers] = useState<MembersProps[]>([]);
-  
+
   useEffect(() => {
     const online = members.filter((member) => member.status !== 'offline');
     const offline = members.filter((member) => member.status === 'offline');
@@ -30,19 +30,19 @@ export default function GroupMembers({ members, owner }: { members: MembersProps
   return (
     <div>
       <h5>{`Online:${onlineMembers.length}`}</h5>
-      {onlineMembers.map((member,index) => {
+      {onlineMembers.map((member, index) => {
         return <div key={index} className="group-members">
-          <ImageComp className='group-members-img' unique={member} type={'user'}/>
-          <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
-          <h5>{member.username!==owner&&member.username}</h5>
+          <ImageComp className='group-members-img' unique={member} type={'user'} />
+          <h5>{member.username === owner && `${member.username}(owner)`}</h5>
+          <h5>{member.username !== owner && member.username}</h5>
         </div>;
       })}
       <h5>{`Offline:${offlineMembers.length}`}</h5>
-      {offlineMembers.map((member,index) => {
+      {offlineMembers.map((member, index) => {
         return <div key={index} className="group-members">
-          <ImageComp className='img-member' unique={member} type={'user'}/>
-          <h5>{member.username===owner&&`${member.username}(owner)`}</h5>
-          <h5>{member.username!==owner&&member.username}</h5>
+          <ImageComp className='img-member' unique={member} type={'user'} />
+          <h5>{member.username === owner && `${member.username}(owner)`}</h5>
+          <h5>{member.username !== owner && member.username}</h5>
         </div>;
       })}
     </div>

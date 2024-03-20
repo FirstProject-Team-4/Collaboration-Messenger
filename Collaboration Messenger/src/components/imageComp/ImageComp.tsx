@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import './imageComp.css';
-import { get, ref} from "firebase/database";
+import { get, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { changeStatusToAway } from "../../service/status";
 import { useAppContext } from "../../context/appContext";
@@ -13,7 +13,7 @@ import { useAppContext } from "../../context/appContext";
  * @param style - Optional inline styles for the component.
  * @returns The rendered image component.
  */
-export default function ImageComp({ unique, type }: { unique: any, type: string, className?: string, style?: any}) {
+export default function ImageComp({ unique, type }: { unique: any, type: string, className?: string, style?: any }) {
   const [data, setData] = useState<any>(null);
   const [status, setStatus] = useState('');
   const { userData } = useAppContext();
@@ -90,5 +90,5 @@ export default function ImageComp({ unique, type }: { unique: any, type: string,
       </>
     );
   }
-  
+
 }

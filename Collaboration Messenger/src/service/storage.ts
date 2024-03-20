@@ -19,9 +19,8 @@ export const saveImage = async (file: File) => {
  * Saves a file to the storage.
  * @param {File} file - The file to be saved.
  * @param {string} id - The ID of the file.
- * @returns {Promise<string>} - A promise that resolves to the download URL of the saved file.
  */
-export const saveFile = async (file: File,id:string) => {
+export const saveFile = async (file: File, id: string) => {
   if (!file) {
     return;
   }

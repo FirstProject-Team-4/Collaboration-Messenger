@@ -12,7 +12,7 @@ export const InviteMembers = ({ closeFn }: any) => {
   const [openFriend, setOpenFriend] = useState(true);
   const [friends, setFriends] = useState<any>([]);
   const { userData } = useAppContext();
-  const {id}=useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     if (userData.friends) {
@@ -22,12 +22,12 @@ export const InviteMembers = ({ closeFn }: any) => {
       setFriends([]);
     }
   }, [userData]);
-  const inviteFriend = (username:string) => {
-    if (id){
+  const inviteFriend = (username: string) => {
+    if (id) {
       inviteToGroup(id, username);
     }
   };
-  
+
   return (
     <div className='invite-members-container'>
       <div className='invite-members-form'>
@@ -44,8 +44,8 @@ export const InviteMembers = ({ closeFn }: any) => {
             </div>
           );
         })}
-        {openFriend&&friends.length===0&&<h5>No friends</h5>}
-                
+        {openFriend && friends.length === 0 && <h5>No friends</h5>}
+
         <button className='invite-members-close-btn' onClick={
           () => {
             closeFn(false);

@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div>
       <h1>Welcome to Busy chat</h1>
-      <img className="home-view" src='/image/home-view.png'/>
+      <img className="home-view" src='/image/home-view.png' />
     </div>
   );
 }

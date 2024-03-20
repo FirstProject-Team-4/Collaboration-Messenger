@@ -32,20 +32,20 @@ const Profile = () => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       const imgUrl = await saveImage(file);
-      imgUrl&&setImage(imgUrl);
+      imgUrl && setImage(imgUrl);
       update(ref(db, `users/${userData.username}/`), { image: imgUrl });
-           
+
     }
   };
 
   //for the first and last name (edit)
   const handleSubmit = () => {
     update(ref(db, `users/${userData.username}/`), { firstName: firstName, lastName: lastName });
-       
+
   };
   const loadUserProfile = () => {
-    setFirstName(userData?.firstName || ''); 
-    setLastName(userData?.lastName || ''); 
+    setFirstName(userData?.firstName || '');
+    setLastName(userData?.lastName || '');
     setImage(userData?.image || '');
     setShowEdit(!showEdit);
   };
@@ -64,15 +64,15 @@ const Profile = () => {
         </div>
       </div>
       {showEdit ? (
-        <form  className='edit-form-overlay'>
+        <form className='edit-form-overlay'>
           <div className='edit-form'>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <label>
-                        First Name:
+              First Name:
               <input className='edit-info-input' type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
             </label><br></br>
             <label>
-                        Last Name:
+              Last Name:
               <input className='edit-info-input' type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
             </label><br></br><br></br>
             {userData && <button onClick={handleSubmit} className="button-profile">Submit</button>}

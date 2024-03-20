@@ -39,14 +39,14 @@ export default function PublicGroups() {
     }
 
   };
-  const joinPublicGroup = (group:Group) => {
+  const joinPublicGroup = (group: Group) => {
     joinGroup(group, userData);
     // const filteredGroups = groups.filter((g: any) => g.id !== group.id);
     // filteredGroups.push({...group,members:{[userData.username]:userData.username}});
     // setGroups(filteredGroups);
     // // nav(`/group/${group.id}`)
 
-        
+
   };
   const handleSearch = (value: string) => {
     setSearch(value);
@@ -65,7 +65,7 @@ export default function PublicGroups() {
               <ImageComp className='group-img image' unique={group} type={'group'} />
               <h3 className="title-group">{group.title}</h3>
               <p className="info-group">About group: {group.description}</p>
-              <p><PeopleAltIcon/> {group.members ? Object.keys(group.members).length : 0} members</p>
+              <p><PeopleAltIcon /> {group.members ? Object.keys(group.members).length : 0} members</p>
               {group.members && Object.keys(group.members).includes(userData.username) ? <button className="btn-leave" onClick={() => leavePublicGroup(group.id)}>Leave </button> : <button className='btn-join' onClick={() => { joinPublicGroup(group); }}>Join </button>}
             </div>;
           })}

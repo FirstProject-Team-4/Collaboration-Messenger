@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import ImageComp from "../imageComp/ImageComp";
-import { get, getDatabase, onValue, ref, remove} from "firebase/database";
+import { get, getDatabase, onValue, ref, remove } from "firebase/database";
 import { NavLink } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,7 +42,7 @@ const BlockList = () => {
     });
   }, [userData]);
 
-  
+
 
   /**
      * Handles unblocking a user.

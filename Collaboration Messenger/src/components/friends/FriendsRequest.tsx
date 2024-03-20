@@ -8,19 +8,19 @@ import ImageComp from '../imageComp/ImageComp';
 import './FriendsList.css';
 
 interface Request {
-    id: string;
-    uid: string;
-    username: string;
+  id: string;
+  uid: string;
+  username: string;
 }
 
 interface User {
-    username: string;
-    uid: string;
+  username: string;
+  uid: string;
 }
 
 interface FriendsRequestProps {
-    username: string | any;
-    friendUser: User | any;
+  username: string | any;
+  friendUser: User | any;
 
 }
 
@@ -42,7 +42,7 @@ export default function FriendsRequest() {
           username: data[key].username
         }));
         setRequests(requests);
-      }else{
+      } else {
         setRequests([]);
       }
     });
@@ -57,7 +57,7 @@ export default function FriendsRequest() {
         }
         ));
         setRequests(requests);
-      }else{
+      } else {
         setRequests([]);
       }
     });

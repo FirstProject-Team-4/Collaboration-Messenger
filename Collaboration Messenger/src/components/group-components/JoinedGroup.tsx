@@ -9,12 +9,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import './group-components.css';
 
 export interface Group {
-    id: string,
-    title: string,
-    members: {},
-    owner: string,
-    image: string | null
-    room: { id: string }
+  id: string,
+  title: string,
+  members: {},
+  owner: string,
+  image: string | null
+  room: { id: string }
 }
 
 /**
@@ -24,27 +24,27 @@ export interface Group {
  * @param {Group} props.singleGroup - The joined group object.
  * @returns {JSX.Element} The rendered component.
  */
-export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {
-  const {userData}=useAppContext();
-  const [notification,setNotification]=useState(false);
+export default function JoinedGroups({ singleGroup }: { singleGroup: Group }) {
+  const { userData } = useAppContext();
+  const [notification, setNotification] = useState(false);
 
   useEffect(() => {
-    onValue(ref(db,`users/${userData.username}/groupNotifications/${singleGroup.id}`),(snapshot)=>{
-      if(snapshot.exists()){
+    onValue(ref(db, `users/${userData.username}/groupNotifications/${singleGroup.id}`), (snapshot) => {
+      if (snapshot.exists()) {
         setNotification(true);
       }
-      else{
+      else {
         setNotification(false);
       }
     });
-  },[]);
+  }, []);
 
   return (
     <NavLink to={`/group/${singleGroup.id}`}>
-      <div className="joined-groups"> 
-        <ImageComp unique={singleGroup} type={'group'} />   
+      <div className="joined-groups">
+        <ImageComp unique={singleGroup} type={'group'} />
         <h4>{singleGroup.title}</h4>
-        {notification && <div><NotificationsIcon/></div>}
+        {notification && <div><NotificationsIcon /></div>}
       </div>
     </NavLink>
   );
