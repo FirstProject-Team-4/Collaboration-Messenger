@@ -90,7 +90,7 @@ export default function FriendsList() {
         {friendList && friendList.map((friend: any, index: number) => (
           <div key={index} className="card">
             <div className="infos">
-              <div className="image">
+              <div id="request-friend-img" className="image">
                 <ImageComp className="image-friends" unique={friend} type={'user'} />
               </div>
               <div className="info">

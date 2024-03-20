@@ -97,3 +97,20 @@
     /* Adds space between the letters */
 
 }
+.image-friends .span {
+    font-size: 50px;
+    color: white;
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+#request-friend-img span {
+    display: flex;
+    font-size: 50px;
+    width: 70px;
+    height: 80px;
+
+
+  
+    
+}

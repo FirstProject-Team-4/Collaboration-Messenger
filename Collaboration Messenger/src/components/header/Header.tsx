@@ -162,7 +162,7 @@ export const Header = () => {
             <img src='/image/busy-logo.webp' alt="Logo" style={{ width: 100, height: 100 }} />
           </NavLink></div>
           <div className="header-view">
-            <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat ' :"Chat"} </NavLink>
+            <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat !' :"Chat"} </NavLink>
             <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
 
             {/* <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>

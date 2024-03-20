@@ -117,7 +117,7 @@ const Chat = ({ type }: { type: string }) => {
     if (!isScrolled) {
       scrollRef.current && (scrollRef.current as HTMLElement).scrollIntoView({ behavior: 'instant' });
     }
-  }, [messageList]);
+  }, [messageList, isScrolled]);
   useEffect(() => {
     if (!otherUserUsername) {
       return;
