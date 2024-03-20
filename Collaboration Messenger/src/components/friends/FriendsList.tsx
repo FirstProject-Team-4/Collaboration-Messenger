@@ -15,7 +15,6 @@ export default function FriendsList() {
   const [friendList, setFriendList] = useState<any>([]);
   const { userData } = useAppContext();
   const navigate = useNavigate();
-  console.log('FriendsList');
 
   useEffect(() => {
     onValue(ref(db, `users/${userData?.username}/friends`), (snapshot) => {
@@ -47,6 +46,11 @@ export default function FriendsList() {
     });
   }, [userData]);
 
+  /**
+   * Handles the chat functionality when a user is selected.
+   * 
+   * @param user - The selected user object containing the user's UID and username.
+   */
   const handleChat = async (user: { uid: string, username: string }) => {
     const chatId = commbineId(userData.uid, user.uid);
     const snapshot = await get(ref(db, `/chats/${chatId}`));
@@ -60,6 +64,11 @@ export default function FriendsList() {
     }
   };
 
+  /**
+   * Handles the removal of a friend from the user's friend list.
+   * 
+   * @param user - The friend to be removed, containing the username and UID.
+   */
   const handleRemoveFriend = async (user: { username: string, uid: string }) => {
     const db = getDatabase();
     const friendRef = ref(db, `/users/${userData.username}/friends/${user.username}`);
@@ -68,20 +77,6 @@ export default function FriendsList() {
     await remove(friendRef2);
   };
    
-  // return (
-  //     <>
-  //         <h4>Friends</h4>
-  //         {friendList && friendList.map((friend: any, index: number) => (
-  //             <div key={index} className="friend-info">
-  //                 <ImageComp unique={friend.username} type={'user'} />
-  //                 <NavLink to={`/profile/${friend.username}`}>{friend.username}</NavLink>
-  //                 <button onClick={() => handleChat(friend)}><QuestionAnswerIcon /></button>
-  //                 <button onClick={() => handleRemoveFriend(friend)}>Remove </button>
-  //             </div>
-  //         ))}
-  //     </>
-  // );
-
   return (
     <>
       <h4 className="title-friends-view">Friends</h4>

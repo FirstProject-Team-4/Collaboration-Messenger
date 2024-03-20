@@ -22,6 +22,7 @@ const InviteSearch = () => {
   const navigate = useNavigate(); // Get the navigate function
   const [invited, setInvited] = useState<{[key:string]:boolean}>({});
   const [groupMembers, setGroupMembers] = useState<any>([]);
+  
   useEffect(() => {
     if (id) {
       get(ref(db, `groups/${id}/members`)).then((snapshot) => {
@@ -33,7 +34,9 @@ const InviteSearch = () => {
   }, [id]);
 
 
-  console.log(groupMembers);
+  /**
+   * Searches for users based on the provided search term and updates the state with the filtered users.
+   */
   const searchUser = async () => {
     if (search === '') {
       return;
@@ -43,13 +46,14 @@ const InviteSearch = () => {
       return user.username && user.username.toLowerCase().includes(search.toLowerCase()) && user.username !== userData.username && !groupMembers.includes(user.username);
     });
     setUsers(filtered);
-           
   };
        
        
-        
-    
-
+  /**
+   * Handles the invitation of a user to a group.
+   * 
+   * @param user - The user to be invited, containing the user ID and username.
+   */
   const handleInvite = async (user: { uid: string, username: string }) => {
     if (id) {
       inviteToGroup(id, user.username);

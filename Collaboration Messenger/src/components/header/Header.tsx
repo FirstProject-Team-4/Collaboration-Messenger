@@ -1,9 +1,9 @@
 import './Header.css';
 import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
+import { useAppContext, useCallContext, useDyteContext } from "../../context/appContext";
 import { logoutUser } from "../../service/auth";
-import {  onValue, ref, remove,update } from 'firebase/database';
+import { onValue, ref, remove, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
 import ChatIcon from '@mui/icons-material/Chat';
 import Groups2Icon from '@mui/icons-material/Groups2';
@@ -14,8 +14,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
-import { DyteMeeting} from '@dytesdk/react-ui-kit';
-import { setStatusToBusy, toggleStatus} from '../../service/status';
+import { DyteMeeting } from '@dytesdk/react-ui-kit';
+import { setStatusToBusy, toggleStatus } from '../../service/status';
 import ImageComp from '../imageComp/ImageComp';
 import toast from 'react-hot-toast';
 
@@ -44,10 +44,10 @@ export const Header = () => {
       });
       meeting.self.on(`roomJoined`, () => {//Send message to chat
         setStatusToBusy(userData);
-        console.log("roomJoined");
       });
     }
   }, [meeting, userData]);
+
   useEffect(() => {
     if (!userData) {
       return;
@@ -59,13 +59,13 @@ export const Header = () => {
           return;
         }
         const data = snapshot.val();
-        console.log(data);
         const callAudio = new Audio();
+
         callAudio.play();
         const toastID = toast((t) => (
           <div id='custom-toast'>
             <ImageComp unique={data.caller} type='user'></ImageComp>
-                        Incoming Call <b>{data.caller.username}</b>
+            Incoming Call <b>{data.caller.username}</b>
             <button onClick={() => {
               update(ref(db, `users/${userData.username}/callNotification`), { status: 'declined' });
 
@@ -73,7 +73,7 @@ export const Header = () => {
               callAudio.pause();
               callAudio.currentTime = 0;
             }}>
-                            Decline
+              Decline
             </button>
             <button onClick={async () => {
 
@@ -91,7 +91,7 @@ export const Header = () => {
               toast.dismiss(t.id);
               setInCall(true);
             }}>
-                            Accept
+              Accept
             </button>
           </div>
         ), {
@@ -103,6 +103,7 @@ export const Header = () => {
     });
 
   }, [userData]);
+
   useEffect(() => {
     if (!userData) {
       return;
@@ -125,16 +126,26 @@ export const Header = () => {
     });
   }, [userData]);
 
-
-
-
+  /**
+   * Handles the click event for the header component.
+   * Sets the anchor element for the event.
+   * 
+   * @param {any} event - The click event.
+   */
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
+  /**
+   * Closes the anchor element.
+   */
   const handleClose = () => {
     setAnchorEl(null);
   };
-    // const location = useLocation();
+
+  /**
+   * Logs out the user and updates their status to 'offline' in the database.
+   */
   const logout = async () => {
     await logoutUser();
     setContext({ user: null, userData: null });
@@ -143,11 +154,13 @@ export const Header = () => {
     groups.forEach(id => {
       update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'offline' });
     });
-     
-       
+
     navigate('/login');
   };
 
+  /**
+   * Navigates to the user's profile page.
+   */
   const profile = () => {
     navigate(`/profile/${userData?.username}`);
   };
@@ -155,6 +168,7 @@ export const Header = () => {
   if (location.pathname === '/login' || location.pathname === '/register') {
     return null;
   }
+  
   return (
     userData &&
         <>
@@ -165,8 +179,6 @@ export const Header = () => {
             <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />{privateNotif ? 'Chat !' :"Chat"} </NavLink>
             <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />{groupNotifications ? 'Group !' : "Group"}</NavLink>
 
-            {/* <NavLink to="/privateChats" className={'header-nav'}> <ChatIcon /><br />Chats </NavLink>
-                <NavLink to="/group" className={'header-nav'} ><Groups2Icon /><br />Groups</NavLink> */}
             <NavLink to='/friends' className={'header-nav'}><Diversity2Icon /><br />Friends</NavLink>
             <NavLink to="/calendar" className={'header-nav'} ><CalendarMonthIcon /><br />Calendar </NavLink>
 
@@ -181,7 +193,7 @@ export const Header = () => {
               style={{ color: 'white' }}
             >
               <LogoutIcon />
-                
+
             </IconButton>
             <Menu
               id="logout-menu"
@@ -194,7 +206,7 @@ export const Header = () => {
               <MenuItem className="logout-menu-item" onClick={logout}>Logout</MenuItem>
             </Menu>
           </div>
-            
+
           {inCall && <div onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} className="top-div">
 
             <p onClick={() => { setMinimizedMeeting(!minimizedMeeting); }} >{minimizedMeeting ? 'Return to meeting' : 'Hide'}</p>

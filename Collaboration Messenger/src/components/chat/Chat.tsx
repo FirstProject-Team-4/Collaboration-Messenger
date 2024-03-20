@@ -45,8 +45,6 @@ const Chat = ({ type }: { type: string }) => {
   const nav = useNavigate();
 
 
-
-
   useEffect(() => {
     setIsScrolled(false);
 
@@ -109,15 +107,14 @@ const Chat = ({ type }: { type: string }) => {
 
     }
 
-
-
   }, [id, userData]);
 
   useEffect(() => {
     if (!isScrolled) {
       scrollRef.current && (scrollRef.current as HTMLElement).scrollIntoView({ behavior: 'instant' });
     }
-  }, [messageList, isScrolled]);
+  }, [messageList]);
+
   useEffect(() => {
     if (!otherUserUsername) {
       return;
@@ -130,7 +127,15 @@ const Chat = ({ type }: { type: string }) => {
     return () => subscribe();
   }, [otherUserUsername]);
 
-
+  /**
+   * Sends the current message along with any attached files.
+   * If there is no message or attached file, the function returns early.
+   * For each attached file, it generates a unique ID, saves the file, and retrieves its URL.
+   * Determines the type of message based on the presence of attached files.
+   * Constructs the current message data object with the author, content, creation timestamp, attached files, message type, and reply message.
+   * Sends the message to the appropriate recipient based on the message type and ID.
+   * Clears the current message, attached files, and reply message after sending the message.
+   */
   const sendCurrentMessage = async () => {
     if (!currentMessage && !file.length) {
       return;
@@ -144,7 +149,6 @@ const Chat = ({ type }: { type: string }) => {
         type,
         name: f.file.name
       };
-
     }));
     const typeMessage = file.length ? 'file' : 'text';
     const currentMessageData = {
@@ -154,37 +158,38 @@ const Chat = ({ type }: { type: string }) => {
       files: filesUrl,
       type: typeMessage,
       replyMessage: replyMessage
-
     };
     if (id) {
       if (type === 'private') {
-
         sendMessage(id, currentMessageData, otherUserUsername);
-
-      }
-      else {
+      } else {
         sendGroupMessage(id, currentMessageData);
       }
-    };
+    }
     setCurrentMessage('');
     setFile([]);
     setReplyMessage('');
   };
+
+  /**
+   * Opens the file system by triggering a click event on the file input element.
+   */
   const openFileSystem = () => {
     if (fileInputRef.current) {
       (fileInputRef.current as HTMLInputElement).click();
     }
   };
+
+  /**
+   * Handles the scroll event of the message container.
+   */
   const handleScroll = () => {
     if (messageContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = (messageContainerRef.current as HTMLElement);
       if (Math.abs(scrollTop + clientHeight - scrollHeight) < 1) {
         setIsScrolled(false);
-
-      }
-      else {
+      } else {
         setIsScrolled(true);
-
       }
     }
   };
