@@ -193,3 +193,14 @@
 .message-reactions {
   display: flex;
 }
+.reply-input-field{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  bottom: 10px;
+  gap:10px;
+}
+.reply-input-field h5{
+ margin-top: 1px; 
+ margin-bottom: 0px;
+}

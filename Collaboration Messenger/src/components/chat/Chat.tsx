@@ -223,7 +223,7 @@ const Chat = ({ type }: { type: string }) => {
 
           })}
         </div>
-        {replyMessage && (<div>
+        {replyMessage && (<div className="reply-input-field">
           <h5>{replyMessage}</h5>
           <span onClick={() => setReplyMessage('')}>X</span>
         </div>)}
