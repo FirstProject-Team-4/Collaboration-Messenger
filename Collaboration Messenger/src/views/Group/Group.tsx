@@ -10,6 +10,11 @@ import { db } from '../../config/config-firebase';
 import SingleGroup from './SingleGroup';
 import GroupInvites from '../../components/group-components/GroupInvites';
 import PublicGroups from './PublicGroups/PublicGroups';
+
+/**
+ * Renders the Group component.
+ * This component displays the user's groups and group invitations.
+ */
 export default function Group() {
   const { userData } = useAppContext();
   const { id } = useParams();

@@ -12,20 +12,25 @@ export type UserData = {
   image: string,
   isBlock: boolean,
   activity: string;
-  notifications: {} |null,
+  notifications: {} | null,
   createdOn: Date;
   friendsRequest: {} | null,
   friends: {}
 }
-//User Context
+
 export interface AppContextType {
   user: User | any
   userData: UserData | any
-  setContext: Dispatch<SetStateAction<{ user: User|any, userData: UserData|any }>>
+  setContext: Dispatch<SetStateAction<{ user: User | any, userData: UserData | any }>>
 }
 
 export const AppContext = React.createContext<AppContextType | undefined>(undefined);
 
+/**
+ * Custom hook to access the AppContext.
+ * @returns The AppContext object.
+ * @throws {Error} If used outside of an AppContextProvider.
+ */
 export const useAppContext = () => {
   const context = React.useContext(AppContext);
   if (!context) {
@@ -34,16 +39,25 @@ export const useAppContext = () => {
   return context;
 };
 
-
-
-//Dyte Context
+/**
+ * Represents the type of the Dyte context.
+ */
 export type DyteContextType = {
   meeting: any;
   initMeeting: any;
 };
 
+/**
+ * The DyteContext is a React context that holds the DyteContextType.
+ * It is used to provide the DyteContextType to the components in the application.
+ */
 export const DyteContext = React.createContext<DyteContextType | undefined>(undefined);
 
+/**
+ * Custom hook to access the Dyte context.
+ * @returns The Dyte context.
+ * @throws {Error} If used outside of a DyteContextProvider.
+ */
 export const useDyteContext = () => {
   const context = React.useContext(DyteContext);
   if (!context) {
@@ -52,15 +66,33 @@ export const useDyteContext = () => {
   return context;
 };
 
-//Call Context
 
+/**
+ * Represents the type of the call context.
+ */
 export type CallContextType = {
+  /**
+   * Indicates whether the user is currently in a call.
+   */
   inCall: boolean;
+
+  /**
+   * Sets the value of `inCall`.
+   * @param value - The new value for `inCall`.
+   */
   setInCall: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+/**
+ * Context for managing call-related data.
+ */
 export const CallContext = React.createContext<CallContextType | undefined>(undefined);
 
+/**
+ * Custom hook to access the CallContext.
+ * @returns The CallContext object.
+ * @throws Error if used outside of a CallContextProvider.
+ */
 export const useCallContext = () => {
   const context = React.useContext(CallContext);
   if (!context) {

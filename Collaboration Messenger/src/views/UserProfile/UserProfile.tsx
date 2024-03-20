@@ -23,6 +23,9 @@ export type UserProfileData = {
     friendsRequest?: Record<string, unknown>;
 };
 
+/**
+ * Represents the user profile component.
+ */
 const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
   const { userData } = useAppContext();
@@ -103,7 +106,5 @@ const UserProfile = () => {
     </div>
   );
 };
-
-
 
 export default UserProfile;

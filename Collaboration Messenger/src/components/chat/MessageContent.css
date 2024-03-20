@@ -1,72 +1,73 @@
 .message-content {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    height: fit-content;
-  }
-  
-  .message-options {
-    position: absolute;
-    top: -35px; 
-    right: 10px; 
-    display: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
-    padding: 5px;
-  }
-  
-  .message-content:hover .message-options {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .message-options button {
-    background-color: transparent;
-    color: white;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-  }
-  
-  .message-options button:hover {
-    border-color: white;
-  }
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  height: fit-content;
+}
 
-  .emodji-reaction {
-    display: inline; /* Display reactions inline */
-   
-    justify-content:end;
-    background-color: #33333360;
-    color: white; 
-    border-radius: 50%; 
-    width: 30px;
-    height: 30px; 
-    font-size: 20px; 
-    margin-right: 5px;
-  }
-  
-  .emodji-reaction:hover {
-    cursor: pointer; 
-  }
- 
-  #message-reply-container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.message-options {
+  position: absolute;
+  top: -35px;
+  right: 10px;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 5px;
+}
 
-  #main-message-container{
-    height: 15px;
-  }
+.message-content:hover .message-options {
+  display: flex;
+  flex-direction: row;
+}
 
-  #main-message-container h5{
-    margin-top: 10px;
-  }
+.message-options button {
+  background-color: transparent;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
 
-  #reply-container h5{
-    margin: 0;
-  }
+.message-options button:hover {
+  border-color: white;
+}
+
+.emodji-reaction {
+  display: inline;
+  /* Display reactions inline */
+
+  justify-content: end;
+  background-color: #33333360;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.emodji-reaction:hover {
+  cursor: pointer;
+}
+
+#message-reply-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#main-message-container {
+  height: 15px;
+}
+
+#main-message-container h5 {
+  margin-top: 10px;
+}
+
+#reply-container h5 {
+  margin: 0;
+}

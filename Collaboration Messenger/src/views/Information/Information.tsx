@@ -13,6 +13,10 @@ interface Chat {
   username: string;
 }
 
+/**
+ * Represents the Information component.
+ * This component displays the user's private chats and notifications.
+ */
 const Information: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [privateNotifications, setPrivateNotifications] = useState<string[]>([]);
@@ -21,6 +25,11 @@ const Information: React.FC = () => {
     const db = getDatabase();
     const chatsRef = ref(db, `users/${userData?.username}/privateChats`);
 
+    /**
+     * Subscribes to the value changes of the chatsRef and updates the state with the new chat data.
+     * @param {firebase.database.Reference} chatsRef - The reference to the chats in the Firebase Realtime Database.
+     * @returns {firebase.Unsubscribe} - The unsubscribe function to stop listening to the value changes.
+     */
     const unsubscribe = onValue(chatsRef, (snapshot) => {
       const data = snapshot.val();
       const list = data ? Object.keys(data).map(key => ({ ...data[key], id: key })) : [];
@@ -29,6 +38,7 @@ const Information: React.FC = () => {
 
     return () => unsubscribe();
   }, [userData]);
+
   useEffect(() => {
     if(!userData){
       return;

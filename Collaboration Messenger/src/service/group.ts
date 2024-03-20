@@ -1,7 +1,6 @@
 import { push, ref, update, orderByChild, equalTo, query,get, remove } from "firebase/database";
 import { db } from "../config/config-firebase";
 import { MembersProps } from "../components/group-components/GroupMembers";
-import { useAppContext } from "../context/appContext";
 import { createDyteRoom, sendParticipantToken } from "./video-audio-calls";
 import { Group } from "../components/group-components/JoinedGroup";
 

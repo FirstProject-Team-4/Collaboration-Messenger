@@ -117,14 +117,14 @@
     z-index: 999;
 }
 
-.edit-info-input{
+.edit-info-input {
     outline: none;
     border: 1px solid #655988;
     color: #000000;
     width: 14em;
     height: 2em;
-   margin: 2px;
-   margin-left: 10px;
+    margin: 2px;
+    margin-left: 10px;
     border-radius: 10px;
     background-color: #cbcaea;
     text-align: center;

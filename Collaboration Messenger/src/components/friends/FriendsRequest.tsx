@@ -24,6 +24,9 @@ interface FriendsRequestProps {
 
 }
 
+/**
+ * Renders a component that displays friend requests.
+ */
 export default function FriendsRequest() {
   const [requests, setRequests] = useState<Request[]>([]);
   const { userData } = useAppContext();

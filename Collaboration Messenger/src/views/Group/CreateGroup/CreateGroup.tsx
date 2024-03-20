@@ -6,6 +6,10 @@ import { checkGroupData } from '../../../validations/groupData';
 import { saveImage } from '../../../service/storage';
 import './CreateGroup.css';
 
+/**
+ * Renders a form for creating a new group.
+ * @returns {JSX.Element} The rendered CreateGroup component.
+ */
 export default function CreateGroup() {
   const { userData } = useAppContext();
   const [error, setError] = useState({

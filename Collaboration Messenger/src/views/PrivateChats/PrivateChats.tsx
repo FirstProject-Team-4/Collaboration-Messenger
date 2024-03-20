@@ -11,12 +11,13 @@ import { equalTo, getDatabase, off, onValue, orderByChild, query, ref, remove, u
 import { toast } from 'react-hot-toast';
 import { createDytePrivateRoom, sendPrivateParticipantToken } from '../../service/video-audio-calls';
 import { db } from '../../config/config-firebase';
-import ImageComp from '../../components/imageComp/ImageComp';
 import callSound from '../../../Audio/ringtone-126505.mp3';
 
 
-
-
+/**
+ * Represents the PrivateChats component.
+ * This component displays private chats and allows users to send call requests to other users.
+ */
 const PrivateChats = () => {
   const { id } = useParams<{ id: string }>();
   const { userData } = useAppContext();

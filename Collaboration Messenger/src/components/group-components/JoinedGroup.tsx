@@ -6,14 +6,15 @@ import { onValue, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { useAppContext } from "../../context/appContext";
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import './group-components.css';
 
 export interface Group {
-    id:string,
-    title:string,
-    members:{},
-    owner:string,
-    image:string|null
-    room:{id:string}
+    id: string,
+    title: string,
+    members: {},
+    owner: string,
+    image: string | null
+    room: { id: string }
 }
 
 export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {

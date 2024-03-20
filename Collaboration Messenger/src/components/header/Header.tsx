@@ -16,9 +16,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
 import { DyteMeeting} from '@dytesdk/react-ui-kit';
 import { setStatusToBusy, toggleStatus} from '../../service/status';
-import toast from 'react-hot-toast';
 import ImageComp from '../imageComp/ImageComp';
-// import logo from '/image/busyChat_logo.png';
+import toast from 'react-hot-toast';
+
 /**
  * Renders the header component.
  * 

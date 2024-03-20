@@ -25,6 +25,14 @@ export type File = {
     type: string,
     name: string
 }
+
+/**
+ * Renders the content of a message in the chat.
+ * @param message - The message object.
+ * @param type - The type of chat (private or group).
+ * @param setReplyMessage - Optional. A function to set the reply message.
+ * @returns The rendered message content.
+ */
 export default function MessageContent({ message, type, setReplyMessage }: { message: Message, type: string, setReplyMessage?: React.Dispatch<React.SetStateAction<string>> }) {
 
   const [files, setFiles] = useState<File[]>([]);

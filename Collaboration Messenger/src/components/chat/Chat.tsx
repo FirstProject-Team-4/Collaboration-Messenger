@@ -15,13 +15,20 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import SendIcon from '@mui/icons-material/Send';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 
-// import './emoji-mart/css/emoji-mart.css';
 
 type FileObject = {
     file: File,
     id: string
 }
 
+/**
+ * Represents a chat component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.type - The type of chat (private or group).
+ * @returns {JSX.Element} The rendered chat component.
+ */
 const Chat = ({ type }: { type: string }) => {
   const { id } = useParams<{ id: string }>();
   const { userData } = useAppContext();

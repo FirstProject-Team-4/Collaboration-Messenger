@@ -1,6 +1,10 @@
 import { onDisconnect, ref, update } from "firebase/database";
 import { db } from "../config/config-firebase";
 
+/**
+ * Toggles the status of a user and updates the status in the database.
+ * @param userData - The user data object.
+ */
 export const toggleStatus = async (userData: any) => {
   if (!userData.username) {
     return;

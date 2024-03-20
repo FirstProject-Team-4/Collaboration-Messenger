@@ -3,18 +3,20 @@ import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { onValue, ref, remove, set } from 'firebase/database';
+import { onValue, ref, remove} from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
-import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
+import { getGroupByID,removeGroupMember } from '../../service/group';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
-
 import { setStatusToBusy } from '../../service/status';
 import CallIcon from '@mui/icons-material/Call';
-import './Group.css';
 import { toast } from 'react-hot-toast';
+import './Group.css';
 
+/**
+ * Renders a single group component.
+ */
 export default function SingleGroup() {
   const [open, setOpen] = useState(false);
 
@@ -89,7 +91,6 @@ export default function SingleGroup() {
 
 
 
-  
 
 
   const leaveGroup = () => {

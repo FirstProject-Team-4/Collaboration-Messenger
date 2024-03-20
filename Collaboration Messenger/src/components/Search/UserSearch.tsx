@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers} from "../../service/user";
+import { getAllUsers } from "../../service/user";
 import Button from "../button/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
@@ -15,6 +15,11 @@ import './UserSearch.css';
 interface UserSearchProps {
     type?: string;
 }
+/**
+ * UserSearch component for searching and interacting with users.
+ * 
+ * @param type - The type of search (default: 'Search').
+ */
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
   const { userData} = useAppContext();
   const [users, setUsers] = useState<any>([]);

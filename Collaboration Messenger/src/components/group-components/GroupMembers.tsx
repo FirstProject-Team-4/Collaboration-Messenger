@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import './group-components.css';
 import ImageComp from "../imageComp/ImageComp";
+
+
 export interface MembersProps{
     username:string;
     status:string;
     id:string;
 }
 
-export default function GroupMembers({members , owner}: { members: MembersProps[] , owner:string}) {
+/**
+ * Renders a component that displays the group members and their online/offline status.
+ * @param members - An array of member objects.
+ * @param owner - The username of the owner of the group.
+ * @returns The rendered component.
+ */
+export default function GroupMembers({ members, owner }: { members: MembersProps[], owner: string }) {
 
   const [onlineMembers, setOnlineMembers] = useState<MembersProps[]>([]);
   const [offlineMembers, setOfflineMembers] = useState<MembersProps[]>([]);

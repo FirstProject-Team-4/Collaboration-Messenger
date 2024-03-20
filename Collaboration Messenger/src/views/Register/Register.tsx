@@ -69,10 +69,6 @@ export default function Register() {
     return 'black';
   };
 
-
-
-
-
   return (
     <div className="register-view">
       <div className="register-form">

@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { getPublicGroups, joinGroup, removeGroupMember } from "../../../service/group";
 import { useAppContext } from "../../../context/appContext";
 import ImageComp from "../../../components/imageComp/ImageComp";
-import { useNavigate } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../../config/config-firebase";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import './PublicGroups.css';
-
 import { Group } from "../../../components/group-components/JoinedGroup";
-// import './Group.css';
+import { useNavigate } from "react-router-dom";
 
+/**
+ * Renders the PublicGroups component.
+ * Displays a list of public groups and provides functionality to join or leave a group.
+ */
 export default function PublicGroups() {
   const [groups, setGroups] = useState<any>([]);
   const { userData } = useAppContext();

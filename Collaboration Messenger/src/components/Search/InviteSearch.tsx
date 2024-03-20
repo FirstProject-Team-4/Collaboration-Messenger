@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { getAllUsers } from "../../service/user";
 import Button from "../button/Button";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { commbineId } from "../../service/friends";
 import { useAppContext } from "../../context/appContext";
-import { get, ref, set, update } from "firebase/database";
+import { get, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import './UserSearch.css';
 import { inviteToGroup } from "../../service/group";
 
 
 
+/**
+ * Component for searching and inviting users.
+ * @returns JSX.Element
+ */
 const InviteSearch = () => {
   const { id } = useParams();
   const { userData } = useAppContext();

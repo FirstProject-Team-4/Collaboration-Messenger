@@ -6,6 +6,10 @@ import Button from "../../components/button/Button";
 import './Friends.css';
 import BlockList from "../../components/BlockList/BlockList";
 
+/**
+ * Renders the Friends component.
+ * @returns {React.ReactNode} - The rendered Friends component.
+ */
 export default function Friends() {
   const [view, setView] = useState('friendsList');//status->default
 

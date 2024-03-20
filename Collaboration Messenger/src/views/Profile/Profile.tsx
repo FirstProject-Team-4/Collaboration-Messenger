@@ -3,10 +3,14 @@ import { useAppContext } from "../../context/appContext";
 import { saveImage } from "../../service/storage";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
-// import { useParams } from 'react-router-dom'; 
 import './Profile.css';
 
 
+/**
+ * Renders the user profile page.
+ * 
+ * @returns {JSX.Element} The rendered user profile page.
+ */
 const Profile = () => {
   // const { id } = useParams<{ id: string }>();
   const { userData } = useAppContext();

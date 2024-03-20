@@ -1,9 +1,13 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InviteSearch from '../Search/InviteSearch';
 import { useAppContext } from '../../context/appContext';
 import { inviteToGroup } from '../../service/group';
 import { useParams } from 'react-router-dom';
 
+/**
+ * Renders a component for inviting members to a group.
+ * @param closeFn - Function to close the invite members component.
+ */
 export const InviteMembers = ({ closeFn }: any) => {
   const [openFriend, setOpenFriend] = useState(true);
   const [friends, setFriends] = useState<any>([]);

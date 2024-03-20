@@ -9,12 +9,15 @@ const Login = () => {
   const navigate = useNavigate();
   const { setContext } = useAppContext();
   const [error, setError] = useState(false);
-
   const [form, setForrm] = useState({
     email: '',
     password: ''
   });
 
+  /**
+   * Logs in the user.
+   * @returns A Promise that resolves to void.
+   */
   const login = async (): Promise<void> => {
     try {
       const response = await loginUser(form.email, form.password);

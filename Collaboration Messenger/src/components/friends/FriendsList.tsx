@@ -4,10 +4,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { db } from "../../config/config-firebase";
 import { useAppContext } from "../../context/appContext";
 import ImageComp from "../imageComp/ImageComp";
-import { commbineId} from "../../service/friends";
+import { commbineId } from "../../service/friends";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import './FriendsList.css';
 
+/**
+ * Renders a list of friends.
+ */
 export default function FriendsList() {
   const [friendList, setFriendList] = useState<any>([]);
   const { userData } = useAppContext();

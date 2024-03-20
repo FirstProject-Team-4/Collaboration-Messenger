@@ -32,6 +32,15 @@ export const AddEmojiToMessage = (id:string,message:Message,emoji: string,userna
   );
 
 };
+
+/**
+ * Adds an emoji reaction to a group message.
+ * 
+ * @param id - The ID of the group.
+ * @param message - The message object.
+ * @param emoji - The emoji to add as a reaction.
+ * @param username - The username of the user reacting.
+ */
 export const AddEmojiToGroupMessage = async (id: string, message: Message, emoji: string, username: string) => {
   const snapshot = await get(ref(db, `/groups/${id}/messages/${message.id}/reactions/${emoji}/${username}`));
   if (snapshot.exists()) {

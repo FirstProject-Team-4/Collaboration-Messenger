@@ -28,12 +28,16 @@ interface Group {
   members: string[];
 }
 
+/**
+ * Represents the MyCalendar component.
+ */
 const MyCalendar: React.FC = () => {
+  // State variables
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<any>([]);
-  const [selectedGroup, setSelectedGroup] = useState<any>([]);//group
-  const [groups, setGroups] = useState<Group[]>([]);//group
+  const [selectedGroup, setSelectedGroup] = useState<any>([]); //group
+  const [groups, setGroups] = useState<Group[]>([]); //group
   const [start, setStart] = useState(new Date().toISOString());
   const [end, setEnd] = useState(new Date().toISOString());
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +47,7 @@ const MyCalendar: React.FC = () => {
   const { userData } = useAppContext();
   const navigate = useNavigate();
 
-  //users 
+  // Fetch users
   useEffect(() => {
     const fetchUsers = async () => {
       const snapshot = await getAllUsers();
@@ -52,7 +56,7 @@ const MyCalendar: React.FC = () => {
     fetchUsers();
   }, []);
 
-
+  // Fetch user events
   useEffect(() => {
     const db = getDatabase();
     const userEventsRef = ref(db, `users/${userData?.username}/events`);
@@ -75,7 +79,7 @@ const MyCalendar: React.FC = () => {
     });
   }, [userData]);
 
-  //group
+  // Fetch user groups
   useEffect(() => {
     const db = getDatabase();
     const userGroupsRef = ref(db, `users/${userData?.username}/groups`);
@@ -96,40 +100,33 @@ const MyCalendar: React.FC = () => {
     });
   }, [userData]);
 
-  // console.log(selectedUsers);
-
-
-
+ 
+  /**
+   * Handles the selection of a time slot in the calendar.
+   * @param slotInfo - The information about the selected time slot.
+   */
   const handleSelect = (slotInfo: SlotInfo) => {
     console.log('handleSelect called', slotInfo);
-    setIsModalOpen(true);// Open the modal when a slot is selected
+    setIsModalOpen(true); // Open the modal when a slot is selected
     setSelectedSlot(slotInfo);
     setStart(slotInfo.start.toISOString());
     setEnd(slotInfo.end.toISOString());
-
   };
 
-  //user select
+
+  /**
+   * Handles the selection of a user.
+   * @param {string} userId - The ID of the selected user.
+   */
   const handleUserSelect = (userId: string) => {
     setSelectedUsers([userId]);
     setSelectedGroup([]);
-
   };
 
-
-  //group select
-  // const handleGroupSelect = (groupId: string) => {
-
-  //   setSelectedGroup(groupId);
-
-  //   const group = groups.find(group => group.id === groupId);
-  //   if (group) {
-  //     setSelectedUsers(group.members);
-  //   }
-  //   console.log('handleGroupSelect called', selectedGroup);
-  //   console.log('handleGroupSelect called', groupId);
-  // };
-
+  /**
+   * Handles the selection of a group.
+   * @param {string} groupId - The ID of the selected group.
+   */
   const handleGroupSelect = (groupId: string) => {
     setSelectedGroup([groupId]);
     setSelectedUsers([]);
@@ -140,13 +137,14 @@ const MyCalendar: React.FC = () => {
   }, [selectedGroup]);
   console.log('selectedGroup', selectedGroup);
 
+  /**
+   * Handles the save event functionality.
+   * Saves the event to the database and performs necessary state updates.
+   */
   const handleSave = async () => {
     const db = getDatabase();
     const userId = await get(ref(db, `users/${selectedUsers[0]}/uid`));
-    // console.log('userId', userId.val());
-    // console.log('userData', userData.uid);
     const chatId = commbineId(userId.val(), userData.uid);
-
 
     const newEvent = {
       title,
@@ -176,35 +174,37 @@ const MyCalendar: React.FC = () => {
     // Save the event to the 'events' node USER
     selectedUsers.forEach((userId: any) => {
       push(ref(db, `users/${userId}/events`), newEvent);
-
     });
 
-    //group
+    // Save the event to the 'events' node GROUP
     selectedGroup.forEach((groupId: any) => {
       push(ref(db, `groups/${groupId}/events`), newEvent);
-
     });
 
     if (selectedGroup.length > 0) {
-      const snapshot= await get(ref(db, `groups/${selectedGroup}/members`));
-      const members= Object.keys(snapshot.val());
+      const snapshot = await get(ref(db, `groups/${selectedGroup}/members`));
+      const members = Object.keys(snapshot.val());
       members.forEach((member: any) => {
         push(ref(db, `users/${member}/events`), newEvent);
       });
     } else {
       push(ref(db, `users/${userId}/events`), newEvent);
     }
-   
-
   };
+
+  /**
+   * Closes the modal and resets the selected group and users.
+   */
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedGroup([]);
     setSelectedUsers([]);
   };
 
-
-
+  /**
+   * Handles the selection of an event.
+   * @param event - The selected event.
+   */
   const handleSelectEvent = (event: Event) => {
     console.log('handleSelectEvent called', event);
 
@@ -213,11 +213,7 @@ const MyCalendar: React.FC = () => {
     } else {
       navigate(`/group/${event.sharedWith?.id}`);
     }
-
   };
-
-
-
 
   return (
     <>
