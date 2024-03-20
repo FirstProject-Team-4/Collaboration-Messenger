@@ -28,6 +28,6 @@ const Button: React.FC<ButtonProps> = ({ children = null, onClick = () => { }, c
       <button id={id} className={className} style={color ? { border: `2px solid ${color}` } : undefined} onClick={onClick}>{children}</button>
     </>
   );
-}
+};
 
 export default Button;

@@ -90,7 +90,7 @@ const MyCalendar: React.FC = () => {
           return {
             id: key,
             ...data[key]
-          }
+          };
         });
         setGroups(userGroups);
         console.log(userGroups);

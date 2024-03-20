@@ -1,4 +1,4 @@
-import React, { type Dispatch, type SetStateAction } from 'react'
+import React, { type Dispatch, type SetStateAction } from 'react';
 
 export type User = {
   username: string;
@@ -24,11 +24,7 @@ export interface AppContextType {
   setContext: Dispatch<SetStateAction<{ user: User | any, userData: UserData | any }>>
 }
 
-/**
- * The context object for the app.
- * @typeParam AppContextType - The type of the app context.
- */
-export const AppContext = React.createContext<AppContextType | undefined>(undefined)
+export const AppContext = React.createContext<AppContextType | undefined>(undefined);
 
 /**
  * Custom hook to access the AppContext.
@@ -36,12 +32,12 @@ export const AppContext = React.createContext<AppContextType | undefined>(undefi
  * @throws {Error} If used outside of an AppContextProvider.
  */
 export const useAppContext = () => {
-  const context = React.useContext(AppContext)
+  const context = React.useContext(AppContext);
   if (!context) {
-    throw new Error('useAppContext must be used within an AppContextProvider')
+    throw new Error('useAppContext must be used within an AppContextProvider');
   }
-  return context
-}
+  return context;
+};
 
 /**
  * Represents the type of the Dyte context.

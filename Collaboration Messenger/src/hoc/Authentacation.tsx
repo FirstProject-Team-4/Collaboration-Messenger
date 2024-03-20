@@ -10,15 +10,17 @@ import { auth } from "../config/config-firebase";
  * @returns The authenticated child components or a redirect to the login page.
  */
 const Authantication = ({ children }: { children: React.ReactNode }) => {
-    const { userData } = useAppContext();
-    const [user, loading] = useAuthState(auth);
-    const location = useLocation();
+  const { userData } = useAppContext();
+  const [user,loading] = useAuthState(auth);
+  const location = useLocation();
+  if (!user&&!loading) {
 
-    if (!user && !loading) {
-        return <Navigate replace to="/login" state={{ from: location.pathname }} />;
-    }
-
-    return <>{!loading && userData && userData.username && children}</>;
+    return <Navigate replace to="/login" state={{ from: location.pathname }} />;
+  }
+    
+  return <>{!loading&&userData&&userData.username&&children}</>;
 };
-
+  
+  
+  
 export default Authantication;

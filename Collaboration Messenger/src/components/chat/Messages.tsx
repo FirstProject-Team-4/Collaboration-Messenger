@@ -18,31 +18,31 @@ type MessagesProps = {
  * @returns The rendered list of messages.
  */
 const Messages = ({ messages , type, setReplyMessage }: MessagesProps) => {
-   const { userData } = useAppContext();
+  const { userData } = useAppContext();
 
-    return (
-        userData && <>
-            {messages.map((message,index) => {
-                return (
-                    <div key={message.id}
-                    className={userData?.username === message.author ? 'send-message' : 'received-message'}>
+  return (
+    userData && <>
+      {messages.map((message,index) => {
+        return (
+          <div key={message.id}
+            className={userData?.username === message.author ? 'send-message' : 'received-message'}>
 
-                        <div className="message-header" >
-                        {message.author!==messages[index-1]?.author&& <>
-                        <p>{message.author === userData.username ? 'You' : message.author}</p>
-                        </>}
-                        {new Date(message.createdOn).toLocaleDateString([],{hour:'2-digit',minute:'2-digit'}) 
+            <div className="message-header" >
+              {message.author!==messages[index-1]?.author&& <>
+                <p>{message.author === userData.username ? 'You' : message.author}</p>
+              </>}
+              {new Date(message.createdOn).toLocaleDateString([],{hour:'2-digit',minute:'2-digit'}) 
                         !== 
                         new Date(messages[index-1]?.createdOn).toLocaleDateString([],{hour:'2-digit',minute:'2-digit'})&&
                             <p>{new Date(message.createdOn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>}
-                        </div>
-                        <MessageContent message={message} type={type} setReplyMessage={setReplyMessage} />
+            </div>
+            <MessageContent message={message} type={type} setReplyMessage={setReplyMessage} />
 
-                    </div>
-                )
-            })}
-        </>
-    )
-}
+          </div>
+        );
+      })}
+    </>
+  );
+};
 
 export default Messages;

@@ -1,5 +1,5 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { auth, db } from './config/config-firebase';
 import { useState, useEffect } from 'react';
 import Register from './views/Register/Register';
@@ -27,11 +27,11 @@ import Authantication from './hoc/Authentacation';
  */
 function App() {
   const [meeting, initMeeting] = useDyteClient();
-  const [inCall, setInCall] = useState(false)
+  const [inCall, setInCall] = useState(false);
   const [context, setContext] = useState({
     user: {} as any,
     userData: {} as any,
-  })
+  });
   const [user] = useAuthState(auth);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function App() {
           if (snapshot.exists()) {
             setContext({ user, userData: snapshot.val()[Object.keys(snapshot.val())[0]] });
           }
-        })
+        });
     }
   }, [user]);
 
@@ -60,25 +60,20 @@ function App() {
   const toggleTheme = () => {
     document.body.classList.toggle('dark-mode');
   };
-
-  /**
-   * Updates the last click timestamp for the current user.
-   * If the user is currently offline or away, updates the user's status to online.
-   */
-  const updateLastClick = async () => {
-    if (context.userData) {
-      const lastClick = Number(Date.now());
-
-      update(ref(db, `users/${context.userData.username}`), { lastClick: lastClick })
-      const status = await get(ref(db, `users/${context.userData.username}/status`));
-      console
-      if (status.val() === 'away' || status.val() === 'offline') {
-        setContext({ user, userData: { ...context.userData, status: 'online' } });
+  const updateLastClick=async()=>{
+    if(context.userData){
+      const lastClick=Number(Date.now());
+  
+      update(ref(db, `users/${context.userData.username}`),{lastClick:lastClick});
+      const status= await get(ref(db, `users/${context.userData.username}/status`));
+      console;
+      if(status.val()==='away'||status.val()==='offline'){
+        setContext({user,userData:{...context.userData,status:'online'}});
         updateStatusToOnline(context.userData);
       }
     }
-  }
-
+  };
+  console.log(context.userData);
   return (
     <>
       <BrowserRouter>
@@ -87,7 +82,7 @@ function App() {
             <CallContext.Provider value={{ inCall, setInCall }}>
               <Toaster />
               <Header />
-              <div onClick={() => { updateLastClick() }} className="main-content">
+              <div onClick={()=>{updateLastClick();}} className="main-content">
                 <label className="switch">
                   <input type="checkbox" onClick={toggleTheme} />
                   <span className="slider"></span>
@@ -117,7 +112,7 @@ function App() {
       </BrowserRouter>
     </>
 
-  )
+  );
 }
 
 export default App;

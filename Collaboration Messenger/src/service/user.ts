@@ -1,5 +1,5 @@
-import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database'
-import { db } from '../config/config-firebase'
+import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database';
+import { db } from '../config/config-firebase';
 
 /**
  * Retrieves a user object from the database based on the provided username.
@@ -7,7 +7,7 @@ import { db } from '../config/config-firebase'
  * @returns A Promise that resolves to the user object.
  */
 export const getUserByUsername = async (username: string) => {
-  return await get(ref(db, `users/${username}`))
+  return await get(ref(db, `users/${username}`));
 };
 
 /**
@@ -17,7 +17,7 @@ export const getUserByUsername = async (username: string) => {
  * @param email - The email address of the user.
  */
 export const createUserUsername = async (username: string, uid: string, email: string) => {
-  await set(ref(db, `users/${username}`), { username, email, uid, phoneNumber: 'None', activity: 'string', notifications: '', createdOn: new Date().valueOf() })
+  await set(ref(db, `users/${username}`), { username, email, uid, phoneNumber: 'None', activity: 'string', notifications: '', createdOn: new Date().valueOf() });
 };
 
 /**
@@ -26,7 +26,7 @@ export const createUserUsername = async (username: string, uid: string, email: s
  * @returns A Promise that resolves to the user data.
  */
 export const getUserData = async (uid: string) => {
-  return await get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)))
+  return await get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
 
 /**
@@ -34,7 +34,7 @@ export const getUserData = async (uid: string) => {
  * @returns {Promise<Array<User>>} A promise that resolves to an array of users.
  */
 export const getAllUsers = async () => {
-  const snapshot = await get(query(ref(db, 'users')))
+  const snapshot = await get(query(ref(db, 'users')));
   if (!snapshot.exists()) {
     return [];
   }
@@ -43,8 +43,8 @@ export const getAllUsers = async () => {
     id: key,
     ...snapshot.val()[key],
     createdOn: new Date(snapshot.val()[key].createdOn).toString(),
-  }))    
+  }));    
 
 
   return users;
-}
+};
