@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAppContext } from "../../context/appContext"
-
+import './Home.css'
 export default function Home(){
     const{userData}=useAppContext()
     console.log(userData)
@@ -10,7 +10,9 @@ export default function Home(){
     return (
         <div>
         <h1>Welcome to Busy chat</h1>
-        
+      
+        <img className="home-view" src='/image/home-view.png'/>
+    
         </div>
     )
 }
