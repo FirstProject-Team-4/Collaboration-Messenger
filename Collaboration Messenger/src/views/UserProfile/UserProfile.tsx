@@ -9,18 +9,18 @@ import Button from '../../components/button/Button';
 
 export type UserProfileData = {
 
-    username: string;
-    email: string;
-    createdOn?: number;
-    groups?: Record<string, unknown>;
-    image?: string;
-    status?: string;
-    firstName?: string;
-    lastName?: string;
-    uid?: string;
-    isBlock?: boolean;
-    blockedUsers?: any
-    friendsRequest?: Record<string, unknown>;
+  username: string;
+  email: string;
+  createdOn?: number;
+  groups?: Record<string, unknown>;
+  image?: string;
+  status?: string;
+  firstName?: string;
+  lastName?: string;
+  uid?: string;
+  isBlock?: boolean;
+  blockedUsers?: any
+  friendsRequest?: Record<string, unknown>;
 };
 
 /**
@@ -89,9 +89,10 @@ const UserProfile = () => {
       {userProfileData && (
         <div>
           <h1>Profile</h1>
-          <div>
-
-            <ImageComp unique={userProfileData} type={'user'} style={{ width: '300px', height: '200px' }} />
+          <div className='profile-container'>
+            <div className='profile-user-img'>
+              <ImageComp unique={userProfileData} type={'user'} />
+            </div>
             <h2>{userProfileData.username}</h2>
             <Button onClick={() => { handleBlockUser(); }}>{toggleBlock()}</Button>
 

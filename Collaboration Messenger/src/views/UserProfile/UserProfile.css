@@ -1,8 +1,35 @@
 .user-profile-img {
-    width: 100px;
+    width: 00px;
     height: 100px;
     border-radius: 50%;
     margin: 0 auto;
     display: block;
     margin-bottom: 20px;
+}
+.profile-user-img{
+    width: 200px;
+    height: 50px;
+    
+}
+.profile-user-img img{
+    position:absolute;
+   bottom: -30px;
+   left: 50px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+   
+}
+.profile-user-img .status-circle{
+   display: none;
+}
+.profile-user-img .letter{
+    position:absolute;
+   bottom: -30px;
+   left: 50px;
+   width: 70px;
+   height: 85px;
+    font-size: 50px;
+    border-radius: 50%;
+   
 }
