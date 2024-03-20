@@ -19,8 +19,8 @@ export default function GroupMembers({ members, owner }: { members: MembersProps
 
   const [onlineMembers, setOnlineMembers] = useState<MembersProps[]>([]);
   const [offlineMembers, setOfflineMembers] = useState<MembersProps[]>([]);
+  
   useEffect(() => {
-
     const online = members.filter((member) => member.status !== 'offline');
     const offline = members.filter((member) => member.status === 'offline');
     setOnlineMembers(online);

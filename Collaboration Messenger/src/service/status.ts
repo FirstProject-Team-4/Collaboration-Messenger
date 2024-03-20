@@ -22,6 +22,11 @@ export const toggleStatus = async (userData: any) => {
   //   onDisconnect(ref(db, `users/${friend}/friends/${userData.username}`)).update({ status: 'offline' });
   // });
 };
+
+/**
+ * Sets the status of a user to "busy" and updates the status of their groups and friends.
+ * @param userData - The user data object.
+ */
 export const setStatusToBusy = async (userData: any) => {
   if (!userData.username) {
     return;
@@ -39,6 +44,13 @@ export const setStatusToBusy = async (userData: any) => {
   //   onDisconnect(ref(db, `users/${friend}/friends/${userData.username}`)).update({ status: 'offline' });
   // });
 };
+
+/**
+ * Changes the status of a user to "away" in the database.
+ * 
+ * @param userData - The user data object.
+ * @returns A promise that resolves when the status is updated.
+ */
 export const changeStatusToAway = async (userData: any) => {
   if (!userData.username) {
     return;
@@ -53,6 +65,13 @@ export const changeStatusToAway = async (userData: any) => {
   //   update(ref(db, `users/${friend}/friends/${userData.username}`), { status: 'away' });
   // });
 };
+
+/**
+ * Updates the status of a user to online.
+ * 
+ * @param userData - The user data object.
+ * @returns A Promise that resolves when the status is updated.
+ */
 export const updateStatusToOnline = async (userData: any) => {
   if (!userData.username) {
     return;

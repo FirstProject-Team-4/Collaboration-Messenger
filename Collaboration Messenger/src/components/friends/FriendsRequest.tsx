@@ -63,15 +63,25 @@ export default function FriendsRequest() {
     });
   }, [userData]);
 
+  /**
+   * Handles the acceptance of a friend request.
+   * 
+   * @param {any} friendUser - The friend user object.
+   * @returns {void}
+   */
   const handleAccept = (friendUser: any) => {
     acceptFriendRequest(userData, friendUser);
-        
   };
 
+  /**
+   * Handles the rejection of a friend request.
+   * 
+   * @param {any} friendUser - The friend user object.
+   * @returns {void}
+   */
   const handleReject = (friendUser: any) => {
     rejectFriendRequest(userData, friendUser);
   };
-  console.log('FriendsRequest');
 
   return (
     <>

@@ -43,6 +43,7 @@ export default function MessageContent({ message, type, setReplyMessage }: { mes
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [reaction, setReaction] = useState([] as any);
   const { id } = useParams();
+
   useEffect(() => {
     if (message.type === 'image' || message.type === 'file') {
       setFiles(message.files);
@@ -53,10 +54,12 @@ export default function MessageContent({ message, type, setReplyMessage }: { mes
 
   }, [message]);
 
-
+  /**
+   * Deletes the current message.
+   * @param {string} messageId - The ID of the message to be deleted.
+   */
   const deleteCurrentMessage = (messageId: string) => {
-    if (window.confirm('Are you sure you want to delete this message?')
-    ) {
+    if (window.confirm('Are you sure you want to delete this message?')) {
       if (type === 'private') {
         id && deleteMessage(id, messageId);
       } else {
@@ -64,6 +67,11 @@ export default function MessageContent({ message, type, setReplyMessage }: { mes
       }
     }
   };
+
+  /**
+   * Saves the current edit of a message.
+   * @param message - The message to be edited.
+   */
   const saveCurrentEdit = (message: Message) => {
     setEdit(false);
     if (editValue === message.content) {
@@ -75,6 +83,13 @@ export default function MessageContent({ message, type, setReplyMessage }: { mes
       id && editGroupMessage(id, message, editValue);
     }
   };
+
+  /**
+   * Adds the specified emoji to the given message.
+   * 
+   * @param emoji - The emoji to add.
+   * @param message - The message to add the emoji to.
+   */
   const addCurrentEmojiToMessage = (emoji: string, message: Message) => {
 
     if (type === 'private') {

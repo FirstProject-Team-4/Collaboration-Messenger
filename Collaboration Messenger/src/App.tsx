@@ -73,7 +73,6 @@ function App() {
       }
     }
   };
-  console.log(context.userData);
   return (
     <>
       <BrowserRouter>

@@ -25,12 +25,7 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
   const [users, setUsers] = useState<any>([]);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
   const navigate = useNavigate();
-
-  console.log('UserSearch');
 
   useEffect(() => {
     if (search !== '') {
@@ -38,6 +33,10 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     }
   }, [search]);
 
+  /**
+   * Handles the search functionality.
+   * @param value - The search value entered by the user.
+   */
   const handleSearch = (value: string) => {
     setSearch(value);
 
@@ -48,6 +47,10 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     }
   };
 
+  /**
+   * Searches for users based on the provided search term.
+   * Updates the state with the filtered users.
+   */
   const searchUser = async () => {
     const snapshot = await getAllUsers();
     const filtered = snapshot.filter((user: any) => {
@@ -56,14 +59,16 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     setUsers(filtered);
   };
 
+  /**
+   * Handles the chat functionality when a user is selected.
+   * 
+   * @param user - The selected user object containing the user's UID and username.
+   */
   const handleChat = async (user: { uid: string, username: string }) => {
     const chatId = commbineId(userData.uid, user.uid);
-    console.log(chatId);
-    console.log(user, userData);
     const snapshot = await get(ref(db, `/chats/${chatId}`));
     if ((snapshot).exists()) {
       navigate(`/privateChats/${chatId}`);
-      console.log('chat exists');
     } else {
       update(ref(db, `/chats/${chatId}`), { user1: { username: user.username, uid: user.uid }, user2: { username: userData.username, uid: userData.uid } });
       update(ref(db, `/users/${userData.username}/privateChats/${chatId}`), { username: user.username, uid: user.uid });
@@ -71,10 +76,14 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
     }
     setSearch('');
     setUsers([]);
-
   };
 
 
+  /**
+   * Handles adding a friend by sending a friend request.
+   * 
+   * @param user - The user object containing the username and UID of the user to send the friend request to.
+   */
   const handleAddFriend = async (user: { username: string, uid: string }) => {
     const db = getDatabase();
     const friendRequestRef = ref(db, `/users/${user.username}/friendsRequest/${userData.username}`);

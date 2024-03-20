@@ -17,9 +17,17 @@ export interface Group {
     room: { id: string }
 }
 
+/**
+ * Renders a component for a joined group.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Group} props.singleGroup - The joined group object.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {
   const {userData}=useAppContext();
   const [notification,setNotification]=useState(false);
+
   useEffect(() => {
     onValue(ref(db,`users/${userData.username}/groupNotifications/${singleGroup.id}`),(snapshot)=>{
       if(snapshot.exists()){
@@ -30,10 +38,10 @@ export default function JoinedGroups({singleGroup}:{singleGroup:Group}) {
       }
     });
   },[]);
+
   return (
     <NavLink to={`/group/${singleGroup.id}`}>
       <div className="joined-groups"> 
-        {/* <ImageComp className='group-image' unique={singleGroup} type={'group'}/> */}
         <ImageComp unique={singleGroup} type={'group'} />   
         <h4>{singleGroup.title}</h4>
         {notification && <div><NotificationsIcon/></div>}

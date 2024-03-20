@@ -13,6 +13,7 @@ export const InviteMembers = ({ closeFn }: any) => {
   const [friends, setFriends] = useState<any>([]);
   const { userData } = useAppContext();
   const {id}=useParams();
+
   useEffect(() => {
     if (userData.friends) {
       setFriends(Object.keys(userData.friends));
@@ -26,6 +27,7 @@ export const InviteMembers = ({ closeFn }: any) => {
       inviteToGroup(id, username);
     }
   };
+  
   return (
     <div className='invite-members-container'>
       <div className='invite-members-form'>

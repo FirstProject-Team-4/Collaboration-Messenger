@@ -17,6 +17,7 @@ export default function ImageComp({ unique, type }: { unique: any, type: string,
   const [data, setData] = useState<any>(null);
   const [status, setStatus] = useState('');
   const { userData } = useAppContext();
+
   useEffect(() => {
     (async () => {
       switch (type) {
@@ -33,7 +34,6 @@ export default function ImageComp({ unique, type }: { unique: any, type: string,
 
     })();
   }, [unique, userData]);
-
 
   useEffect(() => {
     if (type === 'user') {
@@ -90,4 +90,5 @@ export default function ImageComp({ unique, type }: { unique: any, type: string,
       </>
     );
   }
+  
 }
