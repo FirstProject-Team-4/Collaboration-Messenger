@@ -6,10 +6,19 @@ import Button from "../../components/button/Button";
 import './Friends.css';
 import BlockList from "../../components/BlockList/BlockList";
 
+/**
+ * Renders the Friends component.
+ * @returns {React.ReactNode} - The rendered Friends component.
+ */
 export default function Friends() {
     const [view, setView] = useState('friendsList');//status->default
 
-    const handleViewChange = (view: string) => {
+    /**
+     * Handles the change of view based on the provided view parameter.
+     * @param {string} view - The view to be displayed.
+     * @returns {React.ReactNode} - The React node representing the view.
+     */
+    const handleViewChange = (view: string): React.ReactNode => {
         switch (view) {
             case 'friendsList':
                 return <FriendsList />;
@@ -18,7 +27,7 @@ export default function Friends() {
             case 'block':
                 return <BlockList />;
             default:
-                return <FriendsList />;//status
+                return <FriendsList />; // Default view is the FriendsList
         }
     }
     return (

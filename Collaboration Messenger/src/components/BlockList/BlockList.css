@@ -1,19 +1,20 @@
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 60px; /* Half of the desired space */
-  }
-  
-  .card {
+    margin: 60px;
+    /* Half of the desired space */
+}
+
+.card {
     max-width: 300px;
     flex: 0 1 calc(33.333% - 3px);
     border-radius: 1rem;
     background-color: rgba(31, 41, 55, 1);
     padding: 7px;
-    margin: 3px; /* Half of the desired space */
-  }
+    margin: 3px;
+    /* Half of the desired space */
+}
 
 .infos {
     display: flex;
@@ -24,8 +25,8 @@
 }
 
 .image {
- height: 80px;
- width: 80px;
+    height: 80px;
+    width: 80px;
     border-radius: 0.5rem;
     background-color: rgb(118, 36, 194);
     background: linear-gradient(to bottom right, rgb(118, 36, 194), rgb(185, 128, 240));
@@ -33,19 +34,15 @@
     top: 23px;
     left: 15px;
 }
-.image img{
+
+.image img {
     height: 80px;
     width: 80px;
-       /* border-radius: 0.5rem;
-       background-color: rgb(118, 36, 194);
-       background: linear-gradient(to bottom right, rgb(118, 36, 194), rgb(185, 128, 240));
-       position: relative;
-       top: 23px;
-       left: 15px; */
-   }
-   .image .status-circle{
-   display: none;
-   }
+}
+
+.image .status-circle {
+    display: none;
+}
 
 .image-friends {
     height: 50rem;
@@ -85,7 +82,7 @@
 }
 
 .request {
-  margin: 3px;
+    margin: 3px;
     border: 1px solid transparent;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
@@ -108,7 +105,9 @@
     font-weight: 400;
     font-style: normal;
     font-size: 30px;
-    text-transform: uppercase; /* Makes the text all uppercase */
-    letter-spacing: 1px; /* Adds space between the letters */
- 
+    text-transform: uppercase;
+    /* Makes the text all uppercase */
+    letter-spacing: 1px;
+    /* Adds space between the letters */
+
 }

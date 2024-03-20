@@ -16,9 +16,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import React, { useEffect, useState } from 'react';
 import { DyteMeeting} from '@dytesdk/react-ui-kit';
 import { setStatusToBusy, toggleStatus} from '../../service/status';
-import toast from 'react-hot-toast';
 import ImageComp from '../imageComp/ImageComp';
-// import logo from '/image/busyChat_logo.png';
+import toast from 'react-hot-toast';
+
 /**
  * Renders the header component.
  * 
@@ -48,6 +48,7 @@ export const Header = () => {
             })
         }
     }, [meeting, userData]);
+
     useEffect(() => {
         if (!userData) {
             return;
@@ -103,6 +104,7 @@ export const Header = () => {
         })
 
     }, [userData])
+
     useEffect(() => {
         if (!userData) {
             return;
@@ -125,16 +127,26 @@ export const Header = () => {
         })
     }, [userData])
 
-
-
-
+    /**
+     * Handles the click event for the header component.
+     * Sets the anchor element for the menu.
+     * 
+     * @param {any} event - The click event object.
+     */
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
+
+    /**
+     * Closes the anchor element.
+     */
     const handleClose = () => {
         setAnchorEl(null);
     };
-    // const location = useLocation();
+  
+    /**
+     * Logs out the user and updates their status to 'offline' in the database.
+     */
     const logout = async () => {
         await logoutUser();
         setContext({ user: null, userData: null });
@@ -144,10 +156,12 @@ export const Header = () => {
             update(ref(db, `groups/${id}/members/${userData.username}`), { status: 'offline' });
         })
      
-       
         navigate('/login');
     }
 
+    /**
+     * Navigates to the user's profile page.
+     */
     const profile = () => {
         navigate(`/profile/${userData?.username}`);
     }
@@ -155,6 +169,7 @@ export const Header = () => {
     if (location.pathname === '/login' || location.pathname === '/register') {
         return null;
     }
+    
     return (
         userData &&
         <>

@@ -18,6 +18,7 @@ a {
   color: #7e85dd;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #d096ed;
 }
@@ -28,8 +29,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-y: hidden;
+  /* Hide vertical scrollbar */
+  overflow-x: hidden;
+  /* Hide horizontal scrollbar */
 }
 
 h1 {
@@ -48,9 +51,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #0680a2;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -61,11 +66,12 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
 }
-

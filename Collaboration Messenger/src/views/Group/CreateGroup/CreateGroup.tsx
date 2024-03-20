@@ -6,12 +6,17 @@ import { checkGroupData } from '../../../validations/groupData';
 import { saveImage } from '../../../service/storage';
 import './CreateGroup.css';
 
+/**
+ * Renders a form for creating a new group.
+ * @returns {JSX.Element} The rendered CreateGroup component.
+ */
 export default function CreateGroup() {
     const { userData } = useAppContext();
     const [error, setError] = useState({
         groupName: '',
         groupDescription: ''
     });
+
     const [currentGroup, setCurrentGroup] = useState({
         name: '',
         description: '',
@@ -20,10 +25,14 @@ export default function CreateGroup() {
         type: 'public'
 
     });
+
+    /**
+     * Creates a new group with the provided group data.
+     * @returns {Promise<void>} A promise that resolves when the group is created.
+     */
     const createCurrentGroup = async () => {
         const check = checkGroupData(currentGroup.name, currentGroup.description);
         if (check.groupName || check.groupDescription) {
-
             setError(check);
             return;
         }
@@ -31,7 +40,6 @@ export default function CreateGroup() {
         if (currentGroup.image) {
             currentImageUrl = await saveImage(currentGroup.imageFile)
         }
-
 
         const group = {
             title: currentGroup.name,
@@ -72,7 +80,7 @@ export default function CreateGroup() {
 
                         </input><br></br>
                         <label htmlFor="type" id='type-label'>Type:</label>
-                        <select  className="input" id="type" value={currentGroup.type} onChange={(e) => setCurrentGroup({ ...currentGroup, type: e.target.value })}>
+                        <select className="input" id="type" value={currentGroup.type} onChange={(e) => setCurrentGroup({ ...currentGroup, type: e.target.value })}>
                             <option value="public">Public</option>
                             <option value="private">Private</option>
                         </select>

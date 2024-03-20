@@ -9,7 +9,7 @@
   background-color: rgba(211, 14, 241, 0.085);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px 0 rgba(135, 31, 133, 0.37),
-      0 30px 60px rgba(124, 121, 203, 0.414);
+    0 30px 60px rgba(124, 121, 203, 0.414);
   box-sizing: border-box;
   font-family: "Gloria Hallelujah", cursive;
   font-weight: 400;
@@ -50,24 +50,25 @@
   cursor: pointer;
 }
 
-.rbc-today{
+.rbc-today {
   background-color: #d7a4eccb;
 }
 
-.rbc-off-range-bg{
+.rbc-off-range-bg {
   background-color: #b06de758;
 }
 
-.rbc-header{
+.rbc-header {
   background-color: #d7a4eccb;
   color: #000000;
   font-family: "Gloria Hallelujah", cursive;
   font-weight: 400;
   font-style: normal;
-  font-size:23px;
+  font-size: 23px;
   padding: 3px;
   border-bottom: 1px solid #26142c;
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -79,13 +80,13 @@
 }
 
 .modal {
-  position: fixed; 
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
-  z-index: 1000; 
-  padding: 20px; 
-  border-radius: 10px; 
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  padding: 20px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: #fff;
 }

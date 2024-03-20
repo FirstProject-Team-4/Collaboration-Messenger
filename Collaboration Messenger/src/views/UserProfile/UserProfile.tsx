@@ -23,6 +23,9 @@ export type UserProfileData = {
     friendsRequest?: Record<string, unknown>;
 };
 
+/**
+ * Represents the user profile component.
+ */
 const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
@@ -59,26 +62,32 @@ const UserProfile = () => {
 
 
 
+    /**
+     * Handles blocking/unblocking a user.
+     */
     const handleBlockUser = () => {
         if (userProfileData) {
             const db = getDatabase();
             const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${userProfileData.username}`);
             if (myBlockList.includes(userProfileData.username)) {
-                //  unblock the user
-                set(blockUserRef, null)
+                // Unblock the user
+                set(blockUserRef, null);
             } else {
-                set(blockUserRef, true)
+                set(blockUserRef, true);
             }
         }
     }
+
+    /**
+     * Determines the text to display for the block toggle button based on the user's block status.
+     * @returns The text to display for the block toggle button ('Block' or 'Unblock').
+     */
     const toggleBlock = () => {
         if (userProfileData?.username && myBlockList.includes(userProfileData?.username)) {
             return 'Unblock';
         }
         return 'Block';
     }
-    console.log(myBlockList);
-
 
 
     return (
@@ -103,7 +112,5 @@ const UserProfile = () => {
         </div>
     );
 }
-
-
 
 export default UserProfile;

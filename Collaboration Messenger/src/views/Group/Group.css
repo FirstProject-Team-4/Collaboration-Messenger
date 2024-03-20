@@ -44,7 +44,7 @@
     /* display: flex;
     flex-direction: column; */
     position: absolute;
-    right:19px;
+    right: 19px;
     height: 620px;
     top: 60px;
     width: 240px;
@@ -59,7 +59,7 @@
 
 }
 
-.members-container h5{
+.members-container h5 {
     font-size: 15px;
     align-self: center;
     font-family: "Gloria Hallelujah", cursive;
@@ -68,6 +68,7 @@
     left: 20px;
 
 }
+
 .chat-header {
     display: absolute;
     flex-direction: row;
@@ -200,11 +201,11 @@
     transition: all .3s ease-in;
 
 }
-.public-single-group-container img{
+
+.public-single-group-container img {
     width: 100px;
     height: 100px;
 
     top: 35px;
     right: 60px;
 }
-

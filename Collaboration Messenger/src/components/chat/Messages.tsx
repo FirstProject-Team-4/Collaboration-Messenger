@@ -9,9 +9,16 @@ type MessagesProps = {
     setReplyMessage?: React.Dispatch<React.SetStateAction<string>>
 
 }
-const Messages = ({ messages , type,setReplyMessage}: MessagesProps) => {
+/**
+ * Renders the list of messages.
+ *
+ * @param messages - The array of messages to render.
+ * @param type - The type of message.
+ * @param setReplyMessage - A function to set the reply message.
+ * @returns The rendered list of messages.
+ */
+const Messages = ({ messages , type, setReplyMessage }: MessagesProps) => {
    const { userData } = useAppContext();
-
 
     return (
         userData && <>

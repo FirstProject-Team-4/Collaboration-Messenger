@@ -5,10 +5,19 @@ import { db } from "../../config/config-firebase";
 import { changeStatusToAway } from "../../service/status";
 import { useAppContext } from "../../context/appContext";
 
+/**
+ * Renders an image component based on the provided type.
+ * @param unique - The unique identifier for the image.
+ * @param type - The type of the image ('group' or 'user').
+ * @param className - Optional CSS class name for the component.
+ * @param style - Optional inline styles for the component.
+ * @returns The rendered image component.
+ */
 export default function ImageComp({ unique, type }: { unique: any, type: string, className?: string, style?: any}) {
     const [data, setData] = useState<any>(null)
     const [status, setStatus] = useState('');
     const { userData } = useAppContext();
+
     useEffect(() => {
         (async () => {
             switch (type) {

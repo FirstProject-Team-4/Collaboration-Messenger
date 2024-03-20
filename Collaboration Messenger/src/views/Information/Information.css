@@ -1,4 +1,4 @@
-.chat-user{
+.chat-user {
     display: flex;
     position: relative;
     top: 2px;
@@ -7,20 +7,20 @@
     justify-content: left;
     align-items: center;
     margin-top: 15px;
-    perspective: 1000px; 
+    perspective: 1000px;
     padding: 3px;
-    transform-style: preserve-3d; 
-    transition: transform 0.5s; 
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
     border-radius: 10px;
     border: 2px solid #be76dd4c;
     background-color: #090909;
 }
 
 .chat-user:hover {
-    transform: scale3d(1.05, 1.05, 1); 
+    transform: scale3d(1.05, 1.05, 1);
 }
 
-#user-name{
+#user-name {
     font-size: 15px;
     font-weight: 600;
     margin: 0px;

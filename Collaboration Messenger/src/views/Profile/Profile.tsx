@@ -3,10 +3,14 @@ import { useAppContext } from "../../context/appContext";
 import { saveImage } from "../../service/storage";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
-// import { useParams } from 'react-router-dom'; 
 import './Profile.css';
 
 
+/**
+ * Renders the user profile page.
+ * 
+ * @returns {JSX.Element} The rendered user profile page.
+ */
 const Profile = () => {
     // const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
@@ -23,28 +27,38 @@ useEffect(() => {
 }, [userData]);
 
 
-    //for the image
+    /**
+     * Handles the image change event.
+     * 
+     * @param e - The change event triggered by the input element.
+     * @returns {Promise<void>} - A promise that resolves when the image is saved and updated.
+     */
     const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
             const imgUrl = await saveImage(file);
-            imgUrl&&setImage(imgUrl);
+            imgUrl && setImage(imgUrl);
             update(ref(db, `users/${userData.username}/`), { image: imgUrl });
-           
         }
     };
 
-    //for the first and last name (edit)
+  
+    /**
+     * Handles the form submission by updating the user's first name and last name in the database.
+     */
     const handleSubmit = () => {
         update(ref(db, `users/${userData.username}/`), { firstName: firstName, lastName: lastName });
-       
     };
+
+    /**
+     * Loads the user profile data and updates the state variables.
+     */
     const loadUserProfile = () => {
         setFirstName(userData?.firstName || ''); 
         setLastName(userData?.lastName || ''); 
         setImage(userData?.image || '');
         setShowEdit(!showEdit);
-      }
+    }
 
     return (
         <div>

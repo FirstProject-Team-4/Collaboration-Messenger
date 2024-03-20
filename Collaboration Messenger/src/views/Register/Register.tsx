@@ -69,10 +69,6 @@ const errorColor = (property:string): string => {
     return 'black';
 }
 
-
-
-
-
   return (
     <div className="register-view">
       <div className="register-form">

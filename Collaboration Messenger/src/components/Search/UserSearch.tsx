@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers} from "../../service/user";
+import { getAllUsers } from "../../service/user";
 import Button from "../button/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { commbineId } from "../../service/friends";
@@ -15,17 +15,17 @@ import './UserSearch.css';
 interface UserSearchProps {
     type?: string;
 }
+/**
+ * UserSearch component for searching and interacting with users.
+ * 
+ * @param type - The type of search (default: 'Search').
+ */
 const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
-    const { userData} = useAppContext();
+    const { userData } = useAppContext();
     const [users, setUsers] = useState<any>([]);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
     const navigate = useNavigate();
-
-    console.log('UserSearch');
 
     useEffect(() => {
         if (search !== '') {
@@ -33,6 +33,11 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         }
     }, [search])
 
+    /**
+     * Handles the search functionality.
+     * 
+     * @param value - The search value entered by the user.
+     */
     const handleSearch = (value: string) => {
         setSearch(value);
 
@@ -43,6 +48,10 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         }
     }
 
+    /**
+     * Searches for users based on the provided search term.
+     * @returns {Promise<void>} A promise that resolves when the search is complete.
+     */
     const searchUser = async () => {
         const snapshot = await getAllUsers();
         const filtered = snapshot.filter((user: any) => {
@@ -51,6 +60,10 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         setUsers(filtered);
     }
 
+    /**
+     * Handles the chat functionality when a user is selected.
+     * @param user - The selected user object containing the UID and username.
+     */
     const handleChat = async (user: { uid: string, username: string }) => {
         const chatId = commbineId(userData.uid, user.uid);
         console.log(chatId);
@@ -66,10 +79,13 @@ const UserSearch = ({ type = 'Search' }: UserSearchProps) => {
         }
         setSearch('');
         setUsers([]);
-
     }
 
 
+    /**
+     * Handles adding a friend by sending a friend request.
+     * @param user - The user object containing the username and UID of the user to send the friend request to.
+     */
     const handleAddFriend = async (user: { username: string, uid: string }) => {
         const db = getDatabase();
         const friendRequestRef = ref(db, `/users/${user.username}/friendsRequest/${userData.username}`);

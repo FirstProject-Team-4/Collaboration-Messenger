@@ -18,7 +18,8 @@
   border-radius: 10px;
   transition: all 0.5s ease;
 }
-.column-inf h3{
+
+.column-inf h3 {
   font-size: 20px;
   align-self: center;
   font-family: "Gloria Hallelujah", cursive;
@@ -26,6 +27,7 @@
   bottom: 10px;
 
 }
+
 .btn-friends {
   position: relative;
   bottom: 20px;

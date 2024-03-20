@@ -5,7 +5,7 @@
     /* background-image: url('/image/login1.jpg'); */
     background-image: url('/image/register.jpg');
     background-size: cover;
-    
+
     right: 0px;
     /* bottom: -40px; */
 }
@@ -64,8 +64,7 @@
     background-color: #5d1f80;
 }
 
-#register-link{
-   
+#register-link {
     color: #d8a2e9;
     position: relative;
     left: 120px;

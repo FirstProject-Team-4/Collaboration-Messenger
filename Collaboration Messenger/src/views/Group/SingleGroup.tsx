@@ -3,18 +3,20 @@ import Button from '../../components/button/Button';
 import InviteMembers from '../../components/group-components/InviteMembers';
 import { useNavigate, useParams } from 'react-router-dom';
 import GroupMembers, { MembersProps } from '../../components/group-components/GroupMembers';
-import { onValue, ref, remove, set } from 'firebase/database';
+import { onValue, ref, remove} from 'firebase/database';
 import { Group } from '../../components/group-components/JoinedGroup';
 import { db } from '../../config/config-firebase';
-import { getGroupByID, getGroupMembers, removeGroupMember } from '../../service/group';
+import { getGroupByID,removeGroupMember } from '../../service/group';
 import { useAppContext, useCallContext, useDyteContext } from '../../context/appContext';
 import Chat from '../../components/chat/Chat';
-
 import { setStatusToBusy } from '../../service/status';
 import CallIcon from '@mui/icons-material/Call';
-import './Group.css';
 import { toast } from 'react-hot-toast';
+import './Group.css';
 
+/**
+ * Renders a single group component.
+ */
 export default function SingleGroup() {
     const [open, setOpen] = useState(false);
 
@@ -22,16 +24,12 @@ export default function SingleGroup() {
     const [currentGroup, setCurrentGroup] = useState<Group>({} as Group);
     const { userData } = useAppContext();
     const [token, setToken] = useState<string>("");
-    const {meeting, initMeeting} = useDyteContext();
-    const {inCall, setInCall} = useCallContext();
-    const[status,setStatus]=useState('');
-
-
-
-
-
+    const { meeting, initMeeting } = useDyteContext();
+    const { inCall, setInCall } = useCallContext();
+    const [status, setStatus] = useState('');
     const nav = useNavigate();
     const { id } = useParams();
+
     useEffect(() => {
         if (id) {
             getGroupByID(id).then((group) => {
@@ -44,19 +42,19 @@ export default function SingleGroup() {
                 }
             })
             onValue(ref(db, `groups/${id}/members`), (snapshot) => {
-                if(snapshot.exists()){
-                    setGroupMembers(Object.keys(snapshot.val()).map((key)=>{
-                        return{
-                            username:key,
+                if (snapshot.exists()) {
+                    setGroupMembers(Object.keys(snapshot.val()).map((key) => {
+                        return {
+                            username: key,
                             ...snapshot.val()[key]
                         }
                     }))
                 }
-                else{
+                else {
                     setGroupMembers([]);
                 }
-                })
-            
+            })
+
         }
         onValue(ref(db, `users/${userData.username}/status`), (snapshot) => {
             if (snapshot.exists()) {
@@ -64,7 +62,8 @@ export default function SingleGroup() {
             }
         })
 
-    }, [id,userData])
+    }, [id, userData])
+
     useEffect(() => {
 
         onValue(ref(db, `groups/${id}/members/${userData.username}/token`), (snapshot) => {
@@ -74,67 +73,68 @@ export default function SingleGroup() {
             }
         });
     }, [userData]);
+
     useEffect(() => {
-        if(!userData || !id){
+        if (!userData || !id) {
             return;
         }
-       const subscribe= onValue(ref(db, `users/${userData.username}/groupNotifications/${id}`), (snapshot) => {
-        remove(ref(db, `users/${userData.username}/groupNotifications/${id}`));
-        
+        const subscribe = onValue(ref(db, `users/${userData.username}/groupNotifications/${id}`), (snapshot) => {
+            remove(ref(db, `users/${userData.username}/groupNotifications/${id}`));
+
         });
-        return ()=>subscribe();
+        return () => subscribe();
         //off(ref(db, `users/${userData.username}/groupNotifications/${id}`));
-    },[userData,id])
-    
+    }, [userData, id])
 
 
 
-  
 
 
-      const leaveGroup = () => {
+
+
+    const leaveGroup = () => {
         removeGroupMember(currentGroup.id, userData.username);
     }
     return (
-        
-            <>
-                <div className="chat-container">
-                    <button onClick={async () => {
-                        console.log(status)
-                        if (status === 'busy') {
-                            toast.error('You are already in a call'),{
-                                duration:8000
-                            }
-                           
-                            console.log(status)
-                            console.log('You are currently set to busy.')
-                            return;
-                        }
-                            await initMeeting({
-                                authToken: token,
-                                defaults: {
-                                    audio: false,
-                                    video: false,
-                                },
-                            });
-                           setInCall(true);
-                            setStatusToBusy(userData)
-                    }
-                    }><CallIcon/></button>
 
-                     <Chat type={'group'} />
+        <>
+            <div className="chat-container">
+                <button onClick={async () => {
+                    console.log(status)
+                    if (status === 'busy') {
+                        toast.error('You are already in a call'), {
+                            duration: 8000
+                        }
+
+                        console.log(status)
+                        console.log('You are currently set to busy.')
+                        return;
+                    }
+                    await initMeeting({
+                        authToken: token,
+                        defaults: {
+                            audio: false,
+                            video: false,
+                        },
+                    });
+                    setInCall(true);
+                    setStatusToBusy(userData)
+                }
+                }><CallIcon /></button>
+
+                <Chat type={'group'} />
+            </div>
+            <div className="members-container">
+                <div className="members-buttons">
+                    <h4>{`members ${groupMembers.length}`}</h4>
+                    {currentGroup.owner === userData?.username && <Button onClick={() => setOpen(true)}>Invite </Button>}
+                    {currentGroup.owner !== userData?.username && <Button onClick={leaveGroup}>Leave </Button>}
+                    {open && <InviteMembers closeFn={setOpen} />}
                 </div>
-                <div className="members-container">
-                    <div className="members-buttons">
-                        <h4>{`members ${groupMembers.length}`}</h4>
-                        {currentGroup.owner === userData?.username && <Button onClick={() => setOpen(true)}>Invite </Button>}
-                        {currentGroup.owner !== userData?.username && <Button onClick={leaveGroup}>Leave </Button>}
-                        {open && <InviteMembers closeFn={setOpen} />}
-                    </div>
-                    <GroupMembers members={groupMembers} owner={currentGroup.owner} />
-                </div>
-            </>
-       
-                
+                <GroupMembers members={groupMembers} owner={currentGroup.owner} />
+            </div>
+        </>
+
+
     )
 }
