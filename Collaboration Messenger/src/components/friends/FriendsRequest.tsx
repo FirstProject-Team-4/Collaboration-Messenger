@@ -78,7 +78,7 @@ export default function FriendsRequest() {
                 <div key={request.id} className="card">
                     <div className="infos">
                         <div className="image">
-                            <ImageComp className="image-friends" unique={request.username} type={'user'} />
+                            <ImageComp className="image-friends" unique={request} type={'user'} />
                         </div>
                         <div className="info">
                             <NavLink className="name" to={`/profile/${request.username}`}>{request.username}</NavLink>

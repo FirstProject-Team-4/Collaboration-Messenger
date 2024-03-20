@@ -200,4 +200,11 @@
     transition: all .3s ease-in;
 
 }
+.public-single-group-container img{
+    width: 100px;
+    height: 100px;
+
+    top: 35px;
+    right: 60px;
+}
 
