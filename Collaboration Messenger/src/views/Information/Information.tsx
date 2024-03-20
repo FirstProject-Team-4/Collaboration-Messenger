@@ -39,7 +39,7 @@ const Information: React.FC = () => {
         return;
       }
       setPrivateNotifications(Object.keys(snapshot.val()));
-    })
+    });
   }, [userData]);
 
 
@@ -62,7 +62,7 @@ const Information: React.FC = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default Information;

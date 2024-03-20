@@ -48,7 +48,7 @@ const MyCalendar: React.FC = () => {
     const fetchUsers = async () => {
       const snapshot = await getAllUsers();
       setUsers(snapshot);
-    }
+    };
     fetchUsers();
   }, []);
 
@@ -66,7 +66,7 @@ const MyCalendar: React.FC = () => {
             end: new Date(data[key].end),
             title: data[key].title,
             sharedWith: data[key].sharedWith,
-          }
+          };
         });
         setEvents(userEvents);
       } else {
@@ -86,7 +86,7 @@ const MyCalendar: React.FC = () => {
           return {
             id: key,
             ...data[key]
-          }
+          };
         });
         setGroups(userGroups);
         console.log(userGroups);
@@ -175,13 +175,13 @@ const MyCalendar: React.FC = () => {
 
     // Save the event to the 'events' node USER
     selectedUsers.forEach((userId: any) => {
-      push(ref(db, `users/${userId}/events`), newEvent)
+      push(ref(db, `users/${userId}/events`), newEvent);
 
     });
 
     //group
     selectedGroup.forEach((groupId: any) => {
-      push(ref(db, `groups/${groupId}/events`), newEvent)
+      push(ref(db, `groups/${groupId}/events`), newEvent);
 
     });
 
@@ -189,10 +189,10 @@ const MyCalendar: React.FC = () => {
       const snapshot= await get(ref(db, `groups/${selectedGroup}/members`));
       const members= Object.keys(snapshot.val());
       members.forEach((member: any) => {
-        push(ref(db, `users/${member}/events`), newEvent)
+        push(ref(db, `users/${member}/events`), newEvent);
       });
     } else {
-      push(ref(db, `users/${userId}/events`), newEvent)
+      push(ref(db, `users/${userId}/events`), newEvent);
     }
    
 

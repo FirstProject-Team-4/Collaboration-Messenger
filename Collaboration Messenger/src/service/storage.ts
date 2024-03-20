@@ -9,18 +9,18 @@ import { storage } from "../config/config-firebase";
  * @returns A Promise that resolves to the download URL of the saved image.
  */
 export const saveImage = async (file: File) => {
-    if (!file) {
-        return;
-    }
-    const storageRef = ref(storage, `images/${file.name}`);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
-}
+  if (!file) {
+    return;
+  }
+  const storageRef = ref(storage, `images/${file.name}`);
+  await uploadBytes(storageRef, file);
+  return getDownloadURL(storageRef);
+};
 export const saveFile = async (file: File,id:string) => {
-    if (!file) {
-        return;
-    }
-    const storageRef = ref(storage, `files/${id}`);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
-}
+  if (!file) {
+    return;
+  }
+  const storageRef = ref(storage, `files/${id}`);
+  await uploadBytes(storageRef, file);
+  return getDownloadURL(storageRef);
+};

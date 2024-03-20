@@ -7,33 +7,33 @@ import './Friends.css';
 import BlockList from "../../components/BlockList/BlockList";
 
 export default function Friends() {
-    const [view, setView] = useState('friendsList');//status->default
+  const [view, setView] = useState('friendsList');//status->default
 
-    const handleViewChange = (view: string) => {
-        switch (view) {
-            case 'friendsList':
-                return <FriendsList />;
-            case 'friendsRequest':
-                return <FriendsRequest />;
-            case 'block':
-                return <BlockList />;
-            default:
-                return <FriendsList />;//status
-        }
+  const handleViewChange = (view: string) => {
+    switch (view) {
+    case 'friendsList':
+      return <FriendsList />;
+    case 'friendsRequest':
+      return <FriendsRequest />;
+    case 'block':
+      return <BlockList />;
+    default:
+      return <FriendsList />;//status
     }
-    return (
-        <div className="view-frineds">
+  };
+  return (
+    <div className="view-frineds">
           
-            <div className="header-frineds">
-                <Button className="friends-button" onClick={() => setView('friendsList')}><span>Friends</span></Button>
-                <Button className="friends-button" onClick={() => setView('friendsRequest')}><span>Requests</span></Button>
-                <Button className="friends-button" onClick={() => setView('block')}><span>Block</span></Button>
-                <UserSearch type="Add friend" />
-            </div>
-            <div className="view">
+      <div className="header-frineds">
+        <Button className="friends-button" onClick={() => setView('friendsList')}><span>Friends</span></Button>
+        <Button className="friends-button" onClick={() => setView('friendsRequest')}><span>Requests</span></Button>
+        <Button className="friends-button" onClick={() => setView('block')}><span>Block</span></Button>
+        <UserSearch type="Add friend" />
+      </div>
+      <div className="view">
                
-                {handleViewChange(view)}
-            </div>
-        </div>
-    )
+        {handleViewChange(view)}
+      </div>
+    </div>
+  );
 }

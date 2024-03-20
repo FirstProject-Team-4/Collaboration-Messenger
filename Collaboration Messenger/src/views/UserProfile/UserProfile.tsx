@@ -24,85 +24,85 @@ export type UserProfileData = {
 };
 
 const UserProfile = () => {
-    const { id } = useParams<{ id: string }>();
-    const { userData } = useAppContext();
-    const [myBlockList, setMyBlockList] = useState<string[]>([]);
-    const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const { userData } = useAppContext();
+  const [myBlockList, setMyBlockList] = useState<string[]>([]);
+  const [userProfileData, setUserProfileData] = useState<UserProfileData | null>(null);
 
-    const currentId = id?.split(userData.uid).join('');
+  const currentId = id?.split(userData.uid).join('');
 
-    useEffect(() => {
-        if (currentId) {
-            const db = getDatabase();
-            const dbRef = ref(db, "users");
-            const q = query(dbRef, orderByChild('uid'), equalTo(currentId));
+  useEffect(() => {
+    if (currentId) {
+      const db = getDatabase();
+      const dbRef = ref(db, "users");
+      const q = query(dbRef, orderByChild('uid'), equalTo(currentId));
 
-            onValue(q, (snapshot) => {
-                if (snapshot.exists()) {
-                    setUserProfileData(Object.keys(snapshot.val()).map((key) => snapshot.val()[key])[0]);
-                } else {
-                    console.log("No data available");
-                }
-            });
-
-            onValue(ref(db, `users/${userData.username}/blockedUsers`), (snapshot) => {
-                if (snapshot.exists()) {
-                    setMyBlockList(Object.keys(snapshot.val()));
-                } else {
-                    setMyBlockList([]);
-                }
-            })
+      onValue(q, (snapshot) => {
+        if (snapshot.exists()) {
+          setUserProfileData(Object.keys(snapshot.val()).map((key) => snapshot.val()[key])[0]);
         } else {
-            setUserProfileData(null);
+          console.log("No data available");
         }
-    }, [currentId]);
+      });
 
-
-
-    const handleBlockUser = () => {
-        if (userProfileData) {
-            const db = getDatabase();
-            const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${userProfileData.username}`);
-            if (myBlockList.includes(userProfileData.username)) {
-                //  unblock the user
-                set(blockUserRef, null)
-            } else {
-                set(blockUserRef, true)
-            }
+      onValue(ref(db, `users/${userData.username}/blockedUsers`), (snapshot) => {
+        if (snapshot.exists()) {
+          setMyBlockList(Object.keys(snapshot.val()));
+        } else {
+          setMyBlockList([]);
         }
+      });
+    } else {
+      setUserProfileData(null);
     }
-    const toggleBlock = () => {
-        if (userProfileData?.username && myBlockList.includes(userProfileData?.username)) {
-            return 'Unblock';
-        }
-        return 'Block';
+  }, [currentId]);
+
+
+
+  const handleBlockUser = () => {
+    if (userProfileData) {
+      const db = getDatabase();
+      const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${userProfileData.username}`);
+      if (myBlockList.includes(userProfileData.username)) {
+        //  unblock the user
+        set(blockUserRef, null);
+      } else {
+        set(blockUserRef, true);
+      }
     }
-    console.log(myBlockList);
+  };
+  const toggleBlock = () => {
+    if (userProfileData?.username && myBlockList.includes(userProfileData?.username)) {
+      return 'Unblock';
+    }
+    return 'Block';
+  };
+  console.log(myBlockList);
 
 
 
-    return (
+  return (
+    <div>
+      {userProfileData && (
         <div>
-            {userProfileData && (
-                <div>
-                    <h1>Profile</h1>
-                    <div>
+          <h1>Profile</h1>
+          <div>
 
-                        <ImageComp unique={userProfileData} type={'user'} style={{ width: '300px', height: '200px' }} />
-                        <h2>{userProfileData.username}</h2>
-                        <Button onClick={() => { handleBlockUser() }}>{toggleBlock()}</Button>
+            <ImageComp unique={userProfileData} type={'user'} style={{ width: '300px', height: '200px' }} />
+            <h2>{userProfileData.username}</h2>
+            <Button onClick={() => { handleBlockUser(); }}>{toggleBlock()}</Button>
 
 
-                        <p>{userProfileData?.firstName ? userProfileData.firstName : ''}</p>
-                        <p>{userProfileData?.lastName ? userProfileData.lastName : ''}</p>
-                        <p>Email: {userProfileData.email}</p>
-                        <p>Joined on: {new Date(userProfileData?.createdOn || 0).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
-                    </div>
-                </div>
-            )}
+            <p>{userProfileData?.firstName ? userProfileData.firstName : ''}</p>
+            <p>{userProfileData?.lastName ? userProfileData.lastName : ''}</p>
+            <p>Email: {userProfileData.email}</p>
+            <p>Joined on: {new Date(userProfileData?.createdOn || 0).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+          </div>
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 
 
 

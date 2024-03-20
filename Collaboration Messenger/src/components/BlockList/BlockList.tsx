@@ -7,70 +7,70 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './BlockList.css';
 const BlockList = () => {
-    const { userData } = useAppContext();
-    const [blockUsers, setBlockUsers] = useState<any>([]);
+  const { userData } = useAppContext();
+  const [blockUsers, setBlockUsers] = useState<any>([]);
 
 
-    useEffect(() => {
-        const db = getDatabase();
-        const blockRef = ref(db, `users/${userData.username}/blockedUsers`);
+  useEffect(() => {
+    const db = getDatabase();
+    const blockRef = ref(db, `users/${userData.username}/blockedUsers`);
     
-        onValue(blockRef, async (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                const blockUsers = await Promise.all(Object.keys(data).map(async (key) => {
-                    const userRef = ref(db, `users/${key}`);
-                    const snapshot = await get(userRef);
-                    const userInfo = snapshot.val();
-                    return {
-                        id: key,
-                        username: data[key],
-                        ...userInfo
-                    };
-                }));
+    onValue(blockRef, async (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const blockUsers = await Promise.all(Object.keys(data).map(async (key) => {
+          const userRef = ref(db, `users/${key}`);
+          const snapshot = await get(userRef);
+          const userInfo = snapshot.val();
+          return {
+            id: key,
+            username: data[key],
+            ...userInfo
+          };
+        }));
     
-                setBlockUsers(blockUsers);
-            } else {
-                setBlockUsers([]);
-            }
-        });
-    }, [userData]);
+        setBlockUsers(blockUsers);
+      } else {
+        setBlockUsers([]);
+      }
+    });
+  }, [userData]);
 
-    console.log(blockUsers);
+ 
     
    
 
-const handleUnblock = (id: string) => {
+  const handleUnblock = (id: string) => {
     const db = getDatabase();
     const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${id}`);
     remove(blockUserRef).then(() => {
-        setBlockUsers(blockUsers.filter((user: any) => user.id !== id));
-        toast.success('User unblocked successfully');
+      setBlockUsers(blockUsers.filter((user: any) => user.id !== id));
+      toast.success('User unblocked successfully');
     }
     );
-}
+  };
 
 
-return (
+  return (
     <>
-        <h3 className="title-friends-view">Block List</h3>
-    <div className="card-container">
+      <h3 className="title-friends-view">Block List</h3>
+      <div className="card-container">
         {blockUsers && blockUsers.map((user: any, index: number) => (
-            <div key={index} className="card">
-                <div className="infos">
-                    <div className="image">
-                        <ImageComp className="image-friends" unique={user} type={'user'} />
-                    </div>
-                    <div className="info">
-                        <NavLink className="name" to={`/profile/${user.username}`}>{user.username}</NavLink>
-                    </div>
-                </div>
-                <button className="request" onClick={() => handleUnblock(user.id)}>Unblock</button>
+          <div key={index} className="card">
+            <div className="infos">
+              <div className="image">
+                <ImageComp className="image-friends" unique={user} type={'user'} />
+              </div>
+              <div className="info">
+                <NavLink className="name" to={`/profile/${user.username}`}>{user.username}</NavLink>
+              </div>
             </div>
+            <button className="request" onClick={() => handleUnblock(user.id)}>Unblock</button>
+          </div>
         ))}
-    </div>
+      </div>
     </>
-);
-}
+  );
+};
 export default BlockList;
 

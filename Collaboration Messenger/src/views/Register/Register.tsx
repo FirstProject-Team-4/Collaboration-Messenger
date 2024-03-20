@@ -43,7 +43,7 @@ export default function Register() {
     }
 
     try {
-      console.log(form)
+      console.log(form);
       const response = await registerUser(form.email, form.password);
       createUserUsername(form.username, response.user.uid, form.email);
       loginUser(form.email, form.password);
@@ -53,21 +53,21 @@ export default function Register() {
       setError({ username: 'valid', password: 'valid', email: 'Email is already in use' });
       return;
     }
-  }
+  };
 
   /**
    * Determines the color of the username/email/password based on the error state.
    * @returns The color as a string ('green', 'red', or 'black').
    */
-const errorColor = (property:string): string => {
+  const errorColor = (property:string): string => {
     if (error[property as keyof typeof error] ==='valid') {
-        return 'green';
+      return 'green';
     }
     if (error[property as keyof typeof error] !== '') {
-        return 'red';
+      return 'red';
     }
     return 'black';
-}
+  };
 
 
 
@@ -76,7 +76,7 @@ const errorColor = (property:string): string => {
   return (
     <div className="register-view">
       <div className="register-form">
-      {/* <NavLink to='/about' id='about-link'>About</NavLink> */}
+        {/* <NavLink to='/about' id='about-link'>About</NavLink> */}
         <h2 id='register-h1'>Register</h2>
         <NavLink to='/login' id='login-link'>Login</NavLink>
         <label htmlFor="username">Username: </label><br />
@@ -93,6 +93,6 @@ const errorColor = (property:string): string => {
         </div>
       </div>
     </div>
-  )
+  );
 
 }
