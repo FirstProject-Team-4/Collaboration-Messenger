@@ -16,13 +16,15 @@ import { toggleStatus, updateStatusToOnline } from './service/status';
 import Profile from './views/Profile/Profile';
 import MyCalendar from './views/MyCalendar/MyCalendar';
 import { useDyteClient } from '@dytesdk/react-web-core';
-import { get, ref, set, update } from 'firebase/database';
+import { get, ref, update } from 'firebase/database';
 import { Toaster } from 'react-hot-toast';
 import Authantication from './hoc/Authentacation';
-// import { ToastContainer } from 'react-toastify';
 
 
-
+/**
+ * The main component of the application.
+ * Renders the entire application and manages the user's authentication state.
+ */
 function App() {
   const [meeting, initMeeting] = useDyteClient();
   const [inCall, setInCall] = useState(false);
@@ -50,7 +52,11 @@ function App() {
     }
 
   }, [context.userData]);
- 
+
+  /**
+   * Toggles the theme of the application.
+   * Adds or removes the 'dark-mode' class from the body element.
+   */
   const toggleTheme = () => {
     document.body.classList.toggle('dark-mode');
   };
@@ -65,18 +71,15 @@ function App() {
         setContext({user,userData:{...context.userData,status:'online'}});
         updateStatusToOnline(context.userData);
       }
-   
     }
   };
   console.log(context.userData);
   return (
     <>
-      {/* <ToastContainer /> */}
-
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext }}>
           <DyteContext.Provider value={{ meeting, initMeeting }}>
-            <CallContext.Provider value={{inCall,setInCall}}>
+            <CallContext.Provider value={{ inCall, setInCall }}>
               <Toaster />
               <Header />
               <div onClick={()=>{updateLastClick();}} className="main-content">

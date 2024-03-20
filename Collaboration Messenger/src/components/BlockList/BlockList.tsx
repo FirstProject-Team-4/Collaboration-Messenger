@@ -6,15 +6,21 @@ import { NavLink } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './BlockList.css';
+
+/**
+ * Component for displaying a list of blocked users.
+ */
 const BlockList = () => {
   const { userData } = useAppContext();
   const [blockUsers, setBlockUsers] = useState<any>([]);
 
-
+  /**
+     * Fetches the list of blocked users from the database.
+     */
   useEffect(() => {
     const db = getDatabase();
     const blockRef = ref(db, `users/${userData.username}/blockedUsers`);
-    
+
     onValue(blockRef, async (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -28,7 +34,7 @@ const BlockList = () => {
             ...userInfo
           };
         }));
-    
+
         setBlockUsers(blockUsers);
       } else {
         setBlockUsers([]);
@@ -36,20 +42,20 @@ const BlockList = () => {
     });
   }, [userData]);
 
- 
-    
-   
+  
 
+  /**
+     * Handles unblocking a user.
+     * @param id - The ID of the user to unblock.
+     */
   const handleUnblock = (id: string) => {
     const db = getDatabase();
     const blockUserRef = ref(db, `users/${userData.username}/blockedUsers/${id}`);
     remove(blockUserRef).then(() => {
       setBlockUsers(blockUsers.filter((user: any) => user.id !== id));
       toast.success('User unblocked successfully');
-    }
-    );
+    });
   };
-
 
   return (
     <>
